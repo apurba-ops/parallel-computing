@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="lecture_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <meta name="author" content="Dr.&nbsp;Apurba Das">
+  <meta name="dcterms.date" content="2026-08-13">
+  <title>Multi-Core Architectures</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lecture_files/libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link rel="stylesheet" href="bits_theme.css">
+  <link href="lecture_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="lecture_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="lecture_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="lecture_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center" data-background-color="#ffffff">
+  <!-- Logo at top left -->
+  <div style="position: absolute !important; top: 40px !important; left: 40px !important; z-index: 1000 !important;">
+    <img src="logo.svg" alt="Logo" width="130">
+  </div>
+
+  <div class="title-container" style="margin-top: 30px !important; text-align: center !important;">
+        <div class="course-header" style="font-family: 'Heliotrope', 'Georgia', serif; font-weight: 700; font-size: 1.15em !important; color: #d71920; margin-bottom: 0.9em; letter-spacing: 0.04em;">
+      <span class="course-code">CS F422/U422: Parallel Computing</span>
+    </div>
+    
+    <h1 class="title" style="font-size: 2.85em !important; color: #222222 !important; font-weight: 700 !important; margin-bottom: 0.55em !important; line-height: 1.15 !important;">Multi-Core Architectures</h1>
+
+    <div class="lecture-info" style="font-family: 'Heliotrope', 'Georgia', serif; font-size: 1.25em !important; color: #555; margin-bottom: 1.0em; display: flex; align-items: center; justify-content: center; gap: 0.5em; font-weight: 300;">
+            <span class="lecture-num" style="color: #555; font-weight: 500;">Lecture 5-6</span>
+                  <span class="lecture-divider" style="color: #bbb; margin: 0 0.3em; font-weight: 300;">|</span>
+      <span class="lecture-date" style="color: #666; font-weight: 400;">2026-08-13</span>
+          </div>
+  </div>
+
+  <!-- Presenter info at bottom right -->
+  <div style="position: absolute !important; bottom: 45px !important; right: 45px !important; z-index: 1000 !important; text-align: right !important;">
+        <div style="font-family: 'Heliotrope', 'Georgia', serif; font-size: 1.0em !important; color: #444; font-weight: 500;">Dr.&nbsp;Apurba Das</div>
+            <div style="font-family: 'Heliotrope', 'Georgia', serif; font-size: 0.85em !important; color: #777; font-weight: 400; margin-top: 3px;">BITS Pilani, Hyderabad Campus</div>
+      </div>
+</section>
+
+<section id="single-core-computer-architecture" class="slide level2">
+<h2>Single-Core Computer Architecture</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><strong>Classical Von Neumann Model:</strong>
+<ul>
+<li>Single central processing unit connected via system bus to memory and I/O bridge.</li>
+</ul></li>
+<li><strong>Key Internal Subsystems:</strong>
+<ul>
+<li><strong>ALU:</strong> Arithmetic &amp; Logic computation units.</li>
+<li><strong>Register File:</strong> Fast, localized register storage.</li>
+<li><strong>Bus Interface:</strong> Coordinates transactions with external memory and peripherals.</li>
+</ul></li>
+<li><strong>I/O &amp; Memory Interconnect:</strong>
+<ul>
+<li>Connected to Memory Bus, Graphics Adapter, USB Controller, Disk Controller, and Expansion Slots.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph CPU["CPU Chip"]
+        RF[Register File] &lt;--&gt; ALU[ALU]
+        RF &lt;--&gt; BI[Bus Interface]
+        ALU &lt;--&gt; BI
+    end
+    BI &lt;--&gt; SB[System Bus]
+    SB &lt;--&gt; IOB[I/O Bridge]
+    IOB &lt;--&gt; MB[(Main Memory)]
+    IOB &lt;--&gt; Bus[I/O Bus]
+    Bus --&gt; USB[USB Controller]
+    Bus --&gt; GPU[Graphics Adapter]
+    Bus --&gt; Disk[Disk Controller]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="chip-multi-processing-cmp-approaches" class="slide level2">
+<h2>Chip Multi-Processing (CMP) Approaches</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="cmp-1.png" style="width:95.0%"></p>
+<figcaption>Three CMP Implementations</figcaption>
+</figure>
+</div>
+<div style="font-size: 0.65em; color: #666; margin-top: 4px; text-align: center; line-height: 1.3;">
+<p><strong>Figure:</strong> Three CMP Implementations.<br> <em>Source: David Kanter, “Chip Multi-Processing: A Method to the Madness”, <a href="https://www.realworldtech.com/chip-multiprocessing/" target="_blank" style="color: #003366; text-decoration: underline;">Real World Tech</a> (2005).</em></p>
+</div>
+</div><div class="column" style="width:52%;">
+<ul>
+<li><strong>Lowest Level of Integration Classification:</strong>
+<ol type="1">
+<li><strong>Shared Cache CMP (Single Die):</strong>
+<ul>
+<li>Cores share on-die L2/L3 cache and unified I/O interface.</li>
+<li><em>Advantage:</em> Lowest inter-core latency; dynamic cache allocation between cores; simpler socket interconnect.</li>
+<li><em>Examples:</em> IBM POWER4/5, Sun Niagara, Intel Core 2.</li>
+</ul></li>
+<li><strong>Shared Interface CMP (Single Die):</strong>
+<ul>
+<li>Cores have private caches but share on-die memory controller/I/O interface (e.g., AMD Opteron, Athlon 64 X2).</li>
+</ul></li>
+<li><strong>Shared Package CMP (Multi-Chip Module / Two Dice):</strong>
+<ul>
+<li>Two distinct single-core dice placed on a common substrate (e.g., Intel Pentium D / Presler).</li>
+</ul></li>
+</ol></li>
+</ul>
+</div></div>
+</section>
+<section id="parallel-execution-vs.-time-slicing" class="slide level2">
+<h2>Parallel Execution vs.&nbsp;Time-Slicing</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="hardware-parallelism-across-cores">Hardware Parallelism (Across Cores)</h3>
+<ul>
+<li>Multiple threads execute <strong>truly in parallel</strong> at the exact same physical clock cycle.</li>
+<li><strong>Thread 1 <span class="math inline">\(\rightarrow\)</span> Core 1</strong></li>
+<li><strong>Thread 2 <span class="math inline">\(\rightarrow\)</span> Core 2</strong></li>
+<li><strong>Thread 3 <span class="math inline">\(\rightarrow\)</span> Core 3</strong></li>
+<li><strong>Thread 4 <span class="math inline">\(\rightarrow\)</span> Core 4</strong></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="time-slicing-within-each-core">Time-Slicing (Within Each Core)</h3>
+<ul>
+<li>Within any single core, multiple threads are <strong>time-sliced</strong> by the OS scheduler.</li>
+<li>Each individual core behaves like a classical uniprocessor for its assigned threads.</li>
+<li>Enables high multi-programming concurrency.</li>
+</ul>
+</div></div>
+<p><br></p>
+<blockquote>
+<p><strong>Operating System Perspective:</strong> The OS perceives each core as a separate, distinct logical processor and schedules runnable threads/processes across available cores.</p>
+</blockquote>
+</section>
+<section id="why-multi-core-the-power-scaling-wall" class="slide level2">
+<h2>Why Multi-Core? The Power &amp; Scaling Wall</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><strong>Limits of Frequency Scaling:</strong>
+<ul>
+<li>Extremely difficult to push single-core clock frequencies higher without thermal runaway.</li>
+</ul></li>
+<li><strong>Pitfalls of Deeply Pipelined Circuits:</strong>
+<ul>
+<li><strong>Heat Dissipation:</strong> Exponential power/cooling density.</li>
+<li><strong>Speed-of-Light Delays:</strong> Signal propagation delay across large monolithic dies.</li>
+<li><strong>Design &amp; Verification:</strong> Exponential logic complexity requiring massive engineering teams.</li>
+<li><strong>Datacenter Costs:</strong> Server farms requiring massive cooling infrastructure.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<ul>
+<li><strong>Application Evolution:</strong>
+<ul>
+<li>Modern server, client, and scientific applications are inherently multi-threaded.</li>
+</ul></li>
+<li><strong>The Inevitable Trend:</strong>
+<ul>
+<li>Modern computer architecture has shifted from extracting ILP from a single core to <strong>maximizing chip-wide Thread-Level Parallelism (TLP)</strong>.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="instruction-level-vs.-thread-level-parallelism" class="slide level2">
+<h2>Instruction-Level vs.&nbsp;Thread-Level Parallelism</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="instruction-level-parallelism-ilp">Instruction-Level Parallelism (ILP)</h3>
+<ul>
+<li>Parallelism at the machine-instruction level within a <strong>single thread</strong>.</li>
+<li><strong>Mechanisms:</strong>
+<ul>
+<li>Dynamic instruction re-ordering (Out-of-Order).</li>
+<li>Deep pipelining &amp; superscalar issue.</li>
+<li>Aggressive branch prediction &amp; speculative execution.</li>
+</ul></li>
+<li><strong>Diminishing Returns:</strong> Quadratic increase in issue/renaming hardware logic area.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="thread-level-parallelism-tlp">Thread-Level Parallelism (TLP)</h3>
+<ul>
+<li>Parallelism at a <strong>coarser granularity</strong> across independent threads or processes.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li>Web &amp; Database servers handling concurrent clients.</li>
+<li>Video games with separate AI, physics, and rendering threads.</li>
+</ul></li>
+<li><strong>CMP Advantage:</strong>
+<ul>
+<li>Explicitly exploits abundant TLP across multiple simple, power-efficient cores.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="general-multiprocessor-context-memory-models" class="slide level2">
+<h2>General Multiprocessor Context &amp; Memory Models</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="multiprocessor-taxonomies">Multiprocessor Taxonomies</h3>
+<ul>
+<li><strong>SIMD (Single Instruction, Multiple Data):</strong>
+<ul>
+<li>Same instruction applied across vector data (e.g., GPUs, Vector units).</li>
+</ul></li>
+<li><strong>MIMD (Multiple Instruction, Multiple Data):</strong>
+<ul>
+<li>Distinct cores execute different instruction streams on different data.</li>
+</ul></li>
+<li><strong>Multi-Core is a Shared-Memory MIMD:</strong>
+<ul>
+<li>All cores reside on the same chip and share a unified physical memory address space.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="multiprocessor-memory-types">Multiprocessor Memory Types</h3>
+<ul>
+<li><strong>Shared Memory:</strong>
+<ul>
+<li>All processors access a single, common global address space.</li>
+<li>Found in Symmetric Multiprocessors (SMP) &amp; CMP.</li>
+</ul></li>
+<li><strong>Distributed Memory:</strong>
+<ul>
+<li>Each processor has dedicated local memory.</li>
+<li>Processors communicate via explicit message-passing networks (e.g., Clusters, Supercomputers).</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="applications-benefiting-from-multi-core" class="slide level2">
+<h2>Applications Benefiting from Multi-Core</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="server-enterprise-workloads">Server &amp; Enterprise Workloads</h3>
+<ul>
+<li><strong>Database Servers:</strong> Concurrently processing independent queries and transactions.</li>
+<li><strong>Web &amp; E-Commerce Servers:</strong> Handling thousands of simultaneous client sessions.</li>
+<li><strong>Compilers:</strong> Parallel compilation units and link-time optimizations.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="desktop-technical-workloads">Desktop &amp; Technical Workloads</h3>
+<ul>
+<li><strong>Multimedia &amp; CAD/CAM:</strong> Video encoding, 3D mesh rendering, ray tracing.</li>
+<li><strong>Multi-Tasking Workloads:</strong>
+<ul>
+<li>Photo editing while recording live TV streams.</li>
+<li>Downloading software while running background anti-virus scanning.</li>
+</ul></li>
+</ul>
+</div></div>
+<p><br></p>
+<blockquote>
+<p><strong>Rule of Thumb:</strong> <em>“Anything that can be threaded today maps efficiently to multi-core architectures.”</em> (Though non-parallelizable sequential tasks remain Amdahl-limited).</p>
+</blockquote>
+</section>
+<section id="simultaneous-multithreading-smt" class="slide level2">
+<h2>Simultaneous Multithreading (SMT)</h2>
+<ul>
+<li><strong>The Problem in Superscalar Pipelines:</strong>
+<ul>
+<li>Long floating-point/integer operations or off-chip memory latencies stall the pipeline.</li>
+<li>Valuable execution units sit <strong>idle and unused</strong>.</li>
+</ul></li>
+<li><strong>SMT Solution:</strong>
+<ul>
+<li>Permits multiple independent threads to execute <strong>simultaneously on the SAME physical core</strong>.</li>
+<li>Threads share execution units cycle-by-cycle (“weaving” threads together).</li>
+</ul></li>
+</ul>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Instruction Fetch / Decoder] --&gt; B[Scheduler &amp; Issue Queues]
+    B --&gt; INT[Integer Units: Thread 2]
+    B --&gt; FP[Floating Point Units: Thread 1]
+    INT --&gt; C[L1 Cache / D-TLB]
+    FP --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="smt-vs.-multi-core-structural-difference" class="slide level2">
+<h2>SMT vs.&nbsp;Multi-Core: Structural Difference</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="simultaneous-multithreading-smt-1">Simultaneous Multithreading (SMT)</h3>
+<ul>
+<li><strong>Single Core, Shared Resources:</strong>
+<ul>
+<li>Only one physical copy of execution units (ALU, FP, caches).</li>
+</ul></li>
+<li><strong>Functional Unit Contention:</strong>
+<ul>
+<li>Two threads <em>cannot</em> simultaneously use the same functional unit (e.g., single Integer unit).</li>
+</ul></li>
+<li><strong>Performance:</strong>
+<ul>
+<li>Not a “true” parallel processor; typically provides <strong>up to ~20-30% throughput gain</strong>.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="multi-core-cmp">Multi-Core (CMP)</h3>
+<ul>
+<li><strong>Replicated Execution Hardware:</strong>
+<ul>
+<li>Each core has its own dedicated integer units, FP units, and L1 caches.</li>
+</ul></li>
+<li><strong>True Concurrency:</strong>
+<ul>
+<li>Two threads can simultaneously execute integer operations without any resource contention.</li>
+</ul></li>
+<li><strong>Linear Scaling:</strong> Near-linear throughput scaling for thread-rich workloads.</li>
+</ul>
+</div></div>
+</section>
+<section id="combining-multi-core-and-smt" class="slide level2">
+<h2>Combining Multi-Core and SMT</h2>
+<p>Processors can combine both CMP and SMT paradigms into a hybrid architecture:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Architecture Combination</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Single-core, non-SMT</strong></td>
+<td style="text-align: left;">Standard classical uniprocessor</td>
+<td style="text-align: left;">Pentium III, early Athlon</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Single-core, with SMT</strong></td>
+<td style="text-align: left;">1 physical core executing 2 threads</td>
+<td style="text-align: left;">Pentium 4 (Hyper-Threading)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Multi-core, non-SMT</strong></td>
+<td style="text-align: left;">Multiple independent cores, 1 thread/core</td>
+<td style="text-align: left;">Core 2 Duo, Core 2 Quad</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Multi-core, with SMT</strong></td>
+<td style="text-align: left;">Multiple cores, each running multiple threads</td>
+<td style="text-align: left;">Intel Core i7 / Xeon, AMD Zen</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ul>
+<li><strong>Intel Hyper-Threading:</strong> Intel’s proprietary branding for SMT (typically 2, 4, or 8 simultaneous threads per physical core).</li>
+<li><strong>Dual-Core SMT:</strong> 2 physical cores <span class="math inline">\(\times\)</span> 2 threads/core = <strong>4 concurrent threads</strong>.</li>
+</ul>
+</section>
+<section id="memory-hierarchy-in-multi-core-systems" class="slide level2">
+<h2>Memory Hierarchy in Multi-Core Systems</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="smt-only-systems">SMT-Only Systems</h3>
+<ul>
+<li>All threads share the entire cache hierarchy (L1, L2) and main memory.</li>
+<li>High cache contention among active threads.</li>
+</ul>
+<h3 id="multi-core-cmp-systems">Multi-Core (CMP) Systems</h3>
+<ul>
+<li><strong>L1 Caches:</strong> Typically <strong>private</strong> to each core for ultra-fast, single-cycle access.</li>
+<li><strong>L2 Caches:</strong>
+<ul>
+<li><strong>Shared L2:</strong> Facilitates inter-core communication and dynamic capacity allocation.</li>
+<li><strong>Private L2:</strong> Maximizes isolation and reduces cross-core cache interference.</li>
+</ul></li>
+<li><strong>Main Memory:</strong> Always <strong>shared</strong> across all cores.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="common-architectural-layouts">Common Architectural Layouts</h3>
+<ul>
+<li><strong>Private L1 + Shared L2:</strong>
+<ul>
+<li>Dual-Core Intel Xeon (“Fish” machines).</li>
+</ul></li>
+<li><strong>Private L1 + Private L2:</strong>
+<ul>
+<li>AMD Opteron, AMD Athlon 64 X2, Intel Pentium D.</li>
+</ul></li>
+<li><strong>Private L1 + Private L2 + Shared L3:</strong>
+<ul>
+<li>Intel Itanium 2, modern Core i7/i9, AMD Ryzen/EPYC.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="trade-offs-private-vs.-shared-caches" class="slide level2">
+<h2>Trade-offs: Private vs.&nbsp;Shared Caches</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="advantages-of-private-caches">Advantages of Private Caches</h3>
+<ul>
+<li><strong>Locality &amp; Latency:</strong>
+<ul>
+<li>Positioned directly adjacent to the core; shorter wire delays and lower access latency.</li>
+</ul></li>
+<li><strong>Contention Elimination:</strong>
+<ul>
+<li>Accesses from other cores do not create bandwidth bottlenecks or bank conflicts.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="advantages-of-shared-caches">Advantages of Shared Caches</h3>
+<ul>
+<li><strong>Inter-Thread Sharing:</strong>
+<ul>
+<li>Threads running on different cores can share read-only data without duplication.</li>
+</ul></li>
+<li><strong>Dynamic Capacity Utilization:</strong>
+<ul>
+<li>If a single high-performance thread is active, it can utilize the entire shared cache capacity.</li>
+</ul></li>
+</ul>
+</div></div>
+<p><br></p>
+<blockquote>
+<p><strong>The Resulting Challenge:</strong> When multiple cores maintain <strong>private caches</strong> containing copies of shared memory addresses, we face the <strong>Cache Coherence Problem</strong>.</p>
+</blockquote>
+</section>
+<section id="the-cache-coherence-problem-scenario" class="slide level2">
+<h2>The Cache Coherence Problem: Scenario</h2>
+<p>Let variable <code>x</code> initially reside in Main Memory with value <code>15213</code>:</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    autonumber
+    participant C1 as Core 1 (Private Cache)
+    participant C2 as Core 2 (Private Cache)
+    participant MM as Main Memory (x = 15213)
+
+    C1-&gt;&gt;MM: Read x
+    Note over C1: Cache 1: x = 15213
+    C2-&gt;&gt;MM: Read x
+    Note over C2: Cache 2: x = 15213
+    
+    rect rgb(255, 230, 230)
+    C1-&gt;&gt;C1: Write x = 21660
+    C1-&gt;&gt;MM: Write-Through: x = 21660
+    Note over C1: Cache 1: x = 21660 (Updated)
+    Note over MM: Memory: x = 21660
+    end
+
+    rect rgb(255, 200, 200)
+    C2-&gt;&gt;C2: Read x
+    Note over C2: Stale Read! Cache 2 still has x = 15213!
+    end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cache-coherence-invalidation-protocol-with-snooping" class="slide level2">
+<h2>Cache Coherence: Invalidation Protocol with Snooping</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Snooping Mechanism:</strong>
+<ul>
+<li>All cores continuously “snoop” (monitor) the shared <strong>inter-core bus</strong> for memory transactions.</li>
+</ul></li>
+<li><strong>Invalidation Principle:</strong>
+<ul>
+<li>When Core 1 writes to <code>x</code>, it broadcasts an <strong>Invalidation Request</strong> across the bus.</li>
+<li>All other cores seeing the request invalidate their local copy (<span class="math inline">\(x = \text{INVALID}\)</span>).</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="resolving-cache-misses">Resolving Cache Misses</h3>
+<ul>
+<li>When Core 2 subsequent reads <code>x</code>:
+<ol type="1">
+<li>Detects a local <strong>Cache Miss</strong> (entry is marked Invalid).</li>
+<li>Issues a read request across the inter-core bus.</li>
+<li>Fetches the updated value (<span class="math inline">\(x = 21660\)</span>) from Memory / Core 1 cache.</li>
+</ol></li>
+<li><strong>Result:</strong> Monolithic memory consistency is preserved!</li>
+</ul>
+</div></div>
+</section>
+<section id="invalidation-vs.-update-protocols" class="slide level2">
+<h2>Invalidation vs.&nbsp;Update Protocols</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="invalidation-protocol-standard">Invalidation Protocol (Standard)</h3>
+<ul>
+<li>Core writes <span class="math inline">\(\rightarrow\)</span> Broadcasts invalidation signal.</li>
+<li>Other copies become <strong>Invalid</strong>.</li>
+<li><strong>Efficiency:</strong> Multiple repeated writes to the same cache line only generate <strong>one invalidation</strong> on the first write.</li>
+<li><strong>Generates significantly less bus traffic!</strong></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="update-protocol-alternative">Update Protocol (Alternative)</h3>
+<ul>
+<li>Core writes <span class="math inline">\(\rightarrow\)</span> Broadcasts new data value over the bus.</li>
+<li>All other caches update their local value.</li>
+<li><strong>Drawback:</strong> Every single write broadcasts new data, saturating inter-core bus bandwidth.</li>
+</ul>
+</div></div>
+<p><br></p>
+<ul>
+<li><strong>Standard Coherence State Machines:</strong>
+<ul>
+<li><strong>MSI Protocol:</strong> <strong>M</strong>odified, <strong>S</strong>hared, <strong>I</strong>nvalid.</li>
+<li><strong>MESI Protocol:</strong> <strong>M</strong>odified, <strong>E</strong>xclusive, <strong>S</strong>hared, <strong>I</strong>nvalid (avoids bus signals for private writes).</li>
+</ul></li>
+</ul>
+</section>
+<section id="programming-multi-core-thread-safety" class="slide level2">
+<h2>Programming Multi-Core &amp; Thread Safety</h2>
+<ul>
+<li><strong>Parallel Workload Distribution:</strong>
+<ul>
+<li>Programmers must divide work using <strong>threads or processes</strong> and write parallel algorithms.</li>
+</ul></li>
+<li><strong>Thread Safety &amp; Race Conditions:</strong>
+<ul>
+<li>Preemptive context switching can occur at <strong>any time</strong>.</li>
+<li>Multi-core hardware introduces <strong>true simultaneous concurrency</strong>, exposing race conditions much faster than uniprocessors.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href=""></a><span class="dt">int</span> counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="dt">void</span> thread1<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href=""></a>    <span class="dt">int</span> temp1 <span class="op">=</span> counter<span class="op">;</span>    <span class="co">// Read</span></span>
+<span id="cb1-5"><a href=""></a>    counter <span class="op">=</span> temp1 <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>    <span class="co">// Write</span></span>
+<span id="cb1-6"><a href=""></a><span class="op">}</span></span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a><span class="dt">void</span> thread2<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href=""></a>    <span class="dt">int</span> temp2 <span class="op">=</span> counter<span class="op">;</span>    <span class="co">// Read</span></span>
+<span id="cb1-10"><a href=""></a>    counter <span class="op">=</span> temp2 <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>    <span class="co">// Write</span></span>
+<span id="cb1-11"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>If interleaved without synchronization: both read <code>0</code>, both write <code>1</code> <span class="math inline">\(\rightarrow\)</span> final <code>counter = 1</code> (Lost Update!).</li>
+<li><strong>Synchronization primitives (mutexes, semaphores, atomics) are mandatory!</strong></li>
+</ul>
+</section>
+<section id="processor-affinity-soft-vs.-hard-affinity" class="slide level2">
+<h2>Processor Affinity: Soft vs.&nbsp;Hard Affinity</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="process-migration-overhead">Process Migration Overhead</h3>
+<ul>
+<li>When an OS migrates a thread to another core:
+<ul>
+<li>CPU execution pipeline must be drained/restarted.</li>
+<li>Warm cache lines on the previous core are invalidated / missed on the new core.</li>
+</ul></li>
+<li><strong>Soft Affinity:</strong>
+<ul>
+<li>The OS scheduler natural bias to keep a thread running on the same core to preserve cache locality.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="hard-affinity">Hard Affinity</h3>
+<ul>
+<li>The programmer explicitly prescribes the set of cores a thread is allowed to run on.</li>
+<li><strong>Affinity Mask:</strong> A bit vector where each bit corresponds to a logical CPU core.</li>
+<li><strong>When to Use Hard Affinity:</strong>
+<ul>
+<li><strong>Shared Data Structures:</strong> Pin communicating threads to the same core/socket to maximize shared cache hits.</li>
+<li><strong>Real-Time Threads:</strong> Pin dedicated tasks (e.g., robot controllers) to a dedicated core to eliminate context switch jitter.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="affinity-masks-linux-scheduler-api" class="slide level2">
+<h2>Affinity Masks &amp; Linux Scheduler API</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="affinity-mask-bit-vectors">Affinity Mask Bit Vectors</h3>
+<ul>
+<li><strong>4-Core System without SMT:</strong> <span class="math display">\[\text{Mask: } [1, 1, 0, 1] \rightarrow \text{Allowed on Cores 0, 2, 3 (Disallowed on Core 1)}\]</span></li>
+<li><strong>4-Core System with 2-way SMT (8 Hyper-Threads):</strong>
+<ul>
+<li>Separate bits represent each simultaneous thread slot per core.</li>
+<li>Mask <code>0x0F</code> restricts thread to Core 0 and Core 1.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="linux-posix-api-sched.h">Linux POSIX API (<code>&lt;sched.h&gt;</code>)</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href=""></a><span class="pp">#include </span><span class="im">&lt;sched.h&gt;</span></span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a><span class="co">// Retrieve CPU affinity mask</span></span>
+<span id="cb2-4"><a href=""></a><span class="dt">int</span> sched_getaffinity<span class="op">(</span>pid_t pid<span class="op">,</span> </span>
+<span id="cb2-5"><a href=""></a>    <span class="dt">unsigned</span> <span class="dt">int</span> len<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="op">*</span>mask<span class="op">);</span></span>
+<span id="cb2-6"><a href=""></a></span>
+<span id="cb2-7"><a href=""></a><span class="co">// Set CPU affinity mask</span></span>
+<span id="cb2-8"><a href=""></a><span class="dt">int</span> sched_setaffinity<span class="op">(</span>pid_t pid<span class="op">,</span> </span>
+<span id="cb2-9"><a href=""></a>    <span class="dt">unsigned</span> <span class="dt">int</span> len<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="op">*</span>mask<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="command-line-utility">Command-Line Utility</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href=""></a><span class="co"># Query affinity mask of process 3935</span></span>
+<span id="cb3-2"><a href=""></a><span class="ex">taskset</span> <span class="at">-p</span> 3935</span>
+<span id="cb3-3"><a href=""></a><span class="co"># Output: pid 3935's current affinity mask: f</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="operating-system-view-licensing-models" class="slide level2">
+<h2>Operating System View &amp; Licensing Models</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="os-monitoring-tools">OS Monitoring Tools</h3>
+<ul>
+<li><strong>Windows Task Manager / Linux <code>htop</code>:</strong>
+<ul>
+<li>Displays independent real-time CPU utilization graphs for each logical core / hyper-thread.</li>
+</ul></li>
+<li><strong>Workload Balancing:</strong>
+<ul>
+<li>Default affinity mask is all <code>1</code>s (run on any core); the kernel dynamically balances skewed loads.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="software-licensing-challenges">Software Licensing Challenges</h3>
+<ul>
+<li><strong>Licensing Controversy:</strong>
+<ul>
+<li>Should enterprise software vendors charge licenses <strong>per core</strong> or <strong>per chip (socket)</strong>?</li>
+</ul></li>
+<li><strong>Industry Resolution:</strong>
+<ul>
+<li>Major OS vendors (Microsoft Windows Server, Red Hat Enterprise Linux, SUSE) transitioned to per-socket or tiered per-core licensing structures.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="summary-key-takeaways" class="slide level2">
+<h2>Summary &amp; Key Takeaways</h2>
+<ol type="1">
+<li><strong>The Multi-Core Revolution:</strong> Driven by the physical limits of clock frequency scaling, heat dissipation, and wire delays in wide superscalars.</li>
+<li><strong>CMP vs.&nbsp;SMT:</strong>
+<ul>
+<li><strong>CMP (Multi-Core):</strong> Replicates physical cores to deliver true hardware parallelism for Thread-Level Parallelism (TLP).</li>
+<li><strong>SMT (Hyper-Threading):</strong> Shares single-core execution units to fill pipeline stalls during memory latencies.</li>
+</ul></li>
+<li><strong>Memory &amp; Coherence:</strong>
+<ul>
+<li>Private L1 caches require hardware-enforced <strong>Invalidation Protocols with Snooping</strong> (MESI) to guarantee cache coherence.</li>
+</ul></li>
+<li><strong>Software Implications:</strong>
+<ul>
+<li>Concurrency requires explicit synchronization, thread safety, and intelligent core affinity management to maximize cache locality and throughput.</li>
+</ul></li>
+</ol>
+</section>
+<section id="references-recommended-reading" class="slide level2">
+<h2>References &amp; Recommended Reading</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="seminal-research-papers">Seminal Research Papers</h3>
+<ul>
+<li><strong>The Case for a Single-Chip Multiprocessor (1996):</strong>
+<ul>
+<li>K. Olukotun, B. A. Nayfeh, L. Hammond, K. Wilson, K. Chang. <em>Proc. ASPLOS-VII</em>, pp.&nbsp;2–11, 1996.</li>
+<li><em>Introduced the foundational argument for CMP over wide superscalar ILP architectures.</em></li>
+</ul></li>
+<li><strong>A Single-Chip Multiprocessor (1997):</strong>
+<ul>
+<li>L. Hammond, B. A. Nayfeh, K. Olukotun. <em>IEEE Computer</em>, 30(9): 79–85, 1997.</li>
+<li><em>Comprehensive exploration of on-chip multiprocessors, cache hierarchies, and interconnects.</em></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="multithreading-course-texts">Multithreading &amp; Course Texts</h3>
+<ul>
+<li><strong>Chip Multithreading: Opportunities and Challenges (2005):</strong>
+<ul>
+<li>L. Spracklen and S. G. Abraham. <em>Proc. HPCA-11</em>, pp.&nbsp;248–252, 2005.</li>
+<li><em>Design space and throughput tradeoffs in massive Chip Multithreading (CMT / Sun Niagara).</em></li>
+</ul></li>
+<li><strong>Multi-Core Architectures Technical Notes (2007):</strong>
+<ul>
+<li>Jernej Barbic. <em>15-213: Introduction to Computer Systems</em>, Carnegie Mellon University (CMU), 2007.</li>
+<li><em>Foundational lecture notes on hardware SMT vs.&nbsp;CMP and OS affinity masks.</em></li>
+</ul></li>
+</ul>
+</div></div>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="logo.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>CS F422: Parallel Computing • BITS Pilani, Hyderabad Campus</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lecture_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lecture_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lecture_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lecture_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

@@ -1,0 +1,35 @@
+/*-- scss:defaults --*/
+$body-bg: #ffffff;
+$text-color: #333333;
+$heading-color: #003366; /* BITS Navy Blue */
+$link-color: #003366;
+$selection-bg: #ffcc00; /* BITS Gold */
+
+/*-- scss:rules --*/
+.reveal .slide-logo {
+  max-width: 150px;
+  max-height: 150px;
+}
+.title-slide {
+  background-color: #003366 !important;
+}
+.title-slide h1 {
+  color: #ffcc00 !important;
+  font-weight: bold;
+}
+.title-slide h2, .title-slide h3, .title-slide p, .title-slide .quarto-title-author-name {
+  color: #ffffff !important;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  color: #003366;
+  font-weight: 600;
+}
+.reveal blockquote {
+  border-left: 4px solid #ffcc00;
+  color: #555555;
+  background: #f9f9f9;
+  padding: 10px 20px;
+}
+.reveal .footer {
+  color: #003366;
+}

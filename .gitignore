@@ -1,0 +1,8 @@
+# Ignore local task lists and temporary artifacts
+.system_generated/
+task.md
+implementation_plan.md
+walkthrough.md
+# Ignore OS-generated files
+Thumbs.db
+.DS_Store

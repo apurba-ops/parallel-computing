@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS F422 / U422: Parallel Computing | BITS Pilani</title>
+    <meta name="description" content="Course portal for CS F422/U422: Parallel Computing at BITS Pilani. Instructor: Dr. Apurba Das. Covers multicore architectures, OpenMP, MPI, and GPU CUDA programming.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bits-navy-dark: #07172c;
+            --bits-navy: #003366;
+            --bits-navy-light: #164e87;
+            --bits-gold: #e5a93c;
+            --bits-gold-light: #fff3d6;
+            --bits-crimson: #d71920;
+            --bits-crimson-light: #fdedee;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-subtle: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --border-highlight: #cbd5e1;
+            --accent-glow: rgba(0, 51, 102, 0.08);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+            line-height: 1.25;
+        }
+
+        code, .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        a {
+            color: var(--bits-navy);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* Top Bar & Navigation */
+        header.site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .header-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border-color);
+        }
+
+        .brand-text-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-course-code {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--bits-navy-dark);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .brand-course-code .badge-inst {
+            background: var(--bits-crimson-light);
+            color: var(--bits-crimson);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .brand-dept {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        nav.nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+        }
+
+        nav.nav-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 0.35rem 0.2rem;
+            position: relative;
+        }
+
+        nav.nav-links a:hover, nav.nav-links a.active {
+            color: var(--bits-navy);
+        }
+
+        nav.nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--bits-navy);
+            border-radius: 2px;
+        }
+
+        .btn-header-cta {
+            background: var(--bits-navy);
+            color: #ffffff !important;
+            padding: 0.5rem 1.1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 51, 102, 0.2);
+        }
+
+        .btn-header-cta:hover {
+            background: var(--bits-navy-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #07172c 0%, #003366 65%, #0d4680 100%);
+            color: #ffffff;
+            padding: 4.5rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 30%, rgba(229, 169, 60, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(215, 25, 32, 0.12) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.35fr 0.95fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-pill {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hero-pill.gold {
+            background: rgba(229, 169, 60, 0.2);
+            border-color: rgba(229, 169, 60, 0.45);
+            color: #ffd978;
+        }
+
+        .hero-title {
+            font-size: 3.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.85rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title span.highlight {
+            color: var(--bits-gold);
+            display: inline-block;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 1.8rem;
+            font-weight: 300;
+            max-width: 620px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--bits-gold);
+            color: #07172c;
+            padding: 0.85rem 1.6rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            box-shadow: 0 4px 14px rgba(229, 169, 60, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #f5b746;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(229, 169, 60, 0.45);
+            color: #07172c;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 0.85rem 1.4rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Instructor / Info Card */
+        .hero-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .instructor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bits-gold) 0%, var(--bits-crimson) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .instructor-meta h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .instructor-meta p {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+        }
+
+        .course-quick-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .quick-item {
+            background: rgba(0, 0, 0, 0.18);
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .quick-item .q-label {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-item .q-val {
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Layout Container */
+        .main-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem;
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header-left {
+            max-width: 700px;
+        }
+
+        .section-eyebrow {
+            color: var(--bits-crimson);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: inline-block;
+            margin-bottom: 0.35rem;
+        }
+
+        .section-title {
+            font-size: 2.1rem;
+            color: var(--bits-navy-dark);
+            letter-spacing: -0.01em;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.4rem;
+        }
+
+        /* Featured Lecture 3 Spotlight Card */
+        .featured-lecture-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #cbd5e1;
+            border-left: 6px solid var(--bits-navy);
+            border-radius: var(--radius-lg);
+            padding: 2.25rem;
+            margin-bottom: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .featured-lecture-card:hover {
+            border-color: var(--bits-navy-light);
+            box-shadow: 0 16px 36px -6px rgba(0, 51, 102, 0.15);
+        }
+
+        .featured-badge-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .active-lecture-tag {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .active-lecture-tag .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #0284c7;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(2, 132, 199, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+        }
+
+        .lecture-date-tag {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .featured-title-wrap {
+            margin-bottom: 1rem;
+        }
+
+        .featured-lecture-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--bits-crimson);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .featured-lecture-title {
+            font-size: 1.85rem;
+            color: var(--bits-navy-dark);
+            font-weight: 800;
+        }
+
+        .featured-description {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 1.5rem;
+            background: #ffffff;
+            padding: 1.1rem 1.4rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .topic-tags-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.6rem;
+        }
+
+        .topic-tag {
+            background: var(--bg-card-subtle);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.7rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .featured-btn-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-launch-slides {
+            background: linear-gradient(135deg, var(--bits-navy) 0%, #164e87 100%);
+            color: #ffffff !important;
+            padding: 0.85rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            box-shadow: 0 4px 14px rgba(0, 51, 102, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-launch-slides:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 51, 102, 0.35);
+            background: linear-gradient(135deg, #07172c 0%, var(--bits-navy) 100%);
+        }
+
+        .btn-preview-link {
+            background: #ffffff;
+            color: var(--bits-navy);
+            border: 1px solid var(--border-highlight);
+            padding: 0.85rem 1.4rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-preview-link:hover {
+            background: var(--bg-card-subtle);
+            border-color: var(--bits-navy);
+        }
+
+        /* Pillars Grid */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: #cbd5e1;
+        }
+
+        .pillar-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--bits-gold-light);
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .pillar-icon.navy {
+            background: #e0f2fe;
+            color: var(--bits-navy);
+        }
+
+        .pillar-icon.crimson {
+            background: var(--bits-crimson-light);
+            color: var(--bits-crimson);
+        }
+
+        .pillar-icon.green {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pillar-title {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: var(--bits-navy-dark);
+        }
+
+        .pillar-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Schedule & Lectures Section */
+        .schedule-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-filter {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.45rem 0.9rem;
+            border-radius: var(--radius-full);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-filter:hover, .btn-filter.active {
+            background: var(--bits-navy);
+            color: #ffffff;
+            border-color: var(--bits-navy);
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.3rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+            background: var(--bg-card);
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--bits-navy);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Lecture Table & List */
+        .lectures-table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3.5rem;
+        }
+
+        .lecture-row {
+            display: grid;
+            grid-template-columns: 85px 1.4fr 1.6fr 140px 140px;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .lecture-row:last-child {
+            border-bottom: none;
+        }
+
+        .lecture-row:hover {
+            background: #f8fafc;
+        }
+
+        .lecture-row.highlighted {
+            background: #f0f7ff;
+            border-left: 4px solid var(--bits-navy);
+        }
+
+        .row-header {
+            background: #f1f5f9;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 0.85rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .lecture-id-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--bits-navy);
+            background: #e2e8f0;
+            padding: 0.25rem 0.55rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            display: inline-block;
+        }
+
+        .lecture-row.highlighted .lecture-id-badge {
+            background: var(--bits-navy);
+            color: #ffffff;
+        }
+
+        .lecture-topic-col h4 {
+            font-size: 0.98rem;
+            color: var(--bits-navy-dark);
+            margin-bottom: 0.15rem;
+        }
+
+        .lecture-topic-col .module-name {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+
+        .lecture-desc-col {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .lecture-date-col {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .lecture-action-col {
+            text-align: right;
+        }
+
+        .btn-table-action {
+            background: var(--bits-navy);
+            color: #ffffff !important;
+            padding: 0.45rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+
+        .btn-table-action:hover {
+            background: var(--bits-navy-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-table-disabled {
+            background: #f1f5f9;
+            color: #94a3b8;
+            padding: 0.45rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            cursor: not-allowed;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Modules / Syllabus Overview Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .module-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .module-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: #cbd5e1;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bits-navy);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .module-title {
+            font-size: 1.15rem;
+            color: var(--bits-navy-dark);
+        }
+
+        .module-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .module-list li {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+
+        .module-list li i {
+            color: var(--bits-navy-light);
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            flex-shrink: 0;
+        }
+
+        /* Instructor & Course Info Dual Section */
+        .info-dual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .instructor-profile-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .instructor-avatar-lg {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bits-navy) 0%, #164e87 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+            flex-shrink: 0;
+        }
+
+        .instructor-contact-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .instructor-contact-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .instructor-contact-list li i {
+            color: var(--bits-navy);
+            width: 18px;
+            text-align: center;
+        }
+
+        /* Grading Table */
+        .grading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.85rem;
+            margin-top: 1.2rem;
+        }
+
+        .grading-item {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-color);
+            padding: 0.9rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .grading-weight {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--bits-crimson);
+            font-family: 'Outfit', sans-serif;
+            display: block;
+        }
+
+        .grading-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-top: 0.2rem;
+            display: block;
+        }
+
+        /* References / Textbooks */
+        .reference-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .reference-item {
+            padding: 0.85rem 1rem;
+            background: var(--bg-card-subtle);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--bits-gold);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .reference-item strong {
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer.site-footer {
+            background: var(--bits-navy-dark);
+            color: #94a3b8;
+            padding: 3.5rem 1.5rem 2.5rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .footer-logo {
+            height: 38px;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+        }
+
+        .footer-text {
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--bits-gold);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .hero-title {
+                font-size: 2.6rem;
+            }
+            .info-dual-grid {
+                grid-template-columns: 1fr;
+            }
+            .lecture-row {
+                grid-template-columns: 75px 1.3fr 1.3fr 110px;
+            }
+            .lecture-row .lecture-date-col {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav.nav-links {
+                display: none;
+            }
+            .hero-title {
+                font-size: 2.15rem;
+            }
+            .lecture-row {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                padding: 1.2rem;
+            }
+            .row-header {
+                display: none;
+            }
+            .lecture-action-col {
+                text-align: left;
+                margin-top: 0.4rem;
+            }
+            .course-quick-grid {
+                grid-template-columns: 1fr;
+            }
+            .featured-lecture-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-link">
+                <img src="logo.svg" alt="BITS Pilani Logo" class="brand-logo">
+                <div class="brand-divider"></div>
+                <div class="brand-text-wrapper">
+                    <div class="brand-course-code">
+                        CS F422 / U422 <span class="badge-inst">BITS Pilani &bull; Hyderabad</span>
+                    </div>
+                    <span class="brand-dept">Parallel Computing &bull; First Semester 2026&ndash;27</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#overview" class="active">Overview</a>
+                <a href="#handout">Course Handout</a>
+                <a href="#schedule">Schedule &amp; Slides</a>
+                <a href="#modules">Syllabus</a>
+                <a href="#instructor">Course Info</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="overview">
+        <div class="hero-pattern"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge-row">
+                    <span class="hero-pill gold"><i class="fa-solid fa-graduation-cap"></i> CS F422 / U422</span>
+                    <span class="hero-pill"><i class="fa-solid fa-building-columns"></i> BITS Pilani</span>
+                    <span class="hero-pill"><i class="fa-solid fa-microchip"></i> High-Performance Computing</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Parallel <span class="highlight">Computing</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Master modern parallel architectures, hardware multithreading, cache coherence, shared-memory programming (OpenMP), distributed-memory systems (MPI), and GPU accelerator programming with CUDA.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#schedule" class="btn-primary">
+                        <i class="fa-solid fa-list-check"></i> Course Schedule &amp; Lectures
+                    </a>
+                    <a href="#handout" class="btn-secondary">
+                        <i class="fa-solid fa-file-pdf"></i> Course Handout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Info Card -->
+            <div class="hero-card">
+                <div class="hero-card-header">
+                    <div class="instructor-avatar">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-meta">
+                        <h3>Dr. Apurba Das</h3>
+                        <p>Course Instructor &bull; CSIS Department</p>
+                    </div>
+                </div>
+
+                <div class="course-quick-grid">
+                    <div class="quick-item">
+                        <span class="q-label">Course Code</span>
+                        <span class="q-val">CS F422 / U422</span>
+                    </div>
+                    <div class="quick-item">
+                        <span class="q-label">Credits &amp; Structure</span>
+                        <span class="q-val">3-0-3 (Lectures + Labs)</span>
+                    </div>
+                    <div class="quick-item">
+                        <span class="q-label">Current Status</span>
+                        <span class="q-val">6 Lectures Completed</span>
+                    </div>
+                    <div class="quick-item">
+                        <span class="q-label">Today's Class</span>
+                        <span class="q-val" style="color: #ffd978;">Lecture 7 (Active Online)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+
+        <!-- Featured Lecture 7 Spotlight Card -->
+        <section id="featured">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow"><i class="fa-solid fa-bolt"></i> Today's Lecture &bull; Active Slide Deck</span>
+                    <h2 class="section-title">Lecture 7: GPU Architecture &amp; CUDA</h2>
+                    <p class="section-desc">Access the interactive reveal.js slide deck for today's lecture.</p>
+                </div>
+            </div>
+
+            <div class="featured-lecture-card">
+                <div class="featured-badge-bar">
+                    <span class="active-lecture-tag">
+                        <span class="pulse-dot"></span> Today's Class &bull; August 14, 2026
+                    </span>
+                    <span class="lecture-date-tag">
+                        <i class="fa-regular fa-calendar"></i> August 14, 2026 &bull; Lecture 7
+                    </span>
+                </div>
+
+                <div class="featured-title-wrap">
+                    <span class="featured-lecture-num">LECTURE 7</span>
+                    <h3 class="featured-lecture-title">GPU Architecture &amp; CUDA</h3>
+                </div>
+
+                <div class="featured-description">
+                    <i class="fa-solid fa-quote-left" style="color: var(--bits-navy); opacity: 0.35; margin-right: 0.5rem;"></i>
+                    An introduction to the history of GPUs and GPGPU, graphics pipelines, CUDA thread/block SPMD execution models, memory hierarchies (Private, Shared, Global), and Streaming Multiprocessors (SM) warp scheduling.
+                </div>
+
+                <div class="topic-tags-row">
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> GPU History &amp; GPGPU</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> CUDA Execution Model</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Memory Hierarchy &amp; Shared Mem</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Streaming Multiprocessors (SM)</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Warp Scheduling &amp; Latency Hiding</span>
+                </div>
+
+                <div class="featured-btn-row">
+                    <a href="lecture-7.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 7)
+                    </a>
+                    <a href="#schedule" class="btn-preview-link">
+                        <i class="fa-solid fa-calendar-days"></i> View Full Lecture Roadmap
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Pillars Grid -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow">Core Competencies</span>
+                    <h2 class="section-title">What You Will Learn</h2>
+                    <p class="section-desc">Key pillars of the parallel computing curriculum at BITS Pilani.</p>
+                </div>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon navy">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="pillar-title">Parallel Architectures</h3>
+                    <p class="pillar-desc">
+                        Multicore CMPs, cache coherence (MSI/MESI), memory consistency models, interconnect topologies, and hardware multithreading (SMT/CMT).
+                    </p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon crimson">
+                        <i class="fa-solid fa-code-fork"></i>
+                    </div>
+                    <h3 class="pillar-title">Shared Memory (OpenMP)</h3>
+                    <p class="pillar-desc">
+                        POSIX threads, OpenMP compiler directives, tasking, work-sharing loops, synchronizations, critical sections, and lock-free programming.
+                    </p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="pillar-title">Distributed Memory (MPI)</h3>
+                    <p class="pillar-desc">
+                        Message Passing Interface (MPI), point-to-point non-blocking semantics, collective communications, parallel I/O, and hybrid OpenMP+MPI clusters.
+                    </p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon green">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h3 class="pillar-title">GPU Acceleration (CUDA)</h3>
+                    <p class="pillar-desc">
+                        SIMT execution, warp scheduling, shared memory banking, coalesced memory transactions, and high-performance kernel design in CUDA C/C++.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lecture Roadmap & Schedule Section -->
+        <section id="schedule">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow">Curriculum Roadmap</span>
+                    <h2 class="section-title">Lectures &amp; Slide Materials</h2>
+                    <p class="section-desc">Access slide decks, lecture notes, and topical coverage across all semesters.</p>
+                </div>
+            </div>
+
+            <div class="schedule-controls">
+                <div class="filter-buttons">
+                    <button class="btn-filter active" onclick="filterLectures('all')">All Lectures (1&ndash;7)</button>
+                    <button class="btn-filter" onclick="filterLectures('arch')">Architecture &amp; Foundations</button>
+                </div>
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="lectureSearch" placeholder="Search topics or keywords..." onkeyup="searchLectures()">
+                </div>
+            </div>
+
+            <div class="lectures-table-card">
+                <div class="lecture-row row-header">
+                    <div>Lecture</div>
+                    <div>Topic &amp; Module</div>
+                    <div>Key Coverage &amp; Concepts</div>
+                    <div>Date</div>
+                    <div style="text-align: right;">Deck / Notes</div>
+                </div>
+
+                <!-- Lecture 1 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 1</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Introduction to Parallel Computing</h4>
+                        <span class="module-name">Module 1 &bull; Foundations &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Course motivations &amp; perspective, supercomputing history from Cray-1 to Exascale/AI (Frontier, AIRAWAT, PARAM Rudra), modern hardware landscape, and evaluation scheme.
+                    </div>
+                    <div class="lecture-date-col">Aug 04, 2026</div>
+                    <div class="lecture-action-col">
+                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                    </div>
+                </div>
+
+                <!-- Lecture 2 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 2</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Parallelism &amp; Computer Architecture</h4>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Von Neumann bottleneck with 128 cores scaling, Moore's Law vs clock speed plateau, Dennard scaling breakdown, Power Wall &amp; thermal runaway, and the rise of multicore chips.
+                    </div>
+                    <div class="lecture-date-col">Aug 06, 2026</div>
+                    <div class="lecture-action-col">
+                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                    </div>
+                </div>
+
+                <!-- Lecture 3 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 3</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Multicore, Multithreading &amp; Granularity</h4>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Processes vs threads, OS dispatcher &amp; context switching, hyperthreading core states, loop dependencies &amp; parallel tree reductions, and work vs interaction granularity.
+                    </div>
+                    <div class="lecture-date-col">Aug 07, 2026</div>
+                    <div class="lecture-action-col">
+                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                    </div>
+                </div>
+
+                <!-- Lecture 4 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 4</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Taxonomy &amp; Forms of Parallelism</h4>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Flynn's taxonomy (SISD, SIMD, MISD, MIMD), physical memory (UMA/SMP vs NUMA), Shared Address (OpenMP) vs Message Passing (MPI), and Data vs Control parallelism.
+                    </div>
+                    <div class="lecture-date-col">Aug 11, 2026</div>
+                    <div class="lecture-action-col">
+                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                    </div>
+                </div>
+
+                <!-- Lecture 5-6 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 5-6</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Multi-Core Architectures</h4>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Single-core to CMP transition, hardware multithreading (SMT/Fine-Grained/Coarse-Grained), and cache hierarchy bottlenecks in modern parallel systems.
+                    </div>
+                    <div class="lecture-date-col">Aug 13, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-5-6.html" class="btn-table-action" title="View Lecture 5-6 Slides" target="_blank" style="padding: 4px 10px; font-size: 0.8rem; background: #ecfdf5; color: #15803d; border: 1px solid #a7f3d0; border-radius: var(--radius-sm);">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lecture 7 (TODAY / ACTIVE SLIDE DECK) -->
+                <div class="lecture-row highlighted" data-category="arch">
+                    <div><span class="lecture-id-badge" style="background: var(--bits-navy); color: #ffffff;">Lec 7</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>GPU Architecture &amp; CUDA</h4>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture (Today's Class)</span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        <strong>Today's Topic:</strong> Introduction to GPU throughput designs, graphics pipelines, CUDA thread hierarchy, memory models, and SM warp execution/latency hiding.
+                    </div>
+                    <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Aug 14, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-7.html" class="btn-table-action" title="View Lecture 7 Slides">
+                            <i class="fa-solid fa-play"></i> Open Slides
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Syllabus / Modules Section -->
+        <section id="modules" style="margin-bottom: 4rem;">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow">Structure</span>
+                    <h2 class="section-title">Course Modules Breakdown</h2>
+                    <p class="section-desc">Comprehensive curriculum organized into foundational and advanced units.</p>
+                </div>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-num">1</div>
+                        <h3 class="module-title">Architectures &amp; Multicore</h3>
+                    </div>
+                    <ul class="module-list">
+                        <li><i class="fa-solid fa-angle-right"></i> Single-core Von Neumann limitations &amp; ILP bottlenecks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Chip Multi-Processing (CMP) &amp; Simultaneous Multithreading (SMT)</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Memory wall, cache hierarchies (L1, L2, L3) &amp; interconnection networks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Cache coherence (MSI/MESI/MOESI) &amp; memory consistency</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-num">2</div>
+                        <h3 class="module-title">Shared Memory (OpenMP)</h3>
+                    </div>
+                    <ul class="module-list">
+                        <li><i class="fa-solid fa-angle-right"></i> POSIX threads (pthreads), race conditions &amp; mutual exclusion</li>
+                        <li><i class="fa-solid fa-angle-right"></i> OpenMP directives: parallel for, sections, reduction &amp; tasking</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Synchronization primitives: barriers, critical, atomic, and locks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> False sharing diagnostics &amp; NUMA memory affinity</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-num">3</div>
+                        <h3 class="module-title">Distributed Memory (MPI)</h3>
+                    </div>
+                    <ul class="module-list">
+                        <li><i class="fa-solid fa-angle-right"></i> Message passing paradigm &amp; MPI execution model</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Point-to-point communication: blocking vs non-blocking</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Collectives: Bcast, Scatter, Gather, Allreduce, Scan</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Parallel matrix algorithms (Cannon's, Fox's) &amp; scaling laws</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-num">4</div>
+                        <h3 class="module-title">Accelerators &amp; CUDA</h3>
+                    </div>
+                    <ul class="module-list">
+                        <li><i class="fa-solid fa-angle-right"></i> GPU hardware architecture &amp; SIMT execution paradigm</li>
+                        <li><i class="fa-solid fa-angle-right"></i> CUDA programming: thread blocks, grids, and kernel launch</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Memory optimization: global, shared, constant &amp; texture caches</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Asynchronous transfers, CUDA streams, &amp; profiling with Nsight</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Handout Placeholder Section -->
+        <section id="handout" style="margin-bottom: 4rem;">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow"><i class="fa-solid fa-file-lines"></i> Official Documentation</span>
+                    <h2 class="section-title">Course Handout &amp; Policies</h2>
+                    <p class="section-desc">The official course document detailing evaluation breakdown, textbook references, and learning objectives.</p>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-card); border: 2px dashed #cbd5e1; border-radius: var(--radius-lg); padding: 2.25rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; box-shadow: var(--shadow-sm); position: relative; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; max-width: 750px;">
+                    <div style="width: 58px; height: 58px; border-radius: var(--radius-md); background: var(--bits-crimson-light); color: var(--bits-crimson); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                            <h3 style="font-size: 1.35rem; color: var(--bits-navy-dark);">CS F422 / U422 Course Handout</h3>
+                            <span style="background: #ecfdf5; color: #15803d; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #a7f3d0;">
+                                <i class="fa-solid fa-circle-check"></i> Available
+                            </span>
+                        </div>
+                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.75rem;">
+                            The comprehensive course handout for First Semester 2026&ndash;27 containing the detailed lecture-by-lecture syllabus, evaluation breakdown, reference materials, and academic policies.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 1.2rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
+                            <span><i class="fa-solid fa-user-tie" style="color: var(--bits-navy);"></i> Instructor: Dr. Apurba Das</span>
+                            <span><i class="fa-solid fa-layer-group" style="color: var(--bits-navy);"></i> 4 Modules &bull; 40 Lectures</span>
+                            <span><i class="fa-solid fa-file-arrow-down" style="color: var(--bits-navy);"></i> Format: PDF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                    <!-- COURSE HANDOUT PDF LINK -->
+                    <a href="handout.pdf" class="btn-preview-link" style="opacity: 0.9; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer;" target="_blank">
+                        <i class="fa-solid fa-download"></i> Download Handout (PDF)
+                    </a>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-style: italic;">
+                        <i class="fa-solid fa-circle-info"></i> Size: ~205 KB &bull; PDF Document
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Info & Instructor Section -->
+        <section id="instructor">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-eyebrow">Faculty &amp; Administration</span>
+                    <h2 class="section-title">Course Information &amp; Logistics</h2>
+                    <p class="section-desc">Contact information, evaluation structure, and prescribed literature.</p>
+                </div>
+            </div>
+
+            <div class="info-dual-grid">
+                <!-- Instructor Details -->
+                <div class="info-box">
+                    <div class="instructor-profile-wrap">
+                        <div class="instructor-avatar-lg">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.35rem; color: var(--bits-navy-dark);">Dr. Apurba Das</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Instructor-in-Charge</p>
+                            <p style="color: var(--bits-navy); font-size: 0.85rem; font-weight: 600;">Department of Computer Science &amp; Information Systems</p>
+                        </div>
+                    </div>
+
+                    <ul class="instructor-contact-list">
+                        <li><i class="fa-solid fa-building"></i> <strong>Institution:</strong> BITS Pilani, Hyderabad Campus</li>
+                        <li><i class="fa-solid fa-envelope"></i> <strong>Course Inquiries:</strong> Contact via Institute CMS Portal</li>
+                        <li><i class="fa-solid fa-clock"></i> <strong>Consultation Hours:</strong> Tuesdays &amp; Thursdays, 4:00 PM &ndash; 5:30 PM</li>
+                        <li><i class="fa-solid fa-chalkboard-user"></i> <strong>Classroom:</strong> I222</li>
+                    </ul>
+
+                    <h4 style="margin-top: 1.5rem; font-size: 1.05rem; color: var(--bits-navy-dark);">Evaluation &amp; Grading Components</h4>
+                    <div class="grading-grid">
+                        <div class="grading-item">
+                            <span class="grading-weight">30%</span>
+                            <span class="grading-label">Mid-Sem Exam<br><small style="color:#64748b;">(Closed Book, 1.5h)</small></span>
+                        </div>
+                        <div class="grading-item">
+                            <span class="grading-weight">10%</span>
+                            <span class="grading-label">Continuous Assessments<br><small style="color:#64748b;">(Open Book)</small></span>
+                        </div>
+                        <div class="grading-item">
+                            <span class="grading-weight">20%</span>
+                            <span class="grading-label">Term Project<br><small style="color:#64748b;">(Open Book)</small></span>
+                        </div>
+                        <div class="grading-item">
+                            <span class="grading-weight">40%</span>
+                            <span class="grading-label">Comprehensive Exam<br><small style="color:#64748b;">(Closed Book, 3h)</small></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Textbooks & References -->
+                <div class="info-box">
+                    <h3 style="font-size: 1.25rem; color: var(--bits-navy-dark); margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-book-bookmark" style="color: var(--bits-gold); margin-right: 0.4rem;"></i> Prescribed Textbooks &amp; References
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Standard literature and technical reference manuals for CS F422/U422:
+                    </p>
+
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <strong>Ananth Grama, Anshul Gupta, George Karypis, Vipin Kumar.</strong><br>
+                            <em>Introduction to Parallel Computing</em>, 2nd Edition, Pearson Education / Addison-Wesley.
+                        </div>
+
+                        <div class="reference-item">
+                            <strong>John L. Hennessy and David A. Patterson.</strong><br>
+                            <em>Computer Architecture: A Quantitative Approach</em>, 6th Edition, Morgan Kaufmann.
+                        </div>
+
+                        <div class="reference-item">
+                            <strong>Michael J. Quinn.</strong><br>
+                            <em>Parallel Programming in C with MPI and OpenMP</em>, McGraw-Hill Education.
+                        </div>
+
+                        <div class="reference-item">
+                            <strong>David B. Kirk and Wen-mei W. Hwu.</strong><br>
+                            <em>Programming Massively Parallel Processors: A Hands-on Approach</em>, 4th Edition, Morgan Kaufmann.
+                        </div>
+
+                        <div class="reference-item" style="border-left-color: var(--bits-navy);">
+                            <strong>K. Olukotun, B. A. Nayfeh, L. Hammond, et al. (Stanford University).</strong><br>
+                            <em>"The Case for a Single-Chip Multiprocessor"</em>, ACM ASPLOS-VII (1996) &bull; <em>"A Single-Chip Multiprocessor"</em>, IEEE Computer (1997).
+                        </div>
+
+                        <div class="reference-item" style="border-left-color: var(--bits-crimson);">
+                            <strong>L. Spracklen and S. G. Abraham (Sun Microsystems).</strong><br>
+                            <em>"Chip Multithreading: Opportunities and Challenges"</em>, IEEE HPCA-11 (2005) &bull; UltraSPARC T1 Niagara.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="logo.svg" alt="BITS Pilani" class="footer-logo">
+                <div class="footer-text">
+                    <strong style="color: #ffffff;">CS F422 / U422 &bull; Parallel Computing</strong><br>
+                    Department of Computer Science &amp; Information Systems, BITS Pilani, Hyderabad Campus.<br>
+                    Instructor: <strong>Dr. Apurba Das</strong>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <a href="#overview">Back to Top <i class="fa-solid fa-arrow-up"></i></a>
+                <a href="#schedule">Schedule &amp; Slides</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Search & Filtering Script -->
+    <script>
+        function filterLectures(category) {
+            const buttons = document.querySelectorAll('.btn-filter');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const rows = document.querySelectorAll('.lectures-table-card .lecture-row:not(.row-header)');
+            rows.forEach(row => {
+                if (category === 'all' || row.getAttribute('data-category') === category) {
+                    row.style.display = 'grid';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function searchLectures() {
+            const query = document.getElementById('lectureSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.lectures-table-card .lecture-row:not(.row-header)');
+            
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = 'grid';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
