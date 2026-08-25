@@ -851,6 +851,19 @@
             transform: translateY(-1px);
         }
 
+        .btn-table-action.secondary {
+            background: #eff6ff;
+            color: #1d4ed8 !important;
+            border: 1px solid #bfdbfe;
+            padding: 4px 10px;
+        }
+
+        .btn-table-action.secondary:hover {
+            background: #dbeafe;
+            color: #1e40af !important;
+            border-color: #93c5fd;
+        }
+
         .btn-table-disabled {
             background: #f1f5f9;
             color: #94a3b8;
@@ -1148,6 +1161,89 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Resources Carousel Styles */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+        }
+        .carousel-viewport {
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+        .carousel-slide {
+            flex: 0 0 calc((100% - 3rem) / 3);
+            max-width: calc((100% - 3rem) / 3);
+            box-sizing: border-box;
+            background: var(--bg-card);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .carousel-slide:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+        .carousel-dot.active {
+            background: var(--bits-navy);
+            width: 24px;
+            border-radius: var(--radius-full);
+        }
+        .btn-carousel-nav:hover {
+            background: var(--bits-navy) !important;
+            color: #ffffff !important;
+            border-color: var(--bits-navy) !important;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-carousel-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f1f5f9 !important;
+            color: #94a3b8 !important;
+            border-color: #e2e8f0 !important;
+        }
+        
+        @media (max-width: 1024px) {
+            .carousel-slide {
+                flex: 0 0 calc((100% - 1.5rem) / 2);
+                max-width: calc((100% - 1.5rem) / 2);
+            }
+        }
+        @media (max-width: 640px) {
+            .carousel-slide {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1171,6 +1267,7 @@
                 <a href="#handout">Course Handout</a>
                 <a href="#schedule">Schedule &amp; Slides</a>
                 <a href="#modules">Syllabus</a>
+                <a href="#resources">Blogs &amp; Research</a>
                 <a href="#instructor">Course Info</a>
             </nav>
         </div>
@@ -1228,11 +1325,11 @@
                     </div>
                     <div class="quick-item">
                         <span class="q-label">Current Status</span>
-                        <span class="q-val">6 Lectures Completed</span>
+                        <span class="q-val">9 Lectures Completed</span>
                     </div>
                     <div class="quick-item">
                         <span class="q-label">Today's Class</span>
-                        <span class="q-val" style="color: #ffd978;">Lecture 7 (Active Online)</span>
+                        <span class="q-val" style="color: #ffd978;">Lecture 10 (Active Online)</span>
                     </div>
                 </div>
             </div>
@@ -1242,12 +1339,12 @@
     <!-- Main Content Area -->
     <main class="main-container">
 
-        <!-- Featured Lecture 7 Spotlight Card -->
+        <!-- Featured Lecture 10 Spotlight Card -->
         <section id="featured">
             <div class="section-header">
                 <div class="section-header-left">
                     <span class="section-eyebrow"><i class="fa-solid fa-bolt"></i> Today's Lecture &bull; Active Slide Deck</span>
-                    <h2 class="section-title">Lecture 7: GPU Architecture &amp; CUDA</h2>
+                    <h2 class="section-title">Lecture 10: Physical Organizations &amp; Interconnection Topologies</h2>
                     <p class="section-desc">Access the interactive reveal.js slide deck for today's lecture.</p>
                 </div>
             </div>
@@ -1255,34 +1352,34 @@
             <div class="featured-lecture-card">
                 <div class="featured-badge-bar">
                     <span class="active-lecture-tag">
-                        <span class="pulse-dot"></span> Today's Class &bull; August 14, 2026
+                        <span class="pulse-dot"></span> Today's Class &bull; August 17, 2026
                     </span>
                     <span class="lecture-date-tag">
-                        <i class="fa-regular fa-calendar"></i> August 14, 2026 &bull; Lecture 7
+                        <i class="fa-regular fa-calendar"></i> August 17, 2026 &bull; Lecture 10
                     </span>
                 </div>
 
                 <div class="featured-title-wrap">
-                    <span class="featured-lecture-num">LECTURE 7</span>
-                    <h3 class="featured-lecture-title">GPU Architecture &amp; CUDA</h3>
+                    <span class="featured-lecture-num">LECTURE 10</span>
+                    <h3 class="featured-lecture-title">Physical Organizations &amp; Interconnection Topologies</h3>
                 </div>
 
                 <div class="featured-description">
                     <i class="fa-solid fa-quote-left" style="color: var(--bits-navy); opacity: 0.35; margin-right: 0.5rem;"></i>
-                    An introduction to the history of GPUs and GPGPU, graphics pipelines, CUDA thread/block SPMD execution models, memory hierarchies (Private, Shared, Global), and Streaming Multiprocessors (SM) warp scheduling.
+                    Local/modular memory models, PRAM model (EREW, CREW, CRCW), switch complexity, direct/indirect networks (Bus, Mesh, Hypercube, Multistage Networks, Fat Trees), and bus cache optimizations.
                 </div>
 
                 <div class="topic-tags-row">
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> GPU History &amp; GPGPU</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> CUDA Execution Model</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Memory Hierarchy &amp; Shared Mem</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Streaming Multiprocessors (SM)</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Warp Scheduling &amp; Latency Hiding</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Local vs. Modular Memory</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> PRAM (EREW/CREW/CRCW)</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Interconnection Topologies</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Switch Complexity</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Multistage &amp; Fat Trees</span>
                 </div>
 
                 <div class="featured-btn-row">
-                    <a href="lecture-7-8-9.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 7-8-9)
+                    <a href="lecture-10.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 10)
                     </a>
                     <a href="#schedule" class="btn-preview-link">
                         <i class="fa-solid fa-calendar-days"></i> View Full Lecture Roadmap
@@ -1451,7 +1548,7 @@
                     </div>
                     <div class="lecture-date-col">Aug 13, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-5-6.html" class="btn-table-action" title="View Lecture 5-6 Slides" target="_blank" style="padding: 4px 10px; font-size: 0.8rem; background: #ecfdf5; color: #15803d; border: 1px solid #a7f3d0; border-radius: var(--radius-sm);">
+                        <a href="lecture-5-6.html" class="btn-table-action secondary" title="View Lecture 5-6 Slides" target="_blank">
                             <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
@@ -1471,6 +1568,24 @@
                     <div class="lecture-action-col">
                         <a href="lecture-7-8-9.html" class="btn-table-action" title="View Lecture 7-8-9 Slides">
                             <i class="fa-solid fa-play"></i> Open Slides
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lecture 10 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 10</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Physical Organizations &amp; Interconnection Topologies</h4>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture</span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Local/modular memory models, PRAM model (EREW, CREW, CRCW), switch complexity, direct/indirect networks (Bus, Mesh, Hypercube, Multistage Networks, Fat Trees), and bus cache optimizations.
+                    </div>
+                    <div class="lecture-date-col">Aug 17, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-10.html" class="btn-table-action secondary" title="View Lecture 10 Slides" target="_blank">
+                            <i class="fa-solid fa-play"></i> Slides
                         </a>
                     </div>
                 </div>
@@ -1588,6 +1703,228 @@
             </div>
         </section>
 
+        <!-- Supplementary Blogs & Research Section -->
+        <section id="resources" style="margin-bottom: 4rem;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem;">
+                <div class="section-header-left">
+                    <span class="section-eyebrow"><i class="fa-solid fa-square-rss"></i> Supplementary Reading</span>
+                    <h2 class="section-title">Blogs &amp; Seminal Research</h2>
+                    <p class="section-desc">Curated articles, technical blogs, and seminal research papers to deepen your knowledge of concurrency and hardware architectures.</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-shrink: 0;">
+                    <button class="btn-carousel-nav prev" onclick="slidePrev()" aria-label="Previous Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="btn-carousel-nav next" onclick="slideNext()" aria-label="Next Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="carousel-wrapper">
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Card 1: Herb Sutter's Free Lunch -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: var(--bits-crimson-light); color: var(--bits-crimson); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fee2e2;">Technical Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2005</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    The Free Lunch Is Over: A Fundamental Turn Toward Concurrency
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Herb Sutter's landmark article detailing the physical limits of processor frequency scaling and why software developers must transition to concurrency.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Herb Sutter</span>
+                                <a href="https://herbsutter.com/welcome-to-the-jungle/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Stanford Single-Chip Multiprocessor -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 1996</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    The Case for a Single-Chip Multiprocessor
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Stanford University's seminal paper proposing on-chip multiprocessors (CMPs) as a more effective alternative to complex single-core instruction-level parallelism (ILP).
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Kunle Olukotun et al.</span>
+                                <a href="https://dl.acm.org/doi/10.1145/237090.237140" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: NVIDIA CUDA Intro -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #e0f2fe; color: #0369a1; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bae6fd;">Technical Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2020</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    An Introduction to CUDA and GPU Architectures
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    NVIDIA's detailed developer blog explaining GPU computing concepts, thread execution configurations, warps, and CUDA memory models.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">NVIDIA Dev Blog</span>
+                                <a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Amdahl's Law Multicore -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2008</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    Amdahl's Law in the Multicore Era
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A seminal IEEE Computer paper analyzing Gustafson's and Amdahl's laws for multicore designs, showing why hardware builders must combine small and large cores.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Hill &amp; Marty</span>
+                                <a href="https://www.cs.wisc.edu/multifacet/papers/ieeecomputer08_amdahl_multicore.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 5: Parallel Scan/Prefix Sum -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #f0fdf4; color: #166534; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bbf7d0;">Algorithms</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2007</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    Parallel Prefix Sum (Scan) with CUDA
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Mark Harris's guide on executing work-efficient parallel scan algorithms, which serve as foundational building blocks for parallel sorting and searching.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Mark Harris (NVIDIA)</span>
+                                <a href="https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Book <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: Google MapReduce -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2004</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    MapReduce: Simplified Data Processing
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Google's breakthrough systems paper outlining the MapReduce model for processing massive datasets in parallel across distributed server arrays.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Dean &amp; Ghemawat</span>
+                                <a href="https://dl.acm.org/doi/10.1145/1327452.1327492" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 7: LMAX Disruptor -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #faf5ff; color: #6b21a8; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #f3e8ff;">High Scalability</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2011</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    The LMAX Disruptor: Concurrency Framework
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A detailed design blog and paper outlining a lock-free queue concurrency framework that achieves millions of transactions per second on single commodity servers.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">LMAX Architecture</span>
+                                <a href="https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 8: Compute Shaders / Game Engines -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #fff1f2; color: #9f1239; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #ffe4e6;">Graphics Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2021</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    Modern Game Engines Rely on Compute Shaders
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A deep dive into how engines like Unreal and Frostbite bypass traditional graphics pipelines for arbitrary parallel GPU simulations like particle systems and culling.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Sebastian Aaltonen</span>
+                                <a href="https://gpuopen.com/learn/optimizing-gpu-occupancy-resource-usage-large-thread-groups/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 9: Amazon Dynamo DB -->
+                        <div class="carousel-slide">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2007</span>
+                                </div>
+                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                    Dynamo: Amazon's Highly Available Key-Value Store
+                                </h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Amazon's foundational paper on Dynamo, explaining decentralized, highly scalable distributed storage models utilizing consistent hashing and vector clocks.
+                                </p>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Amazon Web Services</span>
+                                <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Carousel Indicators/Dots -->
+                <div class="carousel-indicators" id="carouselDots"></div>
+            </div>
+        </section>
+
         <!-- Course Info & Instructor Section -->
         <section id="instructor">
             <div class="section-header">
@@ -1701,6 +2038,7 @@
             <div class="footer-links">
                 <a href="#overview">Back to Top <i class="fa-solid fa-arrow-up"></i></a>
                 <a href="#schedule">Schedule &amp; Slides</a>
+                <a href="#resources">Blogs &amp; Research</a>
             </div>
         </div>
     </footer>
@@ -1735,6 +2073,84 @@
                 }
             });
         }
+
+        /* Blogs & Research Carousel Slider Script */
+        let currentSlideIndex = 0;
+        
+        function getSlidesPerView() {
+            if (window.innerWidth <= 640) return 1;
+            if (window.innerWidth <= 1024) return 2;
+            return 3;
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (!track || slides.length === 0) return;
+            
+            const totalSlides = slides.length;
+            const slidesPerView = getSlidesPerView();
+            const maxIndex = totalSlides - slidesPerView;
+            
+            if (currentSlideIndex > maxIndex) currentSlideIndex = maxIndex;
+            if (currentSlideIndex < 0) currentSlideIndex = 0;
+            
+            // Calculate translate offset
+            const slideWidth = slides[0].offsetWidth;
+            const gap = 24; // 1.5rem gap = 24px
+            const offset = currentSlideIndex * (slideWidth + gap);
+            track.style.transform = `translateX(-${offset}px)`;
+            
+            // Enable/disable navigation buttons
+            const prevBtn = document.querySelector('.btn-carousel-nav.prev');
+            const nextBtn = document.querySelector('.btn-carousel-nav.next');
+            if (prevBtn) prevBtn.disabled = (currentSlideIndex === 0);
+            if (nextBtn) nextBtn.disabled = (currentSlideIndex === maxIndex);
+            
+            // Update indicator dots
+            updateDots(totalSlides, slidesPerView);
+        }
+        
+        function updateDots(total, perView) {
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            
+            const totalDots = total - perView + 1;
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === currentSlideIndex ? ' active' : '');
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.onclick = () => { currentSlideIndex = i; updateCarousel(); };
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        function slidePrev() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateCarousel();
+            }
+        }
+        
+        function slideNext() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const slidesPerView = getSlidesPerView();
+            if (currentSlideIndex < slides.length - slidesPerView) {
+                currentSlideIndex++;
+                updateCarousel();
+            }
+        }
+        
+        // Listen to window resizing to dynamically recalculate views
+        window.addEventListener('resize', () => {
+            requestAnimationFrame(updateCarousel);
+        });
+        
+        // Initialize once DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(updateCarousel, 150);
+        });
     </script>
 </body>
 </html>
