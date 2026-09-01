@@ -7,8 +7,17 @@ $selection-bg: #ffcc00; /* BITS Gold */
 
 /*-- scss:rules --*/
 .reveal .slide-logo {
-  max-width: 150px;
-  max-height: 150px;
+  display: block !important;
+  position: fixed !important;
+  top: 18px !important;
+  right: 28px !important;
+  bottom: auto !important;
+  max-height: 52px !important;
+  height: 52px !important;
+  width: auto !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
+  opacity: 0.95;
 }
 .title-slide {
   background-color: #003366 !important;

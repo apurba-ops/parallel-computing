@@ -2859,8 +2859,17 @@ ul.task-list li input[type="checkbox"] {
 }
 
 .reveal .slide-logo {
-  display: none !important;
-  /* Hide default logo */
+  display: block !important;
+  position: fixed !important;
+  top: 18px !important;
+  right: 28px !important;
+  bottom: auto !important;
+  max-height: 52px !important;
+  height: 52px !important;
+  width: auto !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
+  opacity: 0.95;
 }
 
 /* Main Title Slide Custom Design */
