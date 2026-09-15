@@ -25,7 +25,7 @@ format:
 - **Multistage Omega Network**: 
   - Perfect Shuffle interconnection & bitwise left-rotation permutation.
   - $2 \times 2$ switch configurations (Pass-through and Cross-over).
-  - Distributed self-routing using destination bit tags.
+  - Distributed self-routing using destination bit tags & inductive proof of correctness.
   - Sizing, cost ($O(p \log p)$), and internal **link blocking**.
 - **Evaluating Interconnection Networks**:
   - Quantitative metrics: **Diameter**, **Arc/Node Connectivity**, **Bisection Width**, and **Cost**.
@@ -34,7 +34,9 @@ format:
 - **The PRAM Algorithmic Paradigm**:
   - Two-phase execution model and explicit concurrency.
 - **Fundamental PRAM Algorithms**:
-  - **Parallel Prefix Sum (Scan)**: Stride doubling in $O(\log n)$ time on CREW PRAM.
+  - **Parallel Prefix Sum (Scan)**:
+    - **Hillis-Steele Algorithm**: Stride doubling in $O(\log n)$ time, but $O(n \log n)$ work (**work-inefficient**).
+    - **Upsweep-Downsweep Algorithm (Blelloch Scan)**: Tree-based reduction & distribution achieving optimal $O(n)$ work and $O(\log n)$ span.
   - **Pointer Jumping**: Logarithmic traversal of pointer-based data structures.
   - **Parallel List Ranking**: Wyllie's algorithm for linked list distance ranking.
 
@@ -177,15 +179,15 @@ An $8 \times 8$ Omega network consists of $\log_2 8 = 3$ stages. Each stage cont
 
 ## Distributed Self-Routing in Omega Networks
 
-Omega networks support **decentralized self-routing** (Delta routing) based entirely on the binary bits of the **destination address** $D = (d_{k-1} d_{k-2} \dots d_0)_2$:
+Omega networks support **decentralized self-routing** (Delta routing) based entirely on the binary bits of the **destination address** $D = (d_{n-1} d_{n-2} \dots d_0)_2$ (where $n = \log_2 p$):
 
 :::: {.columns}
 
 ::: {.column width="60%"}
 ### Self-Routing Algorithm
-- Let a packet be routed to destination $D = (d_{k-1} \dots d_0)_2$.
-- At **Stage $s$** (where $s = 0, 1, \dots, k-1$):
-  - The switch inspects bit $d_{k-1-s}$ (the $(s+1)$-th bit of the destination tag).
+- Let a packet be routed to destination $D = (d_{n-1} \dots d_0)_2$.
+- At **Stage $s$** (where $s = 0, 1, \dots, n-1$):
+  - The switch inspects bit $d_{n-1-s}$ (the $(s+1)$-th bit of the destination tag).
   - If **bit $= 0$**: The switch routes the packet out of its **Upper output port (0)**.
   - If **bit $= 1$**: The switch routes the packet out of its **Lower output port (1)**.
 - **No Central Controller**: Each switch makes local routing decisions instantly in hardware, achieving $O(\log p)$ path setup time!
@@ -201,6 +203,49 @@ Omega networks support **decentralized self-routing** (Delta routing) based enti
 :::
 
 ::::
+
+---
+
+## Proof of Correctness: Omega Self-Routing
+
+<div style="font-size: 0.80em; line-height: 1.3;">
+
+**Claim**: A packet from source $S = s_{n-1} \dots s_0$ to destination $D = d_{n-1} \dots d_0$ correctly reaches $D$ through $n = \log_2 p$ stages.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Induction Invariant (Claim)
+After $k$ stages ($0 \le k \le n$), the packet is on wire:
+$$\boxed{s_{n-k-1} s_{n-k-2} \cdots s_0 \; d_{n-1} d_{n-2} \cdots d_{n-k}}$$
+*Exactly $k$ source bits have disappeared and $k$ destination bits have been inserted.*
+
+### Base Case ($k = 0$)
+- Before entering the network, packet is at source:
+  $$s_{n-1} s_{n-2} \cdots s_0$$
+- Agrees with formula (0 destination bits inserted). Holds for $k=0$.
+
+### Induction Hypothesis
+- Assume claim holds after $k$ stages ($0 \le k < n$):
+  $$\text{Wire}(k) = s_{n-k-1} \cdots s_0 \; d_{n-1} \cdots d_{n-k}$$
+:::
+
+::: {.column width="50%"}
+### Inductive Step ($k \to k + 1$)
+- At stage $k + 1$, switch inspects next destination bit $d_{n-k-1}$.
+- Switch routes to upper/lower output according to this bit ($b = d_{n-k-1}$).
+- One Omega stage (shuffle + switch) performs:
+  $$x_{n-1} x_{n-2} \cdots x_0 \longrightarrow x_{n-2} \cdots x_0 \, b$$
+- The label becomes:
+  $$s_{n-k-2} \cdots s_0 \; d_{n-1} \cdots d_{n-k} \, d_{n-k-1}$$
+- Therefore, after $k + 1$ stages the packet is on wire:
+  $$\boxed{s_{n-k-2} \cdots s_0 \; d_{n-1} \cdots d_{n-k-1}}$$
+- Matches form for $k+1$! At $k = n$, wire is $d_{n-1} \dots d_0 = D$. $\blacksquare$
+:::
+
+::::
+
+</div>
 
 ---
 
@@ -413,6 +458,185 @@ for k from 0 to ceil(log2(n)) - 1:
 
 ---
 
+## Total Work of Hillis-Steele: Why is it Work-Inefficient?
+
+While the Hillis-Steele algorithm achieves an impressive parallel time (span) of **$O(\log n)$**, its total work is suboptimal compared to the sequential baseline.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Exact Work Derivation
+- At iteration $k$ (where $0 \le k < \log_2 n$), additions are performed for all indices $i$ from $2^k + 1$ up to $n$.
+- Number of operations in step $k$:
+  $$\text{Additions}_k = n - 2^k$$
+- Summing over all $\log_2 n$ steps:
+  $$\begin{aligned}
+  W(n) &= \sum_{k=0}^{\log_2 n - 1} (n - 2^k) \\
+  &= n \log_2 n - \sum_{k=0}^{\log_2 n - 1} 2^k \\
+  &= n \log_2 n - (2^{\log_2 n} - 1) \\
+  &= \mathbf{n \log_2 n - n + 1 = \Theta(n \log n)}
+  \end{aligned}$$
+:::
+
+::: {.column width="50%"}
+### Why Work Inefficiency Matters
+- **Sequential Baseline**: Requires only $n - 1 = \mathbf{\Theta(n)}$ additions.
+- **Work Ratio**: Hillis-Steele executes a factor of **$O(\log n)$ more operations** than the optimal sequential scan!
+- **Practical Implication (Brent's Theorem)**:
+  On $p$ physical processors, runtime is bounded by:
+  $$T_p \le \frac{W(n)}{p} + S(n) = O\left(\frac{n \log n}{p} + \log n\right)$$
+  - If $p < \log n$, $T_p > O(n)$, making it **slower than sequential**!
+  - Wastes energy and processor cycles on duplicate additions.
+
+> [!WARNING]
+> An algorithm is **work-efficient** only if $W(n) = O(W_{\text{seq}}(n)) = O(n)$. This motivates the **Upsweep-Downsweep (Blelloch)** scan!
+:::
+
+::::
+
+---
+
+## Work-Efficient Prefix Sum: Phase 1 — Upsweep
+
+The first phase constructs a balanced binary tree of partial sums bottom-up (reduction tree), precomputing subtree sums for reuse (Westrick, 2025; Blelloch, 1990).
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Algorithmic Mechanism
+- **Divide-and-Conquer**: Recursively split the sequence $s$ into two halves (`s[:half]` and `s[half:]`).
+- **Parallel Subtree Construction**: Recurse on left tree ($t_1$) and right tree ($t_2$) simultaneously in parallel.
+- **Node Synthesis**: An internal node caches the combined sum of both subtrees:
+  $$\text{sum}(t) = \text{sum}(t_1) + \text{sum}(t_2)$$
+- **Base Case**: A single element sequence becomes a leaf storing that value.
+
+> [!NOTE]
+> Caching intermediate sums at each tree node eliminates the need to re-sum elements during prefix distribution.
+:::
+
+::: {.column width="50%"}
+```python
+# Phase 1: Upsweep (Bottom-Up Tree Construction)
+def upsweep(s):
+    # Base case: single element becomes a leaf
+    if len(s) == 1:
+        return Leaf(s[0])
+    
+    half = len(s) // 2
+    # Recurse on left and right halves in parallel
+    t1, t2 = parallel(
+        upsweep(s[:half]),
+        upsweep(s[half:])
+    )
+    
+    # Cache sum(t1) + sum(t2) at internal node
+    return Node(sum_of(t1) + sum_of(t2), t1, t2)
+```
+:::
+
+::::
+
+---
+
+## Work-Efficient Prefix Sum: Phase 2 — Downsweep
+
+The second phase walks down the tree in parallel, distributing an incoming accumulator `acc` (initially `0` at the root) to compute all prefix sums.
+
+:::: {.columns}
+
+::: {.column width="48%"}
+### Propagation Rules
+- **Root**: Initialized with accumulator $\text{acc} = 0$.
+- **To Left Child**: Accumulator stays unchanged:
+  $$\text{acc}_{\text{left}} = \text{acc}$$
+  *(No elements preceding the left half need to be added).*
+- **To Right Child**: Add total sum of left subtree:
+  $$\text{acc}_{\text{right}} = \text{acc} + \text{sum}(t_1)$$
+  *(All elements in left subtree precede the right half).*
+- **Leaves**: Write `acc` directly as the exclusive prefix sum:
+  $$\text{output}[\text{offset}] = \text{acc}$$
+- **Total Sum**: Root sum is written at index $n$.
+:::
+
+::: {.column width="52%"}
+```python
+# Phase 2: Downsweep (Top-Down Accumulator Pass)
+def downsweep(t, acc, output, offset, n):
+    if is_leaf(t):
+        output[offset] = acc
+        return
+    
+    half = n // 2
+    # In parallel: left gets acc; right gets acc + sum(left)
+    parallel(
+        downsweep(t.left,  acc, 
+                  output, offset, half),
+        downsweep(t.right, acc + sum_of(t.left), 
+                  output, offset + half, n - half)
+    )
+
+def prefix_sums(s):
+    t = upsweep(s)
+    output = allocate_array(len(s) + 1)
+    downsweep(t, acc=0, output=output, offset=0, n=len(s))
+    output[len(s)] = sum_of(t)  # total sum at index n
+    return output
+```
+:::
+
+::::
+
+---
+
+## Upsweep-Downsweep: Work & Span Complexity Analysis
+
+By separating reduction from distribution across a balanced binary tree, both phases admit simple, symmetric recurrences.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Phase-by-Phase Recurrences
+- **Phase 1 (Upsweep)**:
+  $$W_{\text{up}}(n) = 2 W_{\text{up}}(n/2) + O(1) \implies \mathbf{O(n)}$$
+  $$S_{\text{up}}(n) = S_{\text{up}}(n/2) + O(1) \implies \mathbf{O(\log n)}$$
+- **Phase 2 (Downsweep)**:
+  $$W_{\text{down}}(n) = 2 W_{\text{down}}(n/2) + O(1) \implies \mathbf{O(n)}$$
+  $$S_{\text{down}}(n) = S_{\text{down}}(n/2) + O(1) \implies \mathbf{O(\log n)}$$
+
+### Overall Complexity
+$$W(n) = W_{\text{up}}(n) + W_{\text{down}}(n) = \mathbf{O(n)}$$
+$$S(n) = S_{\text{up}}(n) + S_{\text{down}}(n) = \mathbf{O(\log n)}$$
+:::
+
+::: {.column width="50%"}
+### Algorithmic Comparison
+
+| Algorithm | Total Work $W(n)$ | Span $S(n)$ | Work-Efficient? |
+|:---|:---:|:---:|:---:|
+| **Sequential** | $\Theta(n)$ | $\Theta(n)$ | Baseline |
+| **Hillis-Steele** | $\Theta(n \log n)$ | $\Theta(\log n)$ | **No** |
+| **Upsweep-Downsweep** | $\mathbf{\Theta(n)}$ | $\mathbf{\Theta(\log n)}$ | **Yes (Optimal)** |
+
+: Comparison of parallel prefix sum algorithms. {tbl-colwidths="[38,22,20,20]"}
+
+### Practical Impact (Brent's Theorem)
+$$T_p \le \frac{W(n)}{p} + S(n) = O\left(\frac{n}{p} + \log n\right)$$
+- Delivers **linear speedup** $T_p \approx \Theta(n/p)$ whenever $p \le O(n / \log n)$.
+- Never runs slower than sequential baseline, regardless of $p$!
+:::
+
+::::
+
+---
+
+## Upsweep-Downsweep Prefix Sum: Trace & Execution
+
+Below is the complete trace for input sequence $s = \langle 1, 2, 3, 4, 5, 6, 7, 8 \rangle$:
+
+![Two-phase Upsweep-Downsweep parallel prefix sum: Phase 1 builds intermediate subtree sums; Phase 2 distributes prefix accumulators down to leaves](extracted_images/lec11_upsweep_downsweep.png){width="84%" fig-align="center"}
+
+---
+
 ## The Pointer Jumping Technique
 
 **Pointer Jumping** (or *pointer doubling*) is a fundamental algorithmic technique on PRAM for linked lists and directed trees (Wyllie, 1979; JáJá, 1992).
@@ -534,7 +758,8 @@ Consider 6 elements stored at arbitrary indices ordered as: $\mathbf{3 \to 4 \to
   - Hypercubes achieve $O(\log p)$ diameter and $O(p)$ bisection width at $O(p \log p)$ link cost.
 - **PRAM Algorithms & Techniques**:
   - **PRAM Model**: Explicit, synchronization-free abstraction for discovering maximum concurrency.
-  - **Prefix Sum**: Computes all cumulative prefixes in $O(\log n)$ time using stride doubling.
+  - **Hillis-Steele Prefix Sum**: Stride doubling computes prefix sums in $O(\log n)$ span, but performs $W(n) = \Theta(n \log n)$ work (**work-inefficient**).
+  - **Upsweep-Downsweep Prefix Sum (Blelloch Scan)**: Two-phase tree algorithm (reduction up, accumulation down) achieving optimal $\mathbf{O(n)}$ **work** and $\mathbf{O(\log n)}$ **span** (**work-efficient**).
   - **Pointer Jumping**: Replaces $P[i]$ with $P[P[i]]$ to traverse linked lists and trees in $O(\log n)$ time, powering algorithms like **List Ranking**.
 
 ---
@@ -545,4 +770,8 @@ Consider 6 elements stored at arbitrary indices ordered as: $\mathbf{3 \to 4 \to
 2. **JáJá, J.** (1992). *An Introduction to Parallel Algorithms*. Addison-Wesley. Chapter 2: "PRAM Algorithms and Pointer Jumping".
 3. **Lawrie, D. H.** (1975). "Access and Alignment of Data in an Array Processor". *IEEE Transactions on Computers*, C-24(12), pp. 1145–1155. *(Original Omega Network paper)*.
 4. **Wyllie, J. C.** (1979). *The Complexity of Parallel Computations*. Ph.D. dissertation, Cornell University. *(Introduced Pointer Jumping & List Ranking)*.
-5. **Leighton, F. T.** (1992). *Introduction to Parallel Algorithms and Architectures: Arrays, Trees, Hypercubes*. Morgan Kaufmann.
+5. **Hillis, W. D., & Steele, G. L.** (1986). "Data Parallel Algorithms". *Communications of the ACM*, 29(12), pp. 1170–1184. *(Hillis-Steele prefix sum algorithm)*.
+6. **Blelloch, G. E.** (1990). "Prefix Sums and Their Applications". *Technical Report CMU-CS-90-190*, School of Computer Science, Carnegie Mellon University. *(Work-efficient upsweep-downsweep scan)*.
+7. **Westrick, S.** (2025). *Lecture 3 Notes: Sequences and Parallel Prefix Sums*. Computer Science Department, New York University. *(Upsweep-downsweep formulation and cost analysis)*.
+8. **Leighton, F. T.** (1992). *Introduction to Parallel Algorithms and Architectures: Arrays, Trees, Hypercubes*. Morgan Kaufmann.
+

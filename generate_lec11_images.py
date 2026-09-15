@@ -467,6 +467,205 @@ def create_list_ranking_diagram():
     img.save("extracted_images/lec11_list_ranking_diagram.png", dpi=(300, 300))
     print("Saved lec11_list_ranking_diagram.png")
 
+# 8. lec11_upsweep_downsweep.png
+def create_upsweep_downsweep_diagram():
+    W, H = 1200, 680
+    img = Image.new("RGB", (W, H), BG_COLOR)
+    draw = ImageDraw.Draw(img)
+    
+    font_title = get_font(18, bold=True)
+    font_sub = get_font(13, bold=False)
+    font_node = get_font(15, bold=True)
+    font_acc = get_font(13, bold=True)
+    font_leaf = get_font(14, bold=True)
+    font_rule = get_font(13, bold=True)
+    font_cite = get_font(11, bold=False)
+    
+    # Dividing line / panels
+    # Left Panel: Upsweep (X: 40 to 580)
+    # Right Panel: Downsweep (X: 620 to 1160)
+    
+    # ------------------ LEFT PANEL: UPSWEEP ------------------
+    draw.rectangle([30, 20, 580, 630], fill=(250, 252, 255), outline=(203, 213, 225), width=2)
+    draw.rectangle([30, 20, 580, 70], fill=NAVY, outline=NAVY)
+    draw.text((305, 45), "Phase 1: Upsweep (Reduction Tree)", fill=(255, 255, 255), font=font_title, anchor="mm")
+    
+    draw.text((305, 90), "Bottom-Up: Computes & stores subtree sums at each node", fill=TEXT_MUTED, font=font_sub, anchor="mm")
+    
+    # Tree coordinates for Upsweep (width = 500, centered at 305)
+    # Leaves: 8 leaves
+    leaf_y = 490
+    l1_y = 380
+    l2_y = 270
+    l3_y = 160
+    
+    leaf_xs = [85 + i * 62 for i in range(8)]
+    l1_xs = [(leaf_xs[2*i] + leaf_xs[2*i+1]) // 2 for i in range(4)]
+    l2_xs = [(l1_xs[2*i] + l1_xs[2*i+1]) // 2 for i in range(2)]
+    l3_x = (l2_xs[0] + l2_xs[1]) // 2
+    
+    input_vals = [1, 2, 3, 4, 5, 6, 7, 8]
+    l1_vals = [3, 7, 11, 15]
+    l2_vals = [10, 26]
+    l3_val = 36
+    
+    # Draw tree edges
+    for i in range(4):
+        draw.line([leaf_xs[2*i], leaf_y - 18, l1_xs[i], l1_y + 18], fill=LINE_COLOR, width=2)
+        draw.line([leaf_xs[2*i+1], leaf_y - 18, l1_xs[i], l1_y + 18], fill=LINE_COLOR, width=2)
+    for i in range(2):
+        draw.line([l1_xs[2*i], l1_y - 18, l2_xs[i], l2_y + 18], fill=LINE_COLOR, width=2)
+        draw.line([l1_xs[2*i+1], l1_y - 18, l2_xs[i], l2_y + 18], fill=LINE_COLOR, width=2)
+    draw.line([l2_xs[0], l2_y - 18, l3_x, l3_y + 18], fill=LINE_COLOR, width=2)
+    draw.line([l2_xs[1], l2_y - 18, l3_x, l3_y + 18], fill=LINE_COLOR, width=2)
+    
+    # Draw upward arrows on edges
+    def draw_up_arrow(x1, y1, x2, y2, color=HIGHLIGHT_BLUE):
+        mx = (x1 + x2) // 2
+        my = (y1 + y2) // 2
+        # small chevron pointing up
+        dx = x2 - x1
+        dy = y2 - y1
+        length = (dx*dx + dy*dy)**0.5
+        if length > 0:
+            ux, uy = dx/length, dy/length
+            draw.line([mx - ux*8 - uy*5, my - uy*8 + ux*5, mx + ux*6, my + uy*6], fill=color, width=2)
+            draw.line([mx - ux*8 + uy*5, my - uy*8 - ux*5, mx + ux*6, my + uy*6], fill=color, width=2)
+
+    for i in range(4):
+        draw_up_arrow(leaf_xs[2*i], leaf_y - 18, l1_xs[i], l1_y + 18)
+        draw_up_arrow(leaf_xs[2*i+1], leaf_y - 18, l1_xs[i], l1_y + 18)
+    for i in range(2):
+        draw_up_arrow(l1_xs[2*i], l1_y - 18, l2_xs[i], l2_y + 18)
+        draw_up_arrow(l1_xs[2*i+1], l1_y - 18, l2_xs[i], l2_y + 18)
+    draw_up_arrow(l2_xs[0], l2_y - 18, l3_x, l3_y + 18)
+    draw_up_arrow(l2_xs[1], l2_y - 18, l3_x, l3_y + 18)
+    
+    # Draw nodes
+    # Root
+    draw.ellipse([l3_x - 24, l3_y - 18, l3_x + 24, l3_y + 18], fill=(219, 234, 254), outline=NAVY, width=2)
+    draw.text((l3_x, l3_y), str(l3_val), fill=NAVY, font=font_node, anchor="mm")
+    
+    # L2 nodes
+    for i, x in enumerate(l2_xs):
+        draw.ellipse([x - 22, l2_y - 18, x + 22, l2_y + 18], fill=(238, 242, 255), outline=HIGHLIGHT_BLUE, width=2)
+        draw.text((x, l2_y), str(l2_vals[i]), fill=TEXT_DARK, font=font_node, anchor="mm")
+        
+    # L1 nodes
+    for i, x in enumerate(l1_xs):
+        draw.ellipse([x - 20, l1_y - 18, x + 20, l1_y + 18], fill=BOX_BG, outline=BOX_BORDER, width=2)
+        draw.text((x, l1_y), str(l1_vals[i]), fill=TEXT_DARK, font=font_node, anchor="mm")
+        
+    # Leaf nodes
+    for i, x in enumerate(leaf_xs):
+        draw.rectangle([x - 18, leaf_y - 16, x + 18, leaf_y + 16], fill=(241, 245, 249), outline=BOX_BORDER, width=2)
+        draw.text((x, leaf_y), str(input_vals[i]), fill=TEXT_DARK, font=font_leaf, anchor="mm")
+        
+    # Input label
+    draw.text((305, 545), "Input Sequence:  s = < 1, 2, 3, 4, 5, 6, 7, 8 >", fill=NAVY, font=font_rule, anchor="mm")
+    draw.text((305, 575), "Work: W_up(n) = 2W(n/2) + O(1) = O(n)", fill=TEXT_DARK, font=font_sub, anchor="mm")
+    draw.text((305, 600), "Span: S_up(n) = S(n/2) + O(1) = O(log n)", fill=TEXT_DARK, font=font_sub, anchor="mm")
+
+    # ------------------ RIGHT PANEL: DOWNSWEEP ------------------
+    draw.rectangle([620, 20, 1170, 630], fill=(255, 253, 250), outline=(254, 215, 170), width=2)
+    draw.rectangle([620, 20, 1170, 70], fill=CRIMSON, outline=CRIMSON)
+    draw.text((895, 45), "Phase 2: Downsweep (Prefix Distribution)", fill=(255, 255, 255), font=font_title, anchor="mm")
+    draw.text((895, 90), "Top-Down: Propagates accumulator [acc] down to leaves", fill=TEXT_MUTED, font=font_sub, anchor="mm")
+    
+    # Coordinates in right panel (shift by 590)
+    r_shift = 590
+    r_leaf_xs = [x + r_shift for x in leaf_xs]
+    r_l1_xs = [x + r_shift for x in l1_xs]
+    r_l2_xs = [x + r_shift for x in l2_xs]
+    r_l3_x = l3_x + r_shift
+    
+    # Downsweep edges
+    for i in range(4):
+        draw.line([r_l1_xs[i], l1_y + 18, r_leaf_xs[2*i], leaf_y - 18], fill=LINE_COLOR, width=2)
+        draw.line([r_l1_xs[i], l1_y + 18, r_leaf_xs[2*i+1], leaf_y - 18], fill=CRIMSON, width=2)
+    for i in range(2):
+        draw.line([r_l2_xs[i], l2_y + 18, r_l1_xs[2*i], l1_y - 18], fill=LINE_COLOR, width=2)
+        draw.line([r_l2_xs[i], l2_y + 18, r_l1_xs[2*i+1], l1_y - 18], fill=CRIMSON, width=2)
+    draw.line([r_l3_x, l3_y + 18, r_l2_xs[0], l2_y - 18], fill=LINE_COLOR, width=2)
+    draw.line([r_l3_x, l3_y + 18, r_l2_xs[1], l2_y - 18], fill=CRIMSON, width=2)
+    
+    # Helper to draw down arrow
+    def draw_down_arrow(x1, y1, x2, y2, color):
+        mx = (x1 + x2) // 2
+        my = (y1 + y2) // 2
+        dx = x2 - x1
+        dy = y2 - y1
+        length = (dx*dx + dy*dy)**0.5
+        if length > 0:
+            ux, uy = dx/length, dy/length
+            draw.line([mx - ux*6 - uy*5, my - uy*6 + ux*5, mx + ux*8, my + uy*8], fill=color, width=2)
+            draw.line([mx - ux*6 + uy*5, my - uy*6 - ux*5, mx + ux*8, my + uy*8], fill=color, width=2)
+
+    draw_down_arrow(r_l3_x, l3_y + 18, r_l2_xs[0], l2_y - 18, LINE_COLOR)
+    draw_down_arrow(r_l3_x, l3_y + 18, r_l2_xs[1], l2_y - 18, CRIMSON)
+    for i in range(2):
+        draw_down_arrow(r_l2_xs[i], l2_y + 18, r_l1_xs[2*i], l1_y - 18, LINE_COLOR)
+        draw_down_arrow(r_l2_xs[i], l2_y + 18, r_l1_xs[2*i+1], l1_y - 18, CRIMSON)
+    for i in range(4):
+        draw_down_arrow(r_l1_xs[i], l1_y + 18, r_leaf_xs[2*i], leaf_y - 18, LINE_COLOR)
+        draw_down_arrow(r_l1_xs[i], l1_y + 18, r_leaf_xs[2*i+1], leaf_y - 18, CRIMSON)
+
+    # Downsweep node rendering: Acc box in crimson/gold + Sum circle
+    def draw_down_node(x, y, acc_val, sum_val, is_root=False):
+        # Accumulator tag
+        acc_str = f"[{acc_val}]"
+        # Draw acc box
+        draw.rectangle([x - 36, y - 14, x - 4, y + 14], fill=(254, 242, 242), outline=CRIMSON, width=2)
+        draw.text((x - 20, y), str(acc_val), fill=CRIMSON, font=font_acc, anchor="mm")
+        # Draw node circle
+        draw.ellipse([x + 2, y - 16, x + 34, y + 16], fill=(248, 250, 252), outline=BOX_BORDER, width=2)
+        draw.text((x + 18, y), str(sum_val), fill=TEXT_DARK, font=font_node, anchor="mm")
+
+    # Root: Acc = 0, Sum = 36
+    draw_down_node(r_l3_x, l3_y, 0, 36, is_root=True)
+    
+    # L2:
+    # Left: acc=0, sum=10
+    draw_down_node(r_l2_xs[0], l2_y, 0, 10)
+    # Right: acc=0+10=10, sum=26
+    draw_down_node(r_l2_xs[1], l2_y, 10, 26)
+    
+    # L1:
+    # Left of L2[0]: acc=0, sum=3
+    draw_down_node(r_l1_xs[0], l1_y, 0, 3)
+    # Right of L2[0]: acc=0+3=3, sum=7
+    draw_down_node(r_l1_xs[1], l1_y, 3, 7)
+    # Left of L2[1]: acc=10, sum=11
+    draw_down_node(r_l1_xs[2], l1_y, 10, 11)
+    # Right of L2[1]: acc=10+11=21, sum=15
+    draw_down_node(r_l1_xs[3], l1_y, 21, 15)
+
+    # Leaves: output prefix values
+    # leaf acc values:
+    leaf_accs = [0, 1, 3, 6, 10, 15, 21, 28]
+    for i, x in enumerate(r_leaf_xs):
+        # leaf acc box
+        draw.rectangle([x - 20, leaf_y - 16, x + 20, leaf_y + 16], fill=(254, 242, 242), outline=CRIMSON, width=2)
+        draw.text((x, leaf_y), str(leaf_accs[i]), fill=CRIMSON, font=font_leaf, anchor="mm")
+        
+    # Final total sum element (at index n=8)
+    draw.rectangle([r_leaf_xs[7] + 46 - 20, leaf_y - 16, r_leaf_xs[7] + 46 + 20, leaf_y + 16], fill=(254, 243, 199), outline=GOLD, width=2)
+    draw.text((r_leaf_xs[7] + 46, leaf_y), "36", fill=(180, 83, 9), font=font_leaf, anchor="mm")
+    
+    # Downsweep rules banner
+    draw.rectangle([640, 525, 1150, 565], fill=(255, 247, 237), outline=GOLD, width=1)
+    draw.text((895, 537), "Left child inherits acc  |  Right child inherits acc + left.sum", fill=CRIMSON, font=font_rule, anchor="mm")
+    draw.text((895, 553), "Leaf receives exclusive prefix sum; root sum placed at end", fill=TEXT_DARK, font=font_cite, anchor="mm")
+
+    draw.text((895, 580), "Prefix Sum Output:  < 0, 1, 3, 6, 10, 15, 21, 28, 36 >", fill=CRIMSON, font=font_rule, anchor="mm")
+    draw.text((895, 608), "Work: W_down(n) = O(n)   |   Span: S_down(n) = O(log n)   |   Total Work = O(n)", fill=TEXT_DARK, font=font_sub, anchor="mm")
+
+    # Bottom citation
+    draw.text((600, 655), "Adapted from Sam Westrick, Lecture 3 Notes: Sequences & Parallel Prefix Sums, NYU (2025) / Guy E. Blelloch (1990)", fill=TEXT_MUTED, font=font_cite, anchor="mm")
+
+    img.save("extracted_images/lec11_upsweep_downsweep.png", dpi=(300, 300))
+    print("Saved lec11_upsweep_downsweep.png")
+
 if __name__ == "__main__":
     create_multistage_schematic()
     create_perfect_shuffle()
@@ -475,3 +674,4 @@ if __name__ == "__main__":
     create_omega_blocking()
     create_prefix_sum_diagram()
     create_list_ranking_diagram()
+    create_upsweep_downsweep_diagram()

@@ -228,7 +228,7 @@
 <ul>
 <li>Perfect Shuffle interconnection &amp; bitwise left-rotation permutation.</li>
 <li><span class="math inline">\(2 \times 2\)</span> switch configurations (Pass-through and Cross-over).</li>
-<li>Distributed self-routing using destination bit tags.</li>
+<li>Distributed self-routing using destination bit tags &amp; inductive proof of correctness.</li>
 <li>Sizing, cost (<span class="math inline">\(O(p \log p)\)</span>), and internal <strong>link blocking</strong>.</li>
 </ul></li>
 <li><strong>Evaluating Interconnection Networks</strong>:
@@ -243,7 +243,11 @@
 </ul></li>
 <li><strong>Fundamental PRAM Algorithms</strong>:
 <ul>
-<li><strong>Parallel Prefix Sum (Scan)</strong>: Stride doubling in <span class="math inline">\(O(\log n)\)</span> time on CREW PRAM.</li>
+<li><strong>Parallel Prefix Sum (Scan)</strong>:
+<ul>
+<li><strong>Hillis-Steele Algorithm</strong>: Stride doubling in <span class="math inline">\(O(\log n)\)</span> time, but <span class="math inline">\(O(n \log n)\)</span> work (<strong>work-inefficient</strong>).</li>
+<li><strong>Upsweep-Downsweep Algorithm (Blelloch Scan)</strong>: Tree-based reduction &amp; distribution achieving optimal <span class="math inline">\(O(n)\)</span> work and <span class="math inline">\(O(\log n)\)</span> span.</li>
+</ul></li>
 <li><strong>Pointer Jumping</strong>: Logarithmic traversal of pointer-based data structures.</li>
 <li><strong>Parallel List Ranking</strong>: Wyllie’s algorithm for linked list distance ranking.</li>
 </ul></li>
@@ -425,15 +429,15 @@
 </section>
 <section id="distributed-self-routing-in-omega-networks" class="slide level2">
 <h2>Distributed Self-Routing in Omega Networks</h2>
-<p>Omega networks support <strong>decentralized self-routing</strong> (Delta routing) based entirely on the binary bits of the <strong>destination address</strong> <span class="math inline">\(D = (d_{k-1} d_{k-2} \dots d_0)_2\)</span>:</p>
+<p>Omega networks support <strong>decentralized self-routing</strong> (Delta routing) based entirely on the binary bits of the <strong>destination address</strong> <span class="math inline">\(D = (d_{n-1} d_{n-2} \dots d_0)_2\)</span> (where <span class="math inline">\(n = \log_2 p\)</span>):</p>
 <div class="columns">
 <div class="column" style="width:60%;">
 <h3 id="self-routing-algorithm">Self-Routing Algorithm</h3>
 <ul>
-<li>Let a packet be routed to destination <span class="math inline">\(D = (d_{k-1} \dots d_0)_2\)</span>.</li>
-<li>At <strong>Stage <span class="math inline">\(s\)</span></strong> (where <span class="math inline">\(s = 0, 1, \dots, k-1\)</span>):
+<li>Let a packet be routed to destination <span class="math inline">\(D = (d_{n-1} \dots d_0)_2\)</span>.</li>
+<li>At <strong>Stage <span class="math inline">\(s\)</span></strong> (where <span class="math inline">\(s = 0, 1, \dots, n-1\)</span>):
 <ul>
-<li>The switch inspects bit <span class="math inline">\(d_{k-1-s}\)</span> (the <span class="math inline">\((s+1)\)</span>-th bit of the destination tag).</li>
+<li>The switch inspects bit <span class="math inline">\(d_{n-1-s}\)</span> (the <span class="math inline">\((s+1)\)</span>-th bit of the destination tag).</li>
 <li>If <strong>bit <span class="math inline">\(= 0\)</span></strong>: The switch routes the packet out of its <strong>Upper output port (0)</strong>.</li>
 <li>If <strong>bit <span class="math inline">\(= 1\)</span></strong>: The switch routes the packet out of its <strong>Lower output port (1)</strong>.</li>
 </ul></li>
@@ -449,6 +453,36 @@
 <li>The packet arrives precisely at output <span class="math inline">\(110_2\)</span>!</li>
 </ul>
 </div></div>
+</section>
+<section id="proof-of-correctness-omega-self-routing" class="slide level2">
+<h2>Proof of Correctness: Omega Self-Routing</h2>
+<div style="font-size: 0.80em; line-height: 1.3;">
+<p><strong>Claim</strong>: A packet from source <span class="math inline">\(S = s_{n-1} \dots s_0\)</span> to destination <span class="math inline">\(D = d_{n-1} \dots d_0\)</span> correctly reaches <span class="math inline">\(D\)</span> through <span class="math inline">\(n = \log_2 p\)</span> stages.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="induction-invariant-claim">Induction Invariant (Claim)</h3>
+<p>After <span class="math inline">\(k\)</span> stages (<span class="math inline">\(0 \le k \le n\)</span>), the packet is on wire: <span class="math display">\[\boxed{s_{n-k-1} s_{n-k-2} \cdots s_0 \; d_{n-1} d_{n-2} \cdots d_{n-k}}\]</span> <em>Exactly <span class="math inline">\(k\)</span> source bits have disappeared and <span class="math inline">\(k\)</span> destination bits have been inserted.</em></p>
+<h3 id="base-case-k-0">Base Case (<span class="math inline">\(k = 0\)</span>)</h3>
+<ul>
+<li>Before entering the network, packet is at source: <span class="math display">\[s_{n-1} s_{n-2} \cdots s_0\]</span></li>
+<li>Agrees with formula (0 destination bits inserted). Holds for <span class="math inline">\(k=0\)</span>.</li>
+</ul>
+<h3 id="induction-hypothesis">Induction Hypothesis</h3>
+<ul>
+<li>Assume claim holds after <span class="math inline">\(k\)</span> stages (<span class="math inline">\(0 \le k &lt; n\)</span>): <span class="math display">\[\text{Wire}(k) = s_{n-k-1} \cdots s_0 \; d_{n-1} \cdots d_{n-k}\]</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="inductive-step-k-to-k-1">Inductive Step (<span class="math inline">\(k \to k + 1\)</span>)</h3>
+<ul>
+<li>At stage <span class="math inline">\(k + 1\)</span>, switch inspects next destination bit <span class="math inline">\(d_{n-k-1}\)</span>.</li>
+<li>Switch routes to upper/lower output according to this bit (<span class="math inline">\(b = d_{n-k-1}\)</span>).</li>
+<li>One Omega stage (shuffle + switch) performs: <span class="math display">\[x_{n-1} x_{n-2} \cdots x_0 \longrightarrow x_{n-2} \cdots x_0 \, b\]</span></li>
+<li>The label becomes: <span class="math display">\[s_{n-k-2} \cdots s_0 \; d_{n-1} \cdots d_{n-k} \, d_{n-k-1}\]</span></li>
+<li>Therefore, after <span class="math inline">\(k + 1\)</span> stages the packet is on wire: <span class="math display">\[\boxed{s_{n-k-2} \cdots s_0 \; d_{n-1} \cdots d_{n-k-1}}\]</span></li>
+<li>Matches form for <span class="math inline">\(k+1\)</span>! At <span class="math inline">\(k = n\)</span>, wire is <span class="math inline">\(d_{n-1} \dots d_0 = D\)</span>. <span class="math inline">\(\blacksquare\)</span></li>
+</ul>
+</div></div>
+</div>
 </section>
 <section id="blocking-contention-in-omega-networks" class="slide level2">
 <h2>Blocking &amp; Contention in Omega Networks</h2>
@@ -732,6 +766,168 @@
 </div>
 </div></div>
 </section>
+<section id="total-work-of-hillis-steele-why-is-it-work-inefficient" class="slide level2">
+<h2>Total Work of Hillis-Steele: Why is it Work-Inefficient?</h2>
+<p>While the Hillis-Steele algorithm achieves an impressive parallel time (span) of <strong><span class="math inline">\(O(\log n)\)</span></strong>, its total work is suboptimal compared to the sequential baseline.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="exact-work-derivation">Exact Work Derivation</h3>
+<ul>
+<li>At iteration <span class="math inline">\(k\)</span> (where <span class="math inline">\(0 \le k &lt; \log_2 n\)</span>), additions are performed for all indices <span class="math inline">\(i\)</span> from <span class="math inline">\(2^k + 1\)</span> up to <span class="math inline">\(n\)</span>.</li>
+<li>Number of operations in step <span class="math inline">\(k\)</span>: <span class="math display">\[\text{Additions}_k = n - 2^k\]</span></li>
+<li>Summing over all <span class="math inline">\(\log_2 n\)</span> steps: <span class="math display">\[\begin{aligned}
+W(n) &amp;= \sum_{k=0}^{\log_2 n - 1} (n - 2^k) \\
+&amp;= n \log_2 n - \sum_{k=0}^{\log_2 n - 1} 2^k \\
+&amp;= n \log_2 n - (2^{\log_2 n} - 1) \\
+&amp;= \mathbf{n \log_2 n - n + 1 = \Theta(n \log n)}
+\end{aligned}\]</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="why-work-inefficiency-matters">Why Work Inefficiency Matters</h3>
+<ul>
+<li><strong>Sequential Baseline</strong>: Requires only <span class="math inline">\(n - 1 = \mathbf{\Theta(n)}\)</span> additions.</li>
+<li><strong>Work Ratio</strong>: Hillis-Steele executes a factor of <strong><span class="math inline">\(O(\log n)\)</span> more operations</strong> than the optimal sequential scan!</li>
+<li><strong>Practical Implication (Brent’s Theorem)</strong>: On <span class="math inline">\(p\)</span> physical processors, runtime is bounded by: <span class="math display">\[T_p \le \frac{W(n)}{p} + S(n) = O\left(\frac{n \log n}{p} + \log n\right)\]</span>
+<ul>
+<li>If <span class="math inline">\(p &lt; \log n\)</span>, <span class="math inline">\(T_p &gt; O(n)\)</span>, making it <strong>slower than sequential</strong>!</li>
+<li>Wastes energy and processor cycles on duplicate additions.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>[!WARNING] An algorithm is <strong>work-efficient</strong> only if <span class="math inline">\(W(n) = O(W_{\text{seq}}(n)) = O(n)\)</span>. This motivates the <strong>Upsweep-Downsweep (Blelloch)</strong> scan!</p>
+</blockquote>
+</div></div>
+</section>
+<section id="work-efficient-prefix-sum-phase-1-upsweep" class="slide level2">
+<h2>Work-Efficient Prefix Sum: Phase 1 — Upsweep</h2>
+<p>The first phase constructs a balanced binary tree of partial sums bottom-up (reduction tree), precomputing subtree sums for reuse (Westrick, 2025; Blelloch, 1990).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="algorithmic-mechanism">Algorithmic Mechanism</h3>
+<ul>
+<li><strong>Divide-and-Conquer</strong>: Recursively split the sequence <span class="math inline">\(s\)</span> into two halves (<code>s[:half]</code> and <code>s[half:]</code>).</li>
+<li><strong>Parallel Subtree Construction</strong>: Recurse on left tree (<span class="math inline">\(t_1\)</span>) and right tree (<span class="math inline">\(t_2\)</span>) simultaneously in parallel.</li>
+<li><strong>Node Synthesis</strong>: An internal node caches the combined sum of both subtrees: <span class="math display">\[\text{sum}(t) = \text{sum}(t_1) + \text{sum}(t_2)\]</span></li>
+<li><strong>Base Case</strong>: A single element sequence becomes a leaf storing that value.</li>
+</ul>
+<blockquote>
+<p>[!NOTE] Caching intermediate sums at each tree node eliminates the need to re-sum elements during prefix distribution.</p>
+</blockquote>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Phase 1: Upsweep (Bottom-Up Tree Construction)</span></span>
+<span id="cb2-2"><a href=""></a><span class="kw">def</span> upsweep(s):</span>
+<span id="cb2-3"><a href=""></a>    <span class="co"># Base case: single element becomes a leaf</span></span>
+<span id="cb2-4"><a href=""></a>    <span class="cf">if</span> <span class="bu">len</span>(s) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb2-5"><a href=""></a>        <span class="cf">return</span> Leaf(s[<span class="dv">0</span>])</span>
+<span id="cb2-6"><a href=""></a>    </span>
+<span id="cb2-7"><a href=""></a>    half <span class="op">=</span> <span class="bu">len</span>(s) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb2-8"><a href=""></a>    <span class="co"># Recurse on left and right halves in parallel</span></span>
+<span id="cb2-9"><a href=""></a>    t1, t2 <span class="op">=</span> parallel(</span>
+<span id="cb2-10"><a href=""></a>        upsweep(s[:half]),</span>
+<span id="cb2-11"><a href=""></a>        upsweep(s[half:])</span>
+<span id="cb2-12"><a href=""></a>    )</span>
+<span id="cb2-13"><a href=""></a>    </span>
+<span id="cb2-14"><a href=""></a>    <span class="co"># Cache sum(t1) + sum(t2) at internal node</span></span>
+<span id="cb2-15"><a href=""></a>    <span class="cf">return</span> Node(sum_of(t1) <span class="op">+</span> sum_of(t2), t1, t2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="work-efficient-prefix-sum-phase-2-downsweep" class="slide level2">
+<h2>Work-Efficient Prefix Sum: Phase 2 — Downsweep</h2>
+<p>The second phase walks down the tree in parallel, distributing an incoming accumulator <code>acc</code> (initially <code>0</code> at the root) to compute all prefix sums.</p>
+<div class="columns">
+<div class="column" style="width:48%;">
+<h3 id="propagation-rules">Propagation Rules</h3>
+<ul>
+<li><strong>Root</strong>: Initialized with accumulator <span class="math inline">\(\text{acc} = 0\)</span>.</li>
+<li><strong>To Left Child</strong>: Accumulator stays unchanged: <span class="math display">\[\text{acc}_{\text{left}} = \text{acc}\]</span> <em>(No elements preceding the left half need to be added).</em></li>
+<li><strong>To Right Child</strong>: Add total sum of left subtree: <span class="math display">\[\text{acc}_{\text{right}} = \text{acc} + \text{sum}(t_1)\]</span> <em>(All elements in left subtree precede the right half).</em></li>
+<li><strong>Leaves</strong>: Write <code>acc</code> directly as the exclusive prefix sum: <span class="math display">\[\text{output}[\text{offset}] = \text{acc}\]</span></li>
+<li><strong>Total Sum</strong>: Root sum is written at index <span class="math inline">\(n\)</span>.</li>
+</ul>
+</div><div class="column" style="width:52%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Phase 2: Downsweep (Top-Down Accumulator Pass)</span></span>
+<span id="cb3-2"><a href=""></a><span class="kw">def</span> downsweep(t, acc, output, offset, n):</span>
+<span id="cb3-3"><a href=""></a>    <span class="cf">if</span> is_leaf(t):</span>
+<span id="cb3-4"><a href=""></a>        output[offset] <span class="op">=</span> acc</span>
+<span id="cb3-5"><a href=""></a>        <span class="cf">return</span></span>
+<span id="cb3-6"><a href=""></a>    </span>
+<span id="cb3-7"><a href=""></a>    half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb3-8"><a href=""></a>    <span class="co"># In parallel: left gets acc; right gets acc + sum(left)</span></span>
+<span id="cb3-9"><a href=""></a>    parallel(</span>
+<span id="cb3-10"><a href=""></a>        downsweep(t.left,  acc, </span>
+<span id="cb3-11"><a href=""></a>                  output, offset, half),</span>
+<span id="cb3-12"><a href=""></a>        downsweep(t.right, acc <span class="op">+</span> sum_of(t.left), </span>
+<span id="cb3-13"><a href=""></a>                  output, offset <span class="op">+</span> half, n <span class="op">-</span> half)</span>
+<span id="cb3-14"><a href=""></a>    )</span>
+<span id="cb3-15"><a href=""></a></span>
+<span id="cb3-16"><a href=""></a><span class="kw">def</span> prefix_sums(s):</span>
+<span id="cb3-17"><a href=""></a>    t <span class="op">=</span> upsweep(s)</span>
+<span id="cb3-18"><a href=""></a>    output <span class="op">=</span> allocate_array(<span class="bu">len</span>(s) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-19"><a href=""></a>    downsweep(t, acc<span class="op">=</span><span class="dv">0</span>, output<span class="op">=</span>output, offset<span class="op">=</span><span class="dv">0</span>, n<span class="op">=</span><span class="bu">len</span>(s))</span>
+<span id="cb3-20"><a href=""></a>    output[<span class="bu">len</span>(s)] <span class="op">=</span> sum_of(t)  <span class="co"># total sum at index n</span></span>
+<span id="cb3-21"><a href=""></a>    <span class="cf">return</span> output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="upsweep-downsweep-work-span-complexity-analysis" class="slide level2">
+<h2>Upsweep-Downsweep: Work &amp; Span Complexity Analysis</h2>
+<p>By separating reduction from distribution across a balanced binary tree, both phases admit simple, symmetric recurrences.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="phase-by-phase-recurrences">Phase-by-Phase Recurrences</h3>
+<ul>
+<li><strong>Phase 1 (Upsweep)</strong>: <span class="math display">\[W_{\text{up}}(n) = 2 W_{\text{up}}(n/2) + O(1) \implies \mathbf{O(n)}\]</span> <span class="math display">\[S_{\text{up}}(n) = S_{\text{up}}(n/2) + O(1) \implies \mathbf{O(\log n)}\]</span></li>
+<li><strong>Phase 2 (Downsweep)</strong>: <span class="math display">\[W_{\text{down}}(n) = 2 W_{\text{down}}(n/2) + O(1) \implies \mathbf{O(n)}\]</span> <span class="math display">\[S_{\text{down}}(n) = S_{\text{down}}(n/2) + O(1) \implies \mathbf{O(\log n)}\]</span></li>
+</ul>
+<h3 id="overall-complexity">Overall Complexity</h3>
+<p><span class="math display">\[W(n) = W_{\text{up}}(n) + W_{\text{down}}(n) = \mathbf{O(n)}\]</span> <span class="math display">\[S(n) = S_{\text{up}}(n) + S_{\text{down}}(n) = \mathbf{O(\log n)}\]</span></p>
+</div><div class="column" style="width:50%;">
+<h3 id="algorithmic-comparison">Algorithmic Comparison</h3>
+<table class="caption-top">
+<caption>Comparison of parallel prefix sum algorithms.</caption>
+<colgroup>
+<col style="width: 38%">
+<col style="width: 22%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: center;">Total Work <span class="math inline">\(W(n)\)</span></th>
+<th style="text-align: center;">Span <span class="math inline">\(S(n)\)</span></th>
+<th style="text-align: center;">Work-Efficient?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Sequential</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n)\)</span></td>
+<td style="text-align: center;">Baseline</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Hillis-Steele</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n \log n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(\log n)\)</span></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Upsweep-Downsweep</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{\Theta(n)}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{\Theta(\log n)}\)</span></td>
+<td style="text-align: center;"><strong>Yes (Optimal)</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="practical-impact-brents-theorem">Practical Impact (Brent’s Theorem)</h3>
+<p><span class="math display">\[T_p \le \frac{W(n)}{p} + S(n) = O\left(\frac{n}{p} + \log n\right)\]</span> - Delivers <strong>linear speedup</strong> <span class="math inline">\(T_p \approx \Theta(n/p)\)</span> whenever <span class="math inline">\(p \le O(n / \log n)\)</span>. - Never runs slower than sequential baseline, regardless of <span class="math inline">\(p\)</span>!</p>
+</div></div>
+</section>
+<section id="upsweep-downsweep-prefix-sum-trace-execution" class="slide level2">
+<h2>Upsweep-Downsweep Prefix Sum: Trace &amp; Execution</h2>
+<p>Below is the complete trace for input sequence <span class="math inline">\(s = \langle 1, 2, 3, 4, 5, 6, 7, 8 \rangle\)</span>:</p>
+
+<img data-src="extracted_images/lec11_upsweep_downsweep.png" style="width:84.0%" class="r-stretch quarto-figure-center"><p class="caption">Two-phase Upsweep-Downsweep parallel prefix sum: Phase 1 builds intermediate subtree sums; Phase 2 distributes prefix accumulators down to leaves</p></section>
 <section id="the-pointer-jumping-technique" class="slide level2">
 <h2>The Pointer Jumping Technique</h2>
 <p><strong>Pointer Jumping</strong> (or <em>pointer doubling</em>) is a fundamental algorithmic technique on PRAM for linked lists and directed trees (Wyllie, 1979; JáJá, 1992).</p>
@@ -783,18 +979,18 @@
 </section>
 <section id="parallel-list-ranking-pram-algorithm" class="slide level2">
 <h2>Parallel List Ranking: PRAM Algorithm</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource pascal number-lines code-with-copy"><code class="sourceCode pascal"><span id="cb2-1"><a href=""></a><span class="co">// PRAM List Ranking Algorithm (Wyllie's Algorithm)</span></span>
-<span id="cb2-2"><a href=""></a><span class="kw">for</span> all i <span class="kw">in</span> parallel <span class="kw">do</span></span>
-<span id="cb2-3"><a href=""></a>    <span class="kw">if</span> next[i] == <span class="kw">NIL</span> <span class="kw">then</span></span>
-<span id="cb2-4"><a href=""></a>        position[i] := <span class="dv">0</span></span>
-<span id="cb2-5"><a href=""></a>    <span class="kw">else</span></span>
-<span id="cb2-6"><a href=""></a>        position[i] := <span class="dv">1</span></span>
-<span id="cb2-7"><a href=""></a></span>
-<span id="cb2-8"><a href=""></a><span class="kw">for</span> step := <span class="dv">1</span> <span class="kw">to</span> ceil(log2(n)) <span class="kw">do</span></span>
-<span id="cb2-9"><a href=""></a>    <span class="kw">for</span> all i <span class="kw">in</span> parallel <span class="kw">do</span></span>
-<span id="cb2-10"><a href=""></a>        <span class="kw">if</span> next[i] != <span class="kw">NIL</span> <span class="kw">then</span></span>
-<span id="cb2-11"><a href=""></a>            position[i] := position[i] + position[next[i]]</span>
-<span id="cb2-12"><a href=""></a>            next[i] := next[next[i]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource pascal number-lines code-with-copy"><code class="sourceCode pascal"><span id="cb4-1"><a href=""></a><span class="co">// PRAM List Ranking Algorithm (Wyllie's Algorithm)</span></span>
+<span id="cb4-2"><a href=""></a><span class="kw">for</span> all i <span class="kw">in</span> parallel <span class="kw">do</span></span>
+<span id="cb4-3"><a href=""></a>    <span class="kw">if</span> next[i] == <span class="kw">NIL</span> <span class="kw">then</span></span>
+<span id="cb4-4"><a href=""></a>        position[i] := <span class="dv">0</span></span>
+<span id="cb4-5"><a href=""></a>    <span class="kw">else</span></span>
+<span id="cb4-6"><a href=""></a>        position[i] := <span class="dv">1</span></span>
+<span id="cb4-7"><a href=""></a></span>
+<span id="cb4-8"><a href=""></a><span class="kw">for</span> step := <span class="dv">1</span> <span class="kw">to</span> ceil(log2(n)) <span class="kw">do</span></span>
+<span id="cb4-9"><a href=""></a>    <span class="kw">for</span> all i <span class="kw">in</span> parallel <span class="kw">do</span></span>
+<span id="cb4-10"><a href=""></a>        <span class="kw">if</span> next[i] != <span class="kw">NIL</span> <span class="kw">then</span></span>
+<span id="cb4-11"><a href=""></a>            position[i] := position[i] + position[next[i]]</span>
+<span id="cb4-12"><a href=""></a>            next[i] := next[next[i]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <h3 id="complexity-breakdown">Complexity Breakdown</h3>
 <ul>
 <li><strong>Processors</strong>: <span class="math inline">\(p = n\)</span> processors (one per node).</li>
@@ -856,7 +1052,8 @@
 <li><strong>PRAM Algorithms &amp; Techniques</strong>:
 <ul>
 <li><strong>PRAM Model</strong>: Explicit, synchronization-free abstraction for discovering maximum concurrency.</li>
-<li><strong>Prefix Sum</strong>: Computes all cumulative prefixes in <span class="math inline">\(O(\log n)\)</span> time using stride doubling.</li>
+<li><strong>Hillis-Steele Prefix Sum</strong>: Stride doubling computes prefix sums in <span class="math inline">\(O(\log n)\)</span> span, but performs <span class="math inline">\(W(n) = \Theta(n \log n)\)</span> work (<strong>work-inefficient</strong>).</li>
+<li><strong>Upsweep-Downsweep Prefix Sum (Blelloch Scan)</strong>: Two-phase tree algorithm (reduction up, accumulation down) achieving optimal <span class="math inline">\(\mathbf{O(n)}\)</span> <strong>work</strong> and <span class="math inline">\(\mathbf{O(\log n)}\)</span> <strong>span</strong> (<strong>work-efficient</strong>).</li>
 <li><strong>Pointer Jumping</strong>: Replaces <span class="math inline">\(P[i]\)</span> with <span class="math inline">\(P[P[i]]\)</span> to traverse linked lists and trees in <span class="math inline">\(O(\log n)\)</span> time, powering algorithms like <strong>List Ranking</strong>.</li>
 </ul></li>
 </ul>
@@ -868,6 +1065,9 @@
 <li><strong>JáJá, J.</strong> (1992). <em>An Introduction to Parallel Algorithms</em>. Addison-Wesley. Chapter 2: “PRAM Algorithms and Pointer Jumping”.</li>
 <li><strong>Lawrie, D. H.</strong> (1975). “Access and Alignment of Data in an Array Processor”. <em>IEEE Transactions on Computers</em>, C-24(12), pp.&nbsp;1145–1155. <em>(Original Omega Network paper)</em>.</li>
 <li><strong>Wyllie, J. C.</strong> (1979). <em>The Complexity of Parallel Computations</em>. Ph.D.&nbsp;dissertation, Cornell University. <em>(Introduced Pointer Jumping &amp; List Ranking)</em>.</li>
+<li><strong>Hillis, W. D., &amp; Steele, G. L.</strong> (1986). “Data Parallel Algorithms”. <em>Communications of the ACM</em>, 29(12), pp.&nbsp;1170–1184. <em>(Hillis-Steele prefix sum algorithm)</em>.</li>
+<li><strong>Blelloch, G. E.</strong> (1990). “Prefix Sums and Their Applications”. <em>Technical Report CMU-CS-90-190</em>, School of Computer Science, Carnegie Mellon University. <em>(Work-efficient upsweep-downsweep scan)</em>.</li>
+<li><strong>Westrick, S.</strong> (2025). <em>Lecture 3 Notes: Sequences and Parallel Prefix Sums</em>. Computer Science Department, New York University. <em>(Upsweep-downsweep formulation and cost analysis)</em>.</li>
 <li><strong>Leighton, F. T.</strong> (1992). <em>Introduction to Parallel Algorithms and Architectures: Arrays, Trees, Hypercubes</em>. Morgan Kaufmann.</li>
 </ol>
 
