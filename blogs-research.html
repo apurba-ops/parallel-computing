@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs &amp; Seminal Research | CS F422/U422: Parallel Computing</title>
+    <meta name="description" content="Curated seminal research papers, architectural design blogs, and industrial systems studies for CS F422/U422: Parallel Computing at BITS Pilani.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bits-navy-dark: #07172c;
+            --bits-navy: #003366;
+            --bits-navy-light: #164e87;
+            --bits-gold: #e5a93c;
+            --bits-gold-light: #fff3d6;
+            --bits-crimson: #d71920;
+            --bits-crimson-light: #fdedee;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-subtle: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --border-highlight: #cbd5e1;
+            --accent-glow: rgba(0, 51, 102, 0.08);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+            line-height: 1.25;
+        }
+
+        code, .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        a {
+            color: var(--bits-navy);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* Header & Navigation */
+        header.site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .header-container {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border-color);
+        }
+
+        .brand-text-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-course-code {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--bits-navy-dark);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .brand-course-code .badge-inst {
+            background: var(--bits-crimson-light);
+            color: var(--bits-crimson);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .brand-dept {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        nav.nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+        }
+
+        nav.nav-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 0.35rem 0.2rem;
+            position: relative;
+        }
+
+        nav.nav-links a:hover, nav.nav-links a.active {
+            color: var(--bits-navy);
+        }
+
+        nav.nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--bits-navy);
+            border-radius: 2px;
+        }
+
+        .btn-header-home {
+            background: #ffffff;
+            color: var(--bits-navy) !important;
+            border: 1px solid var(--border-highlight);
+            padding: 0.45rem 0.95rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+
+        .btn-header-home:hover {
+            background: var(--bg-card-subtle);
+            border-color: var(--bits-navy);
+        }
+
+        /* Hero Banner */
+        .page-hero {
+            background: linear-gradient(135deg, var(--bits-navy-dark) 0%, var(--bits-navy) 100%);
+            color: #ffffff;
+            padding: 3.5rem 1.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 85% 20%, rgba(229, 169, 60, 0.18) 0%, transparent 50%),
+                        radial-gradient(circle at 15% 80%, rgba(215, 25, 32, 0.14) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .page-hero-container {
+            max-width: 1360px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge-strip {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-pill.gold {
+            background: rgba(229, 169, 60, 0.2);
+            border-color: rgba(229, 169, 60, 0.4);
+            color: #ffd978;
+        }
+
+        .hero-pill.crimson {
+            background: rgba(215, 25, 32, 0.25);
+            border-color: rgba(215, 25, 32, 0.5);
+            color: #fca5a5;
+        }
+
+        .page-hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-hero-title span.accent {
+            color: var(--bits-gold);
+        }
+
+        .page-hero-subtitle {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            max-width: 820px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Filter & Search Bar */
+        .controls-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--bits-gold);
+            color: var(--bits-navy-dark);
+            border-color: var(--bits-gold);
+            box-shadow: 0 2px 8px rgba(229, 169, 60, 0.35);
+        }
+
+        .search-box-wrap {
+            position: relative;
+            min-width: 280px;
+        }
+
+        .search-box-wrap i {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.45rem 0.9rem 0.45rem 2.25rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid transparent;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            background: #ffffff;
+            border-color: var(--bits-gold);
+            box-shadow: 0 0 0 3px rgba(229, 169, 60, 0.25);
+        }
+
+        /* Two-Column Main Layout */
+        .content-container {
+            max-width: 1360px;
+            margin: 2.5rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 380px;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        /* Center Column: Main Articles */
+        .main-articles-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--bits-navy);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-highlight);
+        }
+
+        .article-card:hover::before {
+            width: 6px;
+            background: var(--bits-crimson);
+        }
+
+        .card-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.9rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .badge-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-tag.paper {
+            background: var(--bits-gold-light);
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
+
+        .badge-tag.blog {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
+
+        .badge-tag.systems {
+            background: #faf5ff;
+            color: #6b21a8;
+            border: 1px solid #f3e8ff;
+        }
+
+        .badge-tag.algorithms {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .card-time-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .card-time-info span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .article-title {
+            font-size: 1.45rem;
+            color: var(--bits-navy-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .article-author-byline {
+            font-size: 0.88rem;
+            color: var(--bits-navy);
+            font-weight: 600;
+            margin-bottom: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .article-author-byline i {
+            color: var(--bits-gold);
+        }
+
+        .article-abstract {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Key Takeaways Callout Box */
+        .takeaway-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .takeaway-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .takeaway-title i {
+            color: var(--bits-gold);
+        }
+
+        .takeaway-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .takeaway-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            line-height: 1.45;
+        }
+
+        .takeaway-list li i {
+            color: var(--bits-crimson);
+            font-size: 0.75rem;
+            margin-top: 0.35rem;
+            flex-shrink: 0;
+        }
+
+        .card-footer-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 1.2rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .course-lecture-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-read-resource {
+            background: var(--bits-navy);
+            color: #ffffff !important;
+            padding: 0.45rem 1.1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 2px 6px rgba(0, 51, 102, 0.2);
+            transition: var(--transition);
+        }
+
+        .btn-read-resource:hover {
+            background: var(--bits-navy-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3);
+        }
+
+        /* Right Column: Highlights Sidebar */
+        .highlights-col {
+            position: sticky;
+            top: 90px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header i {
+            color: var(--bits-crimson);
+            font-size: 1.1rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            color: var(--bits-navy-dark);
+            font-weight: 700;
+        }
+
+        /* Timeline Items */
+        .milestone-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            position: relative;
+        }
+
+        .milestone-item {
+            position: relative;
+            padding-left: 1.6rem;
+        }
+
+        .milestone-item::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bits-crimson);
+            box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.2);
+        }
+
+        .milestone-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 18px;
+            bottom: -10px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .milestone-item:last-child::after {
+            display: none;
+        }
+
+        .milestone-year {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--bits-navy);
+            background: var(--bits-gold-light);
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.2rem;
+        }
+
+        .milestone-headline {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .milestone-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Formula Cheat Sheet */
+        .formula-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .formula-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--bits-navy);
+            margin-bottom: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .formula-math {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--bits-crimson);
+            font-weight: 600;
+        }
+
+        .formula-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* Roadmap Steps */
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bits-navy);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-info h5 {
+            font-size: 0.85rem;
+            color: var(--bits-navy-dark);
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+
+        .step-info p {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* Topic Tags */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag-chip {
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag-chip:hover {
+            background: var(--bits-navy);
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer.site-footer {
+            background: var(--bits-navy-dark);
+            color: #cbd5e1;
+            padding: 3rem 1.5rem;
+            border-top: 3px solid var(--bits-gold);
+        }
+
+        .footer-container {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            height: 48px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1080px) {
+            .two-column-layout {
+                grid-template-columns: 1fr;
+            }
+            .highlights-col {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav.nav-links {
+                display: none;
+            }
+            .page-hero-title {
+                font-size: 1.9rem;
+            }
+            .controls-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box-wrap {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-link">
+                <img src="logo.svg" alt="BITS Pilani Logo" class="brand-logo">
+                <div class="brand-divider"></div>
+                <div class="brand-text-wrapper">
+                    <div class="brand-course-code">
+                        CS F422 / U422 <span class="badge-inst">BITS Pilani &bull; Hyderabad</span>
+                    </div>
+                    <span class="brand-dept">Parallel Computing &bull; First Semester 2026&ndash;27</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="index.html#overview">Overview</a>
+                <a href="index.html#handout">Course Handout</a>
+                <a href="index.html#schedule">Schedule &amp; Slides</a>
+                <a href="index.html#modules">Syllabus</a>
+                <a href="blogs-research.html" class="active">Blogs &amp; Research</a>
+                <a href="index.html#instructor">Course Info</a>
+            </nav>
+
+            <a href="index.html" class="btn-header-home">
+                <i class="fa-solid fa-house"></i> Main Portal
+            </a>
+        </div>
+    </header>
+
+    <!-- Page Hero Banner -->
+    <section class="page-hero">
+        <div class="page-hero-container">
+            <div class="hero-badge-strip">
+                <span class="hero-pill gold"><i class="fa-solid fa-square-rss"></i> Supplementary Reading</span>
+                <span class="hero-pill"><i class="fa-solid fa-book-journal-whills"></i> Seminal Research Papers</span>
+                <span class="hero-pill crimson"><i class="fa-solid fa-microchip"></i> Architectural Classics</span>
+            </div>
+
+            <h1 class="page-hero-title">
+                Blogs &amp; Seminal <span class="accent">Research</span>
+            </h1>
+
+            <p class="page-hero-subtitle">
+                A curated repository of breakthrough research papers, industrial engineering blogs, and foundational literature that defined modern parallel architectures, lock-free concurrency, PRAM algorithms, and GPU computing.
+            </p>
+
+            <!-- Search & Filter Bar -->
+            <div class="controls-card">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterArticles('all')">All Resources (9)</button>
+                    <button class="filter-btn" onclick="filterArticles('paper')">Research Papers</button>
+                    <button class="filter-btn" onclick="filterArticles('blog')">Technical Blogs</button>
+                    <button class="filter-btn" onclick="filterArticles('systems')">Systems &amp; Distributed</button>
+                    <button class="filter-btn" onclick="filterArticles('algorithms')">Algorithms &amp; GPU</button>
+                </div>
+
+                <div class="search-box-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="articleSearch" class="search-input" placeholder="Search by paper, author, or keyword..." onkeyup="searchArticles()">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container with Center & Right Columns -->
+    <main class="content-container">
+        <div class="two-column-layout">
+
+            <!-- CENTER COLUMN: MAIN BLOG & RESEARCH ARTICLES -->
+            <section class="main-articles-col" id="articlesList">
+
+                <!-- Article 1: Herb Sutter -->
+                <article class="article-card" data-category="blog" data-tags="multicore concurrency frequency">
+                    <div class="card-meta-row">
+                        <span class="badge-tag blog">Technical Blog</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> March 2005</span>
+                            <span><i class="fa-regular fa-clock"></i> 10 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        The Free Lunch Is Over: A Fundamental Turn Toward Concurrency
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-user-pen"></i> By Herb Sutter &bull; Chair of the ISO C++ Standards Committee, Microsoft
+                    </div>
+
+                    <p class="article-abstract">
+                        A landmark manifesto that warned the software engineering world that the decades-long "free lunch" of exponential single-core clock frequency improvements had come to an abrupt halt due to thermal dissipation limits (the Power Wall) and instruction-level parallelism bottlenecks. Sutter demonstrated why software developers must transition to explicit concurrency to extract performance from newer hardware.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Frequency Ceiling:</strong> Processor clock speeds hit a hard physical ceiling around 3.8 GHz due to exponential leakage power dissipation ($P \propto V^2 f$).</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>The Paradigm Shift:</strong> Microprocessor manufacturers pivoted from making single cores faster to packing multiple homogeneous/heterogeneous cores onto a single silicon die.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Software Consequence:</strong> Sequential applications no longer speed up on next-generation processors without multithreaded and parallel algorithmic redesign.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Lecture 1 &amp; 2
+                        </span>
+                        <a href="https://herbsutter.com/welcome-to-the-jungle/" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read Original Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 2: Stanford Single-Chip Multiprocessor -->
+                <article class="article-card" data-category="paper" data-tags="multicore cmp stanford hardware">
+                    <div class="card-meta-row">
+                        <span class="badge-tag paper">Research Paper</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> ASPLOS 1996</span>
+                            <span><i class="fa-regular fa-clock"></i> 15 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        The Case for a Single-Chip Multiprocessor (CMP)
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-graduation-cap"></i> By Kunle Olukotun, Basem A. Nayfeh, Lance Hammond, Ken Wilson, &amp; Kunyung Chang &bull; Stanford University
+                    </div>
+
+                    <p class="article-abstract">
+                        Stanford University's foundational paper that launched the modern multicore revolution. The authors analyzed technological scaling in deep sub-micron CMOS, demonstrating that monolithic superscalar processors suffering from diminishing returns in instruction-level parallelism (ILP) and excessive wire delays should be replaced with multiple compact, high-clocked processor cores on a single chip.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Wire Latency Dominance:</strong> Long interconnect wires cross-chip do not scale in speed as transistors shrink, heavily penalizing centralized superscalar bypass networks.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Hydra CMP Prototype:</strong> Demonstrated that a 4-core CMP achieves superior throughput, lower complexity, and shorter design cycles compared to an equivalent-area wide superscalar core.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Area vs. Performance:</strong> Modest simple cores scale linearly in multi-programmed and thread-parallel workloads.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Lecture 3 &amp; 4
+                        </span>
+                        <a href="https://dl.acm.org/doi/10.1145/237090.237140" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read ACM Paper <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 3: Parallel Prefix Sum with CUDA (Mark Harris) -->
+                <article class="article-card" data-category="algorithms" data-tags="prefix-sum scan blelloch cuda algorithms">
+                    <div class="card-meta-row">
+                        <span class="badge-tag algorithms">Algorithms &amp; GPU</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> GPU Gems 3 (2007)</span>
+                            <span><i class="fa-regular fa-clock"></i> 14 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        Parallel Prefix Sum (Scan) with CUDA: Blelloch vs. Hillis-Steele
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-microchip"></i> By Mark Harris &bull; NVIDIA Corporation (GPU Gems 3)
+                    </div>
+
+                    <p class="article-abstract">
+                        Mark Harris's seminal chapter detailing the algorithmic foundation and GPU implementation of all-prefix-sums (Scan). The article provides a thorough mathematical comparison between the work-inefficient Hillis-Steele stride-doubling algorithm ($\Theta(n \log n)$ work) and Guy Blelloch's work-efficient Upsweep-Downsweep tree algorithm ($\Theta(n)$ work, $O(\log n)$ span), including shared-memory bank-conflict elimination.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Upsweep &amp; Downsweep:</strong> Demonstrates why precomputing intermediate sums in an upsweep tree enables a linear-work $O(n)$ downsweep prefix distribution.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Bank Conflict Avoidance:</strong> Explains how padding shared memory indices by `i >> LOG_NUM_BANKS` eliminates 16-way serialized bank conflicts on NVIDIA GPUs.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Foundational Primitive:</strong> Prefix sum serves as the core building block for stream compaction, radix sort, collision detection, and sparse matrix operations.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Lecture 11 &amp; 12
+                        </span>
+                        <a href="https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read GPU Gems Chapter <i class="fa-solid fa-book-open"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 4: Amdahl's Law in the Multicore Era -->
+                <article class="article-card" data-category="paper" data-tags="amdahl speedup multicore heterogeneous">
+                    <div class="card-meta-row">
+                        <span class="badge-tag paper">Research Paper</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> IEEE Computer 2008</span>
+                            <span><i class="fa-regular fa-clock"></i> 12 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        Amdahl's Law in the Multicore Era
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-graduation-cap"></i> By Mark D. Hill &amp; Michael R. Marty &bull; University of Wisconsin-Madison
+                    </div>
+
+                    <p class="article-abstract">
+                        This seminal paper applies Amdahl's Law to modern on-chip multi-core microprocessors under fixed chip resource budgets measured in Base Core Equivalents (BCEs). The authors modeled Symmetric (SMP), Asymmetric (heterogeneous cores, like modern big.LITTLE / Intel Alder Lake), and Dynamic multicore designs, providing mathematical proof of why heterogeneous architectures achieve higher overall speedup.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Symmetric Limits:</strong> Homogeneous multicores with small cores choke on sequential code ($1-f$); homogeneous chips with large cores lack thread-level throughput.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Asymmetric Superiority:</strong> Allocating budget to one large core (for sequential phases) and many small cores (for parallel phases) delivers highest potential speedup.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Pollack's Rule:</strong> Performance of a single processor core grows roughly with the square root of its silicon area: $\text{Perf} \approx \sqrt{\text{Area}}$.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Lecture 5 &amp; 6
+                        </span>
+                        <a href="https://www.cs.wisc.edu/multifacet/papers/ieeecomputer08_amdahl_multicore.pdf" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read IEEE Paper <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 5: Google MapReduce -->
+                <article class="article-card" data-category="systems" data-tags="mapreduce google distributed cloud">
+                    <div class="card-meta-row">
+                        <span class="badge-tag systems">Systems Paper</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> OSDI 2004</span>
+                            <span><i class="fa-regular fa-clock"></i> 16 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        MapReduce: Simplified Data Processing on Large Clusters
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-building"></i> By Jeffrey Dean &amp; Sanjay Ghemawat &bull; Google Inc.
+                    </div>
+
+                    <p class="article-abstract">
+                        Google's historic paper introducing the MapReduce programming model and runtime implementation for massive distributed parallel data processing. It allows programmers without distributed systems experience to easily exploit large clusters of commodity hardware by specifying just two functions: Map (generating intermediate key/value pairs) and Reduce (merging values associated with the same key).
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Fault Tolerance at Scale:</strong> In clusters of 10,000+ nodes, hardware failures are constant; deterministic re-execution of failed tasks guarantees high availability.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Locality Optimization:</strong> Computations are scheduled directly onto machines that physically hold GFS replicas, saving massive cross-rack network bandwidth.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Combiner &amp; Partitioning:</strong> Pre-aggregating intermediate pairs locally substantially minimizes the shuffle phase latency.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Distributed HPC &amp; MPI
+                        </span>
+                        <a href="https://dl.acm.org/doi/10.1145/1327452.1327492" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read OSDI Paper <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 6: LMAX Disruptor -->
+                <article class="article-card" data-category="systems" data-tags="disruptor lock-free concurrency cache-coherence">
+                    <div class="card-meta-row">
+                        <span class="badge-tag systems">Systems &amp; Concurrency</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> May 2011</span>
+                            <span><i class="fa-regular fa-clock"></i> 12 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        The LMAX Disruptor: High-Performance Alternative to Queues
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-bolt"></i> By Martin Thompson, Dave Farley, Michael Barker, &amp; Patricia Gee &bull; LMAX Exchange
+                    </div>
+
+                    <p class="article-abstract">
+                        A masterclass in "Mechanical Sympathy" &mdash; designing software that works in harmony with underlying CPU hardware. The LMAX team showed that conventional multi-threaded queue designs suffer catastrophic latency spikes due to lock contention, cache-line bouncing (MESI invalidation storm), and OS context switches. By replacing queues with a lock-free pre-allocated RingBuffer, they achieved 6+ million transactions/sec at sub-microsecond latency.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>False Sharing Prevention:</strong> Padding sequence pointers to 64 bytes guarantees they occupy exclusive CPU L1/L2 cache lines, preventing destructive cache invalidation.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Lock-Free Sequencing:</strong> Memory barriers and CAS (Compare-And-Swap) operations eliminate kernel lock transitions and thread suspension.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Ring Buffer Topology:</strong> Power-of-two array indexing allows fast bitwise masking (`sequence & (bufferSize - 1)`) and zero dynamic memory allocation.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Cache Coherence &amp; OpenMP
+                        </span>
+                        <a href="https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read Technical Whitepaper <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 7: Amazon Dynamo -->
+                <article class="article-card" data-category="systems" data-tags="dynamo amazon distributed storage">
+                    <div class="card-meta-row">
+                        <span class="badge-tag systems">Systems Paper</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> SOSP 2007</span>
+                            <span><i class="fa-regular fa-clock"></i> 15 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        Dynamo: Amazon's Highly Available Key-Value Store
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-cloud"></i> By Giuseppe DeCandia, Deniz Hastorun, Madan Jampani, et al. &bull; Amazon.com
+                    </div>
+
+                    <p class="article-abstract">
+                        Amazon's seminal SOSP paper detailing the distributed storage infrastructure powering their e-commerce shopping cart and order systems. Dynamo was designed with the philosophy of "always writable" availability over absolute consistency, demonstrating the practical application of consistent hashing, quorum replication, and vector clocks in mission-critical clouds.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Consistent Hashing:</strong> Nodes and keys map to a virtual ring, allowing dynamic scaling with minimal key migrations.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Sloppy Quorums &amp; Hinted Handoff:</strong> Ensures writes succeed even during network partitions by allowing healthy nodes to temporarily store writes intended for partitioned peers.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Anti-Entropy via Merkle Trees:</strong> Trees of cryptographic hashes synchronize replicas quickly without transferring redundant data over the network.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to Distributed HPC
+                        </span>
+                        <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read SOSP Paper <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 8: Compute Shaders Game Engines -->
+                <article class="article-card" data-category="blog" data-tags="gpu compute shaders graphics game-engines">
+                    <div class="card-meta-row">
+                        <span class="badge-tag blog">Graphics &amp; GPU</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> AMD GPUOpen 2021</span>
+                            <span><i class="fa-regular fa-clock"></i> 11 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        Why Modern Game Engines Rely on Compute Shaders
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-gamepad"></i> By Sebastian Aaltonen &bull; Rendering Lead, Frostbite Engine / AMD GPUOpen
+                    </div>
+
+                    <p class="article-abstract">
+                        A deep architectural examination of why modern high-performance game engines (Unreal Engine 5 Nanite/Lumen, Frostbite) have discarded traditional fixed-function graphics pipelines in favor of raw GPGPU compute shaders. Aaltonen explains how arbitrary parallel GPU memory writes (UAVs / SSBOs), wavefront lane intrinsics, and compute-driven culling deliver orders of magnitude higher performance.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>GPU-Driven Rendering:</strong> The GPU performs its own frustum culling, occlusion testing, and draw-call generation, completely eliminating CPU draw-call bottlenecks.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Wavefront Lane Intrinsics:</strong> Hardware shuffle operations allow threads within a 32/64-wide warp to exchange data in registers without hitting shared memory.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>General Purpose Flexibility:</strong> Physics, skinning, fluid simulations, and ray tracing acceleration structures all share unified GPU compute resources.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to GPU Architecture (Lecture 12)
+                        </span>
+                        <a href="https://gpuopen.com/learn/optimizing-gpu-occupancy-resource-usage-large-thread-groups/" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read GPUOpen Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 9: NVIDIA CUDA Architecture -->
+                <article class="article-card" data-category="blog" data-tags="cuda gpu nvidia warps">
+                    <div class="card-meta-row">
+                        <span class="badge-tag blog">Technical Blog</span>
+                        <div class="card-time-info">
+                            <span><i class="fa-regular fa-calendar"></i> NVIDIA DevBlog</span>
+                            <span><i class="fa-regular fa-clock"></i> 9 min read</span>
+                        </div>
+                    </div>
+
+                    <h2 class="article-title">
+                        An Even Easier Introduction to CUDA &amp; GPU Architectures
+                    </h2>
+
+                    <div class="article-author-byline">
+                        <i class="fa-solid fa-microchip"></i> By Mark Harris &bull; NVIDIA Developer Blog
+                    </div>
+
+                    <p class="article-abstract">
+                        A clean, intuitive introduction to the SIMT (Single Instruction, Multiple Threads) execution model powering NVIDIA GPUs. Demonstrates how Unified Memory (`cudaMallocManaged`) bridges the host CPU and device GPU address spaces, how thread hierarchies map onto Streaming Multiprocessors (SMs), and how to maximize occupancy while minimizing warp divergence.
+                    </p>
+
+                    <div class="takeaway-box">
+                        <div class="takeaway-title">
+                            <i class="fa-solid fa-lightbulb"></i> Key Architectural Insights
+                        </div>
+                        <ul class="takeaway-list">
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>SIMT Execution Model:</strong> Instructions are issued to warps of 32 threads executing in lockstep, balancing vector computing power with scalar programming flexibility.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Memory Coalescing:</strong> When consecutive threads access consecutive global memory addresses, the memory controller merges them into a single 128-byte transaction.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> <strong>Latency Hiding:</strong> When one warp stalls on an off-chip DRAM access (400-800 cycles), the hardware warp scheduler switches with zero overhead to another active warp.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer-actions">
+                        <span class="course-lecture-tag">
+                            <i class="fa-solid fa-chalkboard"></i> Relevant to CUDA &amp; GPU Modules
+                        </span>
+                        <a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/" target="_blank" rel="noopener noreferrer" class="btn-read-resource">
+                            Read NVIDIA DevBlog <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- RIGHT COLUMN: HIGHLIGHTS SIDEBAR -->
+            <aside class="highlights-col">
+
+                <!-- Highlights Card 1: Milestones Timeline -->
+                <div class="sidebar-card">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-star"></i>
+                        <h3 class="sidebar-title">Historical Milestones</h3>
+                    </div>
+
+                    <div class="milestone-list">
+                        <div class="milestone-item">
+                            <span class="milestone-year">1996</span>
+                            <div class="milestone-headline">Stanford Hydra CMP</div>
+                            <div class="milestone-desc">Olukotun et al. prove on-chip multiprocessing is superior to superscalar ILP.</div>
+                        </div>
+
+                        <div class="milestone-item">
+                            <span class="milestone-year">2004</span>
+                            <div class="milestone-headline">Google MapReduce</div>
+                            <div class="milestone-desc">Dean &amp; Ghemawat formalize cluster computing and fault-tolerant data parallelism.</div>
+                        </div>
+
+                        <div class="milestone-item">
+                            <span class="milestone-year">2005</span>
+                            <div class="milestone-headline">The Concurrency Turn</div>
+                            <div class="milestone-desc">Herb Sutter declares the "Free Lunch is Over" as CPUs hit the Power Wall.</div>
+                        </div>
+
+                        <div class="milestone-item">
+                            <span class="milestone-year">2007</span>
+                            <div class="milestone-headline">CUDA &amp; GPU Gems</div>
+                            <div class="milestone-desc">NVIDIA democratizes massively parallel computing on commodity GPUs.</div>
+                        </div>
+
+                        <div class="milestone-item">
+                            <span class="milestone-year">2008</span>
+                            <div class="milestone-headline">Multicore Amdahl's Law</div>
+                            <div class="milestone-desc">Hill &amp; Marty prove asymmetric/heterogeneous cores overcome serial bottlenecks.</div>
+                        </div>
+
+                        <div class="milestone-item">
+                            <span class="milestone-year">2011</span>
+                            <div class="milestone-headline">The LMAX Disruptor</div>
+                            <div class="milestone-desc">Mechanical sympathy &amp; false-sharing elimination beat traditional queues.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlights Card 2: HPC Formulas Quick Reference -->
+                <div class="sidebar-card">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-calculator" style="color: var(--bits-gold);"></i>
+                        <h3 class="sidebar-title">Essential HPC Laws</h3>
+                    </div>
+
+                    <div class="formula-item">
+                        <div class="formula-name">
+                            <span>Amdahl's Law</span>
+                            <small>Strong Scaling</small>
+                        </div>
+                        <div class="formula-math">S(p) = 1 / ((1 - f) + f / p)</div>
+                        <div class="formula-desc">Speedup is bounded by serial fraction (1-f), regardless of p.</div>
+                    </div>
+
+                    <div class="formula-item">
+                        <div class="formula-name">
+                            <span>Gustafson's Law</span>
+                            <small>Weak Scaling</small>
+                        </div>
+                        <div class="formula-math">S(p) = p - &alpha;(p - 1)</div>
+                        <div class="formula-desc">Scales problem size with processors; linear potential speedup.</div>
+                    </div>
+
+                    <div class="formula-item">
+                        <div class="formula-name">
+                            <span>Brent's Theorem</span>
+                            <small>Scheduling Bound</small>
+                        </div>
+                        <div class="formula-math">T_p &le; (W / p) + S</div>
+                        <div class="formula-desc">Bounds parallel time using total work W, span S, and p cores.</div>
+                    </div>
+
+                    <div class="formula-item">
+                        <div class="formula-name">
+                            <span>Work Efficiency</span>
+                            <small>PRAM / Scan</small>
+                        </div>
+                        <div class="formula-math">W_par(n) = O(W_seq(n)) = O(n)</div>
+                        <div class="formula-desc">Optimal parallel algorithms avoid asymptotic redundant work.</div>
+                    </div>
+                </div>
+
+                <!-- Highlights Card 3: Reading Roadmap -->
+                <div class="sidebar-card">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-map-location-dot" style="color: var(--bits-navy);"></i>
+                        <h3 class="sidebar-title">Curated Reading Roadmap</h3>
+                    </div>
+
+                    <div class="roadmap-step">
+                        <div class="step-num">1</div>
+                        <div class="step-info">
+                            <h5>Phase 1: Foundations (Lec 1&ndash;4)</h5>
+                            <p>Read <em>The Free Lunch is Over</em> + <em>Stanford Single-Chip Multiprocessor</em>.</p>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step">
+                        <div class="step-num">2</div>
+                        <div class="step-info">
+                            <h5>Phase 2: Multicore &amp; Scaling (Lec 5&ndash;8)</h5>
+                            <p>Study <em>Amdahl's Law in the Multicore Era</em> + MESI cache coherence papers.</p>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step">
+                        <div class="step-num">3</div>
+                        <div class="step-info">
+                            <h5>Phase 3: Algorithms &amp; PRAM (Lec 9&ndash;11)</h5>
+                            <p>Master <em>Parallel Prefix Sum (GPU Gems 3)</em> &amp; Blelloch's tree scan.</p>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-step">
+                        <div class="step-num">4</div>
+                        <div class="step-info">
+                            <h5>Phase 4: GPU &amp; Systems (Lec 12+)</h5>
+                            <p>Explore <em>NVIDIA CUDA Blog</em>, <em>LMAX Disruptor</em>, and <em>MapReduce</em>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlights Card 4: Topic Tags -->
+                <div class="sidebar-card">
+                    <div class="sidebar-header">
+                        <i class="fa-solid fa-tags" style="color: #64748b;"></i>
+                        <h3 class="sidebar-title">Explore by Topics</h3>
+                    </div>
+
+                    <div class="tag-cloud">
+                        <span class="tag-chip" onclick="searchTag('multicore')">#Multicore</span>
+                        <span class="tag-chip" onclick="searchTag('cuda')">#CUDA</span>
+                        <span class="tag-chip" onclick="searchTag('prefix-sum')">#PrefixSum</span>
+                        <span class="tag-chip" onclick="searchTag('cache-coherence')">#CacheCoherence</span>
+                        <span class="tag-chip" onclick="searchTag('concurrency')">#Concurrency</span>
+                        <span class="tag-chip" onclick="searchTag('distributed')">#Distributed</span>
+                        <span class="tag-chip" onclick="searchTag('lock-free')">#LockFree</span>
+                        <span class="tag-chip" onclick="searchTag('amdahl')">#AmdahlLaw</span>
+                        <span class="tag-chip" onclick="searchTag('gpu')">#GPGPU</span>
+                    </div>
+                </div>
+
+                <!-- Highlights Card 5: Instructor Consultation Note -->
+                <div class="sidebar-card" style="background: linear-gradient(135deg, #f8fafc 0%, var(--bits-gold-light) 100%); border-color: rgba(229, 169, 60, 0.4);">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
+                        <i class="fa-solid fa-circle-question" style="color: #b45309; font-size: 1.1rem;"></i>
+                        <h4 style="font-size: 0.95rem; color: #78350f; font-weight: 700;">Research Discussion</h4>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #92400e; line-height: 1.45;">
+                        Interested in writing a term project based on one of these seminal papers? Reach out to <strong>Dr. Apurba Das</strong> during consultation hours (Tuesdays &amp; Thursdays, 4:00 PM &ndash; 5:30 PM, Room I222).
+                    </p>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="logo.svg" alt="BITS Pilani" class="footer-logo">
+                <div class="footer-text">
+                    <strong style="color: #ffffff;">CS F422 / U422 &bull; Parallel Computing</strong><br>
+                    Department of Computer Science &amp; Information Systems, BITS Pilani, Hyderabad Campus.<br>
+                    Instructor: <strong>Dr. Apurba Das</strong>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <a href="index.html">Main Course Portal</a>
+                <a href="index.html#schedule">Schedule &amp; Slides</a>
+                <a href="handout.pdf" target="_blank">Course Handout</a>
+                <a href="#overview" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to Top <i class="fa-solid fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Filtering & Search Script -->
+    <script>
+        function filterArticles(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            const cards = document.querySelectorAll('#articlesList .article-card');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (category === 'all' || cardCat === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchArticles() {
+            const query = document.getElementById('articleSearch').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('#articlesList .article-card');
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+                if (text.includes(query) || tags.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchTag(tag) {
+            const searchInput = document.getElementById('articleSearch');
+            searchInput.value = tag;
+            searchArticles();
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

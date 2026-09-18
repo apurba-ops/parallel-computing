@@ -1267,7 +1267,7 @@
                 <a href="#handout">Course Handout</a>
                 <a href="#schedule">Schedule &amp; Slides</a>
                 <a href="#modules">Syllabus</a>
-                <a href="#resources">Blogs &amp; Research</a>
+                <a href="blogs-research.html">Blogs &amp; Research</a>
                 <a href="#instructor">Course Info</a>
             </nav>
         </div>
@@ -1339,12 +1339,12 @@
     <!-- Main Content Area -->
     <main class="main-container">
 
-        <!-- Featured Lecture 10 Spotlight Card -->
+        <!-- Featured Lecture 12 Spotlight Card -->
         <section id="featured">
             <div class="section-header">
                 <div class="section-header-left">
                     <span class="section-eyebrow"><i class="fa-solid fa-bolt"></i> Today's Lecture &bull; Active Slide Deck</span>
-                    <h2 class="section-title">Lecture 11: Multistage Networks &amp; PRAM Algorithms</h2>
+                    <h2 class="section-title">Lecture 12: Analytical Modeling of Parallel Systems</h2>
                     <p class="section-desc">Access the interactive reveal.js slide deck for today's lecture.</p>
                 </div>
             </div>
@@ -1352,38 +1352,39 @@
             <div class="featured-lecture-card">
                 <div class="featured-badge-bar">
                     <span class="active-lecture-tag">
-                        <span class="pulse-dot"></span> Today's Class &bull; September 01, 2026
+                        <span class="pulse-dot"></span> Today's Class &bull; September 03, 2026
                     </span>
                     <span class="lecture-date-tag">
-                        <i class="fa-regular fa-calendar"></i> September 01, 2026 &bull; Lecture 11
+                        <i class="fa-regular fa-calendar"></i> September 03, 2026 &bull; Lecture 12
                     </span>
                 </div>
 
                 <div class="featured-title-wrap">
-                    <span class="featured-lecture-num">LECTURE 11</span>
-                    <h3 class="featured-lecture-title">Multistage Networks &amp; PRAM Algorithms</h3>
+                    <span class="featured-lecture-num">LECTURE 12</span>
+                    <h3 class="featured-lecture-title">Analytical Modeling of Parallel Systems</h3>
                 </div>
 
                 <div class="featured-description">
                     <i class="fa-solid fa-quote-left" style="color: var(--bits-navy); opacity: 0.35; margin-right: 0.5rem;"></i>
-                    Multistage Omega networks, perfect shuffle bit-rotations, 2&times;2 switch routing &amp; blocking, static and dynamic interconnection evaluation metrics (Diameter, Bisection Width, Cost), CREW PRAM Prefix Sum, and Pointer Jumping (List Ranking).
+                    Analytical modeling fundamentals, parallel overheads (communication, idling, excess computation), total overhead ($T_o = pT_p - T_s$), speedup and efficiency, tree-structured parallel reduction, the Work-Depth model ($P = W/D$), Circuit DAGs &amp; the $NC$ class, and hardware superlinear speedup ($S = 2.43 > 2$) via cache working set partitioning (Example 5.3).
                 </div>
 
                 <div class="topic-tags-row">
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Multistage Omega Network</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Perfect Shuffle (Left Rotation)</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Delta Self-Routing &amp; Blocking</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Static/Dynamic Network Metrics</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> PRAM Prefix Sum</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Pointer Jumping &amp; List Ranking</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Analytical Modeling</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Parallel Overhead (To = pTp - Ts)</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Speedup &amp; Efficiency</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Tree Reduction Summation</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Work-Depth Model (P = W/D)</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Circuit Model &amp; NC Class</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Superlinear Speedup (Ex 5.3)</span>
                 </div>
 
                 <div class="featured-btn-row">
-                    <a href="lecture-11.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 11)
+                    <a href="lecture-12.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 12)
                     </a>
-                    <a href="#schedule" class="btn-preview-link">
-                        <i class="fa-solid fa-calendar-days"></i> View Full Lecture Roadmap
+                    <a href="lecture-11.html" class="btn-preview-link" target="_blank">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Previous: Lecture 11 Slides
                     </a>
                 </div>
             </div>
@@ -1592,18 +1593,36 @@
                 </div>
 
                 <!-- Lecture 11 -->
-                <div class="lecture-row active-now" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: var(--bits-crimson); color: #fff;">Lec 11</span></div>
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 11</span></div>
                     <div class="lecture-topic-col">
                         <h4>Multistage Networks &amp; PRAM Algorithms</h4>
-                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture &amp; Algorithms</span>
+                        <span class="module-name">Module 1 &bull; Architecture &amp; Algorithms &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        <strong>Today's Topic:</strong> Multistage Omega networks, perfect shuffle left-rotations, 2&times;2 switch routing &amp; blocking, static/dynamic network evaluation (Diameter, Bisection Width, Cost), CREW PRAM Prefix Sum, and Pointer Jumping for Parallel List Ranking.
+                        Multistage Omega networks, perfect shuffle left-rotations, 2&times;2 switch routing &amp; blocking, static/dynamic network evaluation (Diameter, Bisection Width, Cost), CREW PRAM Prefix Sum, and Pointer Jumping for Parallel List Ranking.
                     </div>
-                    <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Sep 01, 2026</div>
+                    <div class="lecture-date-col">Sep 01, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-11.html" class="btn-table-action" title="View Lecture 11 Slides" target="_blank">
+                        <a href="lecture-11.html" class="btn-table-action secondary" title="View Lecture 11 Slides" target="_blank">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lecture 12 -->
+                <div class="lecture-row active-now" data-category="arch">
+                    <div><span class="lecture-id-badge" style="background: var(--bits-crimson); color: #fff;">Lec 12</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Analytical Modeling of Parallel Systems</h4>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Performance Modeling &amp; Algorithms</span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        <strong>Today's Topic:</strong> Sources of parallel overhead, Total Overhead ($T_o$), Speedup ($S$) and Efficiency ($E$), Tree reduction summation, Work-Depth model, Circuit model DAGs &amp; $NC$ class, Superlinear speedup ($S > p$) and Example 5.3 cache hit effects, and Brent's Theorem preview.
+                    </div>
+                    <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Sep 03, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-12.html" class="btn-table-action" title="View Lecture 12 Slides" target="_blank">
                             <i class="fa-solid fa-play"></i> Open Slides
                         </a>
                     </div>
@@ -1730,9 +1749,14 @@
                     <h2 class="section-title">Blogs &amp; Seminal Research</h2>
                     <p class="section-desc">Curated articles, technical blogs, and seminal research papers to deepen your knowledge of concurrency and hardware architectures.</p>
                 </div>
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-shrink: 0;">
-                    <button class="btn-carousel-nav prev" onclick="slidePrev()" aria-label="Previous Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button class="btn-carousel-nav next" onclick="slideNext()" aria-label="Next Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-right"></i></button>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-shrink: 0; flex-wrap: wrap;">
+                    <a href="blogs-research.html" class="btn-header-cta" style="font-size: 0.82rem; padding: 0.45rem 1rem; border-radius: var(--radius-full); box-shadow: var(--shadow-sm);">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Dedicated Blogs &amp; Research Page
+                    </a>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-carousel-nav prev" onclick="slidePrev()" aria-label="Previous Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="btn-carousel-nav next" onclick="slideNext()" aria-label="Next Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
                 </div>
             </div>
 
@@ -2057,7 +2081,7 @@
             <div class="footer-links">
                 <a href="#overview">Back to Top <i class="fa-solid fa-arrow-up"></i></a>
                 <a href="#schedule">Schedule &amp; Slides</a>
-                <a href="#resources">Blogs &amp; Research</a>
+                <a href="blogs-research.html">Blogs &amp; Research</a>
             </div>
         </div>
     </footer>
