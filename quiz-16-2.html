@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 16-2: Shared-Memory &amp; OpenMP (Lec 15 Review) | CS F422 Parallel Computing</title>
+    <meta name="description" content="Interactive review quiz on Shared-Memory Programming and OpenMP: Thread Pools, Reduction Clauses, Loop Scheduling, and Data Scoping (Lecture 15 Review).">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bits-navy-dark: #07172c;
+            --bits-navy: #003366;
+            --bits-navy-light: #164e87;
+            --bits-gold: #e5a93c;
+            --bits-gold-light: #fff3d6;
+            --bits-crimson: #d71920;
+            --bits-crimson-light: #fdedee;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px -2px rgba(15,23,42,0.08), 0 2px 6px -1px rgba(15,23,42,0.04);
+            --shadow-lg: 0 12px 28px -4px rgba(15,23,42,0.12), 0 4px 12px -2px rgba(15,23,42,0.06);
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            --correct-bg: #f0fdf4;
+            --correct-border: #16a34a;
+            --correct-text: #166534;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+            line-height: 1.25;
+        }
+
+        a { color: var(--bits-navy); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--bits-navy-light); }
+
+        /* Header Bar */
+        .quiz-header {
+            background: linear-gradient(135deg, #07172c 0%, #003366 65%, #0d4680 100%);
+            color: #fff;
+            padding: 2.5rem 1.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-header::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(229,169,60,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(215,25,32,0.12) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        .header-inner {
+            max-width: 920px;
+            margin: 0 auto;
+            position: relative; z-index: 2;
+        }
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 0.8rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .breadcrumb a { color: #cbd5e1; }
+        .breadcrumb a:hover { color: #fff; }
+        .quiz-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(215,25,32,0.2);
+            border: 1px solid rgba(215,25,32,0.45);
+            color: #fca5a5;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.78rem; font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .quiz-header h1 {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 0.4rem;
+        }
+        .quiz-header p {
+            color: #cbd5e1;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .quiz-container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .quiz-intro {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--bits-crimson);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+        .quiz-intro strong { color: var(--bits-navy-dark); }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .question-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-header {
+            padding: 1.25rem 1.5rem 0.75rem;
+            display: flex;
+            gap: 0.85rem;
+        }
+        .q-number {
+            flex-shrink: 0;
+            width: 36px; height: 36px;
+            background: var(--bits-crimson);
+            color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .q-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding-top: 0.3rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0 1.5rem 0.5rem 1.5rem;
+        }
+        .options-list li {
+            padding: 0.7rem 1rem;
+            margin-bottom: 0.4rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .options-list li:hover {
+            background: #f1f5f9;
+            border-color: var(--border-color);
+        }
+        .options-list li .opt-label {
+            font-weight: 700;
+            color: var(--bits-crimson);
+            margin-right: 0.35rem;
+        }
+        .options-list li.selected {
+            background: #fef2f2;
+            border-color: var(--bits-crimson);
+        }
+        .options-list li.correct {
+            background: var(--correct-bg);
+            border-color: var(--correct-border);
+        }
+        .options-list li.incorrect {
+            background: var(--bits-crimson-light);
+            border-color: var(--bits-crimson);
+        }
+
+        /* Reveal Button */
+        .reveal-btn-wrap {
+            padding: 0 1.5rem 1rem;
+        }
+        .reveal-btn {
+            background: var(--bits-crimson);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+        .reveal-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        /* Explanation */
+        .explanation {
+            display: none;
+            padding: 1rem 1.5rem 1.25rem;
+            background: var(--correct-bg);
+            border-top: 1px solid #bbf7d0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--correct-text);
+            animation: slideDown 0.3s ease-out;
+        }
+        .explanation.visible {
+            display: block;
+        }
+        .explanation strong {
+            color: #15803d;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Score Bar */
+        .score-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .score-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--bits-navy-dark);
+        }
+        .score-text .score-val {
+            color: var(--bits-crimson);
+            font-size: 1.4rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center; gap: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--bits-navy);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .back-link:hover {
+            background: #f1f5f9;
+            border-color: var(--bits-navy);
+        }
+
+        /* Footer */
+        .quiz-footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+        .quiz-footer a { font-weight: 600; }
+
+        @media (max-width: 640px) {
+            .quiz-header h1 { font-size: 1.5rem; }
+            .question-header { flex-direction: column; gap: 0.4rem; }
+            .score-bar { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="quiz-header">
+        <div class="header-inner">
+            <div class="breadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+                <span>/</span>
+                <a href="lecture-16.html">Lecture 16</a>
+                <span>/</span>
+                <span>Quiz 16-2</span>
+            </div>
+            <div class="quiz-badge"><i class="fa-solid fa-rotate-left"></i> Lecture 15 Review Quiz</div>
+            <h1>Quiz 16-2: Shared-Memory &amp; OpenMP</h1>
+            <p>4 MCQs reviewing Thread Pool Recycling, Reduction Clauses, Loop Scheduling, and Data Scoping from Lecture 15.</p>
+        </div>
+    </header>
+
+    <main class="quiz-container">
+        <div class="score-bar">
+            <div class="score-text">Score: <span class="score-val" id="score">0</span> / 4</div>
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <a href="quiz-16-1.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Quiz 16-1</a>
+                <a href="index.html" class="back-link"><i class="fa-solid fa-house"></i> Course Portal</a>
+            </div>
+        </div>
+
+        <div class="quiz-intro">
+            <strong><i class="fa-solid fa-circle-info"></i> Instructions:</strong> Select an answer for each question, then click <em>"Reveal Answer"</em> to see the correct solution and detailed explanation. Your score updates automatically.
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-card" id="q1">
+            <div class="question-header">
+                <div class="q-number">1</div>
+                <div class="q-text">In the OpenMP Fork-Join execution model, why are worker threads not destroyed by the operating system kernel when reaching the join barrier?</div>
+            </div>
+            <ul class="options-list" data-correct="B">
+                <li data-opt="A"><span class="opt-label">(A)</span> OpenMP compilers lack the system calls to destroy threads.</li>
+                <li data-opt="B"><span class="opt-label">(B)</span> Threads hibernate in a thread pool to eliminate repetitive OS kernel thread creation and context allocation overhead at subsequent parallel regions.</li>
+                <li data-opt="C"><span class="opt-label">(C)</span> Master Thread 0 terminates, leaving workers running.</li>
+                <li data-opt="D"><span class="opt-label">(D)</span> Operating system threads cannot be destroyed once spawned.</li>
+            </ul>
+            <div class="reveal-btn-wrap">
+                <button class="reveal-btn" onclick="revealAnswer('q1')"><i class="fa-solid fa-eye"></i> Reveal Answer</button>
+            </div>
+            <div class="explanation" id="q1-exp">
+                <strong>Answer: (B) Thread Pool Hibernation &amp; Low Latency</strong><br>
+                &bull; <strong>Why (B) is True:</strong> Spawning OS kernel threads via <code>clone()</code> or <code>pthread_create()</code> requires thousands of CPU cycles (allocating thread control blocks, kernel stack frames). By parking threads in a sleep/spin pool, subsequent <code>#pragma omp parallel</code> blocks awaken them in sub-microsecond time.<br>
+                &bull; <em>Why others are false:</em> OS kernels easily destroy threads; Master Thread 0 remains alive throughout.
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" id="q2">
+            <div class="question-header">
+                <div class="q-number">2</div>
+                <div class="q-text">How does the OpenMP clause <code style="color: var(--bits-crimson); font-weight: 700;">reduction(+:sum)</code> eliminate race conditions on shared variable <code>sum</code> without incurring massive mutual exclusion lock contention?</div>
+            </div>
+            <ul class="options-list" data-correct="B">
+                <li data-opt="A"><span class="opt-label">(A)</span> By serializing the entire loop across the master thread.</li>
+                <li data-opt="B"><span class="opt-label">(B)</span> Each thread accumulates into a private local copy initialized to the operator identity (0), followed by a lock-free logarithmic tree reduction at the barrier.</li>
+                <li data-opt="C"><span class="opt-label">(C)</span> By flushing all L1 caches to DRAM on every iteration.</li>
+                <li data-opt="D"><span class="opt-label">(D)</span> By converting the loop into POSIX semaphores.</li>
+            </ul>
+            <div class="reveal-btn-wrap">
+                <button class="reveal-btn" onclick="revealAnswer('q2')"><i class="fa-solid fa-eye"></i> Reveal Answer</button>
+            </div>
+            <div class="explanation" id="q2-exp">
+                <strong>Answer: (B) Private Accumulators + Tree Reduction</strong><br>
+                &bull; <strong>Why (B) is True:</strong> OpenMP allocates a thread-private variable for each worker initialized to identity (e.g. 0 for +, 1 for *). Threads accumulate locally without touching shared memory. At the join barrier, the runtime combines private values into the original shared variable via an O(log₂ p) tree reduction.<br>
+                &bull; <em>Why others are false:</em> It does not serialize execution (A); flushing cache lines causes catastrophic false sharing (C).
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" id="q3">
+            <div class="question-header">
+                <div class="q-number">3</div>
+                <div class="q-text">For a loop where iteration computational workload varies wildly (e.g., Mandelbrot set rendering), which OpenMP scheduling policy is optimal and why?</div>
+            </div>
+            <ul class="options-list" data-correct="B">
+                <li data-opt="A"><span class="opt-label">(A)</span> <code>schedule(static)</code> because it has zero runtime queue overhead.</li>
+                <li data-opt="B"><span class="opt-label">(B)</span> <code>schedule(dynamic, chunk)</code> or <code>guided</code> because threads dynamically pull chunks from a shared work-queue, preventing idle processor waiting.</li>
+                <li data-opt="C"><span class="opt-label">(C)</span> <code>schedule(runtime)</code> because it disables compiler optimizations.</li>
+                <li data-opt="D"><span class="opt-label">(D)</span> No scheduling clause is permitted for non-uniform loops.</li>
+            </ul>
+            <div class="reveal-btn-wrap">
+                <button class="reveal-btn" onclick="revealAnswer('q3')"><i class="fa-solid fa-eye"></i> Reveal Answer</button>
+            </div>
+            <div class="explanation" id="q3-exp">
+                <strong>Answer: (B) Dynamic / Guided Work-Queue Balancing</strong><br>
+                &bull; <strong>Why (B) is True:</strong> When iteration execution times vary unpredictably, <code>static</code> scheduling assigns heavy iterations to one core while others finish early and sit idle. <code>dynamic</code> scheduling allows fast threads to continuously pull new chunks, achieving balanced processor utilization.<br>
+                &bull; <em>Why others are false:</em> <code>static</code> suffers severe load imbalance; <code>runtime</code> simply delays selection to an environment variable.
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" id="q4">
+            <div class="question-header">
+                <div class="q-number">4</div>
+                <div class="q-text">Why is the OpenMP clause <code style="color: var(--bits-crimson); font-weight: 700;">default(none)</code> strongly recommended by expert high-performance computing engineers?</div>
+            </div>
+            <ul class="options-list" data-correct="B">
+                <li data-opt="A"><span class="opt-label">(A)</span> It automatically parallelizes nested loops.</li>
+                <li data-opt="B"><span class="opt-label">(B)</span> It forces the programmer to explicitly declare the scoping (<code>shared</code>, <code>private</code>, <code>firstprivate</code>) of every variable, preventing catastrophic unintended data races.</li>
+                <li data-opt="C"><span class="opt-label">(C)</span> It allocates all variables on GPU device memory.</li>
+                <li data-opt="D"><span class="opt-label">(D)</span> It turns off compiler warnings.</li>
+            </ul>
+            <div class="reveal-btn-wrap">
+                <button class="reveal-btn" onclick="revealAnswer('q4')"><i class="fa-solid fa-eye"></i> Reveal Answer</button>
+            </div>
+            <div class="explanation" id="q4-exp">
+                <strong>Answer: (B) Enforcing Explicit Scoping to Eliminate Races</strong><br>
+                &bull; <strong>Why (B) is True:</strong> By default, variables defined outside parallel regions are implicitly <code>shared</code>. If an inner temporary variable is accidentally left shared, multiple threads overwrite it concurrently, causing silent data corruption. <code>default(none)</code> makes the compiler reject any un-scoped variable at build time.<br>
+                &bull; <em>Why others are false:</em> It does not affect GPUs or loop nesting.
+            </div>
+        </div>
+
+        <div class="score-bar" style="margin-top: 2rem;">
+            <div class="score-text">Final Score: <span class="score-val" id="score-bottom">0</span> / 4</div>
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <a href="quiz-16-1.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Quiz 16-1</a>
+                <a href="index.html" class="back-link"><i class="fa-solid fa-house"></i> Course Portal</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="quiz-footer">
+        <p>CS F422/U422: Parallel Computing &bull; <a href="index.html">BITS Pilani, Hyderabad Campus</a> &bull; Instructor: Dr. Apurba Das</p>
+        <p style="margin-top: 0.5rem;">
+            <strong>Synthesis Insight:</strong> Writing robust OpenMP code requires understanding both algorithm decomposition (Lec 16) and low-level runtime mechanics like thread pools and reduction trees (Lec 15)!
+        </p>
+    </footer>
+
+    <script>
+        let score = 0;
+        const answered = {};
+
+        document.querySelectorAll('.options-list li').forEach(li => {
+            li.addEventListener('click', function() {
+                const list = this.closest('.options-list');
+                const card = this.closest('.question-card');
+                if (answered[card.id]) return;
+                list.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        function revealAnswer(qId) {
+            if (answered[qId]) return;
+            answered[qId] = true;
+
+            const card = document.getElementById(qId);
+            const list = card.querySelector('.options-list');
+            const correct = list.dataset.correct;
+            const exp = document.getElementById(qId + '-exp');
+            const btn = card.querySelector('.reveal-btn');
+
+            const selected = card.querySelector('.options-list li.selected');
+
+            list.querySelectorAll('li').forEach(li => {
+                if (li.dataset.opt === correct) {
+                    li.classList.add('correct');
+                }
+            });
+
+            if (selected && selected.dataset.opt !== correct) {
+                selected.classList.add('incorrect');
+            }
+
+            if (selected && selected.dataset.opt === correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+                document.getElementById('score-bottom').textContent = score;
+            }
+
+            exp.classList.add('visible');
+
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'default';
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Answered';
+
+            list.querySelectorAll('li').forEach(li => {
+                li.style.cursor = 'default';
+            });
+        }
+    </script>
+</body>
+</html>

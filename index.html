@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS F422 / U422: Parallel Computing | BITS Pilani</title>
-    <meta name="description" content="Course portal for CS F422/U422: Parallel Computing at BITS Pilani. Instructor: Dr. Apurba Das. Covers multicore architectures, OpenMP, MPI, and GPU CUDA programming.">
-    
+    <meta name="description"
+        content="Course portal for CS F422/U422: Parallel Computing at BITS Pilani. Instructor: Dr. Apurba Das. Covers multicore architectures, OpenMP, MPI, and GPU CUDA programming.">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -36,7 +40,7 @@
             --radius-md: 12px;
             --radius-lg: 18px;
             --radius-full: 9999px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
             --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
             --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -61,14 +65,20 @@
         }
 
         /* Typography */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-family: 'Outfit', 'Inter', sans-serif;
             font-weight: 700;
             color: var(--bits-navy-dark);
             line-height: 1.25;
         }
 
-        code, .code-font {
+        code,
+        .code-font {
             font-family: 'JetBrains Mono', monospace;
         }
 
@@ -87,7 +97,7 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .header-container {
@@ -164,7 +174,8 @@
             position: relative;
         }
 
-        nav.nav-links a:hover, nav.nav-links a.active {
+        nav.nav-links a:hover,
+        nav.nav-links a.active {
             color: var(--bits-navy);
         }
 
@@ -213,7 +224,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 15% 30%, rgba(229, 169, 60, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 85% 70%, rgba(215, 25, 32, 0.12) 0%, transparent 45%),
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -364,7 +375,7 @@
             font-size: 1.5rem;
             color: #ffffff;
             font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
         }
 
@@ -504,9 +515,20 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(2, 132, 199, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(2, 132, 199, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(2, 132, 199, 0);
+            }
         }
 
         .lecture-date-tag {
@@ -705,7 +727,8 @@
             transition: var(--transition);
         }
 
-        .btn-filter:hover, .btn-filter.active {
+        .btn-filter:hover,
+        .btn-filter.active {
             background: var(--bits-navy);
             color: #ffffff;
             border-color: var(--bits-navy);
@@ -1121,15 +1144,19 @@
                 grid-template-columns: 1fr;
                 gap: 2.5rem;
             }
+
             .hero-title {
                 font-size: 2.6rem;
             }
+
             .info-dual-grid {
                 grid-template-columns: 1fr;
             }
+
             .lecture-row {
                 grid-template-columns: 75px 1.3fr 1.3fr 110px;
             }
+
             .lecture-row .lecture-date-col {
                 display: none;
             }
@@ -1139,24 +1166,30 @@
             nav.nav-links {
                 display: none;
             }
+
             .hero-title {
                 font-size: 2.15rem;
             }
+
             .lecture-row {
                 grid-template-columns: 1fr;
                 gap: 0.6rem;
                 padding: 1.2rem;
             }
+
             .row-header {
                 display: none;
             }
+
             .lecture-action-col {
                 text-align: left;
                 margin-top: 0.4rem;
             }
+
             .course-quick-grid {
                 grid-template-columns: 1fr;
             }
+
             .featured-lecture-card {
                 padding: 1.5rem;
             }
@@ -1169,16 +1202,19 @@
             overflow: hidden;
             padding: 0.5rem 0.25rem 0.5rem 0.25rem;
         }
+
         .carousel-viewport {
             width: 100%;
             overflow: hidden;
         }
+
         .carousel-track {
             display: flex;
             gap: 1.5rem;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform;
         }
+
         .carousel-slide {
             flex: 0 0 calc((100% - 3rem) / 3);
             max-width: calc((100% - 3rem) / 3);
@@ -1193,16 +1229,19 @@
             justify-content: space-between;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .carousel-slide:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-md);
         }
+
         .carousel-indicators {
             display: flex;
             justify-content: center;
             gap: 0.5rem;
             margin-top: 1.5rem;
         }
+
         .carousel-dot {
             width: 10px;
             height: 10px;
@@ -1213,17 +1252,20 @@
             padding: 0;
             transition: all 0.2s ease;
         }
+
         .carousel-dot.active {
             background: var(--bits-navy);
             width: 24px;
             border-radius: var(--radius-full);
         }
+
         .btn-carousel-nav:hover {
             background: var(--bits-navy) !important;
             color: #ffffff !important;
             border-color: var(--bits-navy) !important;
             box-shadow: var(--shadow-sm);
         }
+
         .btn-carousel-nav:disabled {
             opacity: 0.4;
             cursor: not-allowed;
@@ -1231,13 +1273,14 @@
             color: #94a3b8 !important;
             border-color: #e2e8f0 !important;
         }
-        
+
         @media (max-width: 1024px) {
             .carousel-slide {
                 flex: 0 0 calc((100% - 1.5rem) / 2);
                 max-width: calc((100% - 1.5rem) / 2);
             }
         }
+
         @media (max-width: 640px) {
             .carousel-slide {
                 flex: 0 0 100%;
@@ -1246,6 +1289,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Site Header -->
@@ -1283,13 +1327,14 @@
                     <span class="hero-pill"><i class="fa-solid fa-building-columns"></i> BITS Pilani</span>
                     <span class="hero-pill"><i class="fa-solid fa-microchip"></i> High-Performance Computing</span>
                 </div>
-                
+
                 <h1 class="hero-title">
                     Parallel <span class="highlight">Computing</span>
                 </h1>
 
                 <p class="hero-subtitle">
-                    Master modern parallel architectures, hardware multithreading, cache coherence, shared-memory programming (OpenMP), distributed-memory systems (MPI), and GPU accelerator programming with CUDA.
+                    Master modern parallel architectures, hardware multithreading, cache coherence, shared-memory
+                    programming (OpenMP), distributed-memory systems (MPI), and GPU accelerator programming with CUDA.
                 </p>
 
                 <div class="hero-actions">
@@ -1325,11 +1370,11 @@
                     </div>
                     <div class="quick-item">
                         <span class="q-label">Current Status</span>
-                        <span class="q-val">13 Lectures Completed</span>
+                        <span class="q-val">17 Lectures Completed</span>
                     </div>
                     <div class="quick-item">
                         <span class="q-label">Today's Class</span>
-                        <span class="q-val" style="color: #ffd978;">Lecture 14 (Active Online)</span>
+                        <span class="q-val" style="color: #ffd978;">Lecture 18 (Active Online)</span>
                     </div>
                 </div>
             </div>
@@ -1339,12 +1384,14 @@
     <!-- Main Content Area -->
     <main class="main-container">
 
-        <!-- Featured Lecture 14 Spotlight Card -->
+        <!-- Featured Lecture 18 Spotlight Card -->
         <section id="featured">
             <div class="section-header">
                 <div class="section-header-left">
-                    <span class="section-eyebrow"><i class="fa-solid fa-bolt"></i> Today's Lecture &bull; Active Slide Deck</span>
-                    <h2 class="section-title">Lecture 14: Process-to-Processor Mapping &amp; Graph Embedding</h2>
+                    <span class="section-eyebrow"><i class="fa-solid fa-bolt"></i> Today's Lecture &bull; Active Slide
+                        Deck</span>
+                    <h2 class="section-title">Lecture 18: Parallel Algorithm Design: Process Mapping &amp; Load
+                        Balancing</h2>
                     <p class="section-desc">Access the interactive reveal.js slide deck for today's lecture.</p>
                 </div>
             </div>
@@ -1352,40 +1399,57 @@
             <div class="featured-lecture-card">
                 <div class="featured-badge-bar">
                     <span class="active-lecture-tag">
-                        <span class="pulse-dot"></span> Active Slide Deck &bull; September 10, 2026
+                        <span class="pulse-dot"></span> Active Slide Deck &bull; September 24, 2026
                     </span>
                     <span class="lecture-date-tag">
-                        <i class="fa-regular fa-calendar"></i> September 10, 2026 &bull; Lecture 14
+                        <i class="fa-regular fa-calendar"></i> September 24, 2026 &bull; Lecture 18
                     </span>
                 </div>
 
                 <div class="featured-title-wrap">
-                    <span class="featured-lecture-num">LECTURE 14</span>
-                    <h3 class="featured-lecture-title">Process-to-Processor Mapping &amp; Graph Embedding</h3>
+                    <span class="featured-lecture-num">LECTURE 18</span>
+                    <h3 class="featured-lecture-title">Parallel Algorithm Design: Process Mapping &amp; Load Balancing
+                    </h3>
                 </div>
 
                 <div class="featured-description">
-                    <i class="fa-solid fa-quote-left" style="color: var(--bits-navy); opacity: 0.35; margin-right: 0.5rem;"></i>
-                    Mapping logical process interaction graphs onto physical processor topologies, Store-and-Forward vs. Cut-Through &amp; Wormhole routing, Graph Embedding formalism ($D, C, X, L$), Leighton's Bisection Theorem ($C \ge B(G)/B(G')$), Binary Reflected Gray Code embeddings (Linear Array / Mesh into Hypercube), 2D Mesh vs. Linear Array Snake/Inverse mappings, and Hypercube into 2D Mesh bisection mismatch.
+                    <i class="fa-solid fa-quote-left"
+                        style="color: var(--bits-navy); opacity: 0.35; margin-right: 0.5rem;"></i>
+                    The process mapping problem (<code
+                        style="color: var(--bits-navy); font-weight: 700;">M: Tasks &rarr; Processes</code>), Processes
+                    vs. Processors virtualization hierarchy, Minimizing idling (DAG alignment) vs. minimizing
+                    communication (Interaction graph locality), Static mapping via 1-D block, cyclic, and 2-D
+                    checkerboard distributions with <code
+                        style="color: var(--bits-crimson); font-weight: 700;">&radic;p</code> asymptotic
+                    surface-to-volume communication reduction, Sparse matrix-vector mapping via <code
+                        style="color: var(--bits-navy); font-weight: 700;">k</code>-way min-cut graph partitioning
+                    (METIS), Hierarchical mapping for binary tree algorithms (Quicksort processor teams), Decentralized
+                    dynamic load balancing via <strong>Work Stealing</strong> (Cilk/TBB) with double-ended queues
+                    (deques), and comprehensive taxonomies of task generation, granularity, context, and interaction
+                    profiles.
                 </div>
 
                 <div class="topic-tags-row">
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Process Mapping Challenge</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Store-and-Forward &amp; Wormhole Routing</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Graph Embedding Formalism (D, C, X, L)</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Leighton's Bisection Theorem</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Reflected Gray Code (RGC)</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Mesh into Hypercube Concatenation</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Serpentine Snake &amp; Inverse Mappings</span>
-                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> VLSI Bisection Bottlenecks</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Process Mapping</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Processes vs. Processors</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Load Balancing &amp; Idling</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> 1-D &amp; 2-D Distributions</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Checkerboard &radic;p Bound</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Sparse Min-Cut Partitioning</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Hierarchical Mapping</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Work Stealing (Cilk/TBB)</span>
+                    <span class="topic-tag"><i class="fa-solid fa-tag"></i> Blumofe-Leiserson Bound</span>
                 </div>
 
                 <div class="featured-btn-row">
-                    <a href="lecture-14.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 14)
+                    <a href="lecture-18.html" class="btn-launch-slides" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Interactive Slides (Lecture 18)
                     </a>
-                    <a href="lecture-13.html" class="btn-preview-link" target="_blank">
-                        <i class="fa-solid fa-clock-rotate-left"></i> Previous: Lecture 13 Slides
+                    <a href="lecture-17.html" class="btn-preview-link" target="_blank">
+                        <i class="fa-solid fa-file-powerpoint"></i> Lecture 17: Decomposition
+                    </a>
+                    <a href="lecture-16.html" class="btn-preview-link" target="_blank">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Lecture 16: Concurrency
                     </a>
                 </div>
             </div>
@@ -1408,7 +1472,8 @@
                     </div>
                     <h3 class="pillar-title">Parallel Architectures</h3>
                     <p class="pillar-desc">
-                        Multicore CMPs, cache coherence (MSI/MESI), memory consistency models, interconnect topologies, and hardware multithreading (SMT/CMT).
+                        Multicore CMPs, cache coherence (MSI/MESI), memory consistency models, interconnect topologies,
+                        and hardware multithreading (SMT/CMT).
                     </p>
                 </div>
 
@@ -1418,7 +1483,8 @@
                     </div>
                     <h3 class="pillar-title">Shared Memory (OpenMP)</h3>
                     <p class="pillar-desc">
-                        POSIX threads, OpenMP compiler directives, tasking, work-sharing loops, synchronizations, critical sections, and lock-free programming.
+                        POSIX threads, OpenMP compiler directives, tasking, work-sharing loops, synchronizations,
+                        critical sections, and lock-free programming.
                     </p>
                 </div>
 
@@ -1428,7 +1494,8 @@
                     </div>
                     <h3 class="pillar-title">Distributed Memory (MPI)</h3>
                     <p class="pillar-desc">
-                        Message Passing Interface (MPI), point-to-point non-blocking semantics, collective communications, parallel I/O, and hybrid OpenMP+MPI clusters.
+                        Message Passing Interface (MPI), point-to-point non-blocking semantics, collective
+                        communications, parallel I/O, and hybrid OpenMP+MPI clusters.
                     </p>
                 </div>
 
@@ -1438,7 +1505,8 @@
                     </div>
                     <h3 class="pillar-title">GPU Acceleration (CUDA)</h3>
                     <p class="pillar-desc">
-                        SIMT execution, warp scheduling, shared memory banking, coalesced memory transactions, and high-performance kernel design in CUDA C/C++.
+                        SIMT execution, warp scheduling, shared memory banking, coalesced memory transactions, and
+                        high-performance kernel design in CUDA C/C++.
                     </p>
                 </div>
             </div>
@@ -1450,19 +1518,23 @@
                 <div class="section-header-left">
                     <span class="section-eyebrow">Curriculum Roadmap</span>
                     <h2 class="section-title">Lectures &amp; Slide Materials</h2>
-                    <p class="section-desc">Access slide decks, lecture notes, and topical coverage across all semesters.</p>
+                    <p class="section-desc">Access slide decks, lecture notes, and topical coverage across all
+                        semesters.</p>
                 </div>
             </div>
 
             <div class="schedule-controls">
                 <div class="filter-buttons">
-                    <button class="btn-filter active" onclick="filterLectures('all')">All Lectures (1&ndash;7)</button>
+                    <button class="btn-filter active" onclick="filterLectures('all')">All Lectures</button>
                     <button class="btn-filter" onclick="filterLectures('arch')">Architecture &amp; Foundations</button>
+                    <button class="btn-filter" onclick="filterLectures('algo')">Parallel Algorithms</button>
+                    <button class="btn-filter" onclick="filterLectures('openmp')">OpenMP / Shared Memory</button>
                 </div>
 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="lectureSearch" placeholder="Search topics or keywords..." onkeyup="searchLectures()">
+                    <input type="text" id="lectureSearch" placeholder="Search topics or keywords..."
+                        onkeyup="searchLectures()">
                 </div>
             </div>
 
@@ -1480,14 +1552,19 @@
                     <div><span class="lecture-id-badge">Lec 1</span></div>
                     <div class="lecture-topic-col">
                         <h4>Introduction to Parallel Computing</h4>
-                        <span class="module-name">Module 1 &bull; Foundations &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Foundations &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Course motivations &amp; perspective, supercomputing history from Cray-1 to Exascale/AI (Frontier, AIRAWAT, PARAM Rudra), modern hardware landscape, and evaluation scheme.
+                        Course motivations &amp; perspective, supercomputing history from Cray-1 to Exascale/AI
+                        (Frontier, AIRAWAT, PARAM Rudra), modern hardware landscape, and evaluation scheme.
                     </div>
                     <div class="lecture-date-col">Aug 04, 2026</div>
                     <div class="lecture-action-col">
-                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                        <span class="btn-table-disabled"
+                            style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i
+                                class="fa-solid fa-check"></i> Completed</span>
                     </div>
                 </div>
 
@@ -1496,14 +1573,19 @@
                     <div><span class="lecture-id-badge">Lec 2</span></div>
                     <div class="lecture-topic-col">
                         <h4>Parallelism &amp; Computer Architecture</h4>
-                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Von Neumann bottleneck with 128 cores scaling, Moore's Law vs clock speed plateau, Dennard scaling breakdown, Power Wall &amp; thermal runaway, and the rise of multicore chips.
+                        Von Neumann bottleneck with 128 cores scaling, Moore's Law vs clock speed plateau, Dennard
+                        scaling breakdown, Power Wall &amp; thermal runaway, and the rise of multicore chips.
                     </div>
                     <div class="lecture-date-col">Aug 06, 2026</div>
                     <div class="lecture-action-col">
-                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                        <span class="btn-table-disabled"
+                            style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i
+                                class="fa-solid fa-check"></i> Completed</span>
                     </div>
                 </div>
 
@@ -1512,14 +1594,19 @@
                     <div><span class="lecture-id-badge">Lec 3</span></div>
                     <div class="lecture-topic-col">
                         <h4>Multicore, Multithreading &amp; Granularity</h4>
-                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Processes vs threads, OS dispatcher &amp; context switching, hyperthreading core states, loop dependencies &amp; parallel tree reductions, and work vs interaction granularity.
+                        Processes vs threads, OS dispatcher &amp; context switching, hyperthreading core states, loop
+                        dependencies &amp; parallel tree reductions, and work vs interaction granularity.
                     </div>
                     <div class="lecture-date-col">Aug 07, 2026</div>
                     <div class="lecture-action-col">
-                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                        <span class="btn-table-disabled"
+                            style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i
+                                class="fa-solid fa-check"></i> Completed</span>
                     </div>
                 </div>
 
@@ -1528,14 +1615,19 @@
                     <div><span class="lecture-id-badge">Lec 4</span></div>
                     <div class="lecture-topic-col">
                         <h4>Taxonomy &amp; Forms of Parallelism</h4>
-                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Flynn's taxonomy (SISD, SIMD, MISD, MIMD), physical memory (UMA/SMP vs NUMA), Shared Address (OpenMP) vs Message Passing (MPI), and Data vs Control parallelism.
+                        Flynn's taxonomy (SISD, SIMD, MISD, MIMD), physical memory (UMA/SMP vs NUMA), Shared Address
+                        (OpenMP) vs Message Passing (MPI), and Data vs Control parallelism.
                     </div>
                     <div class="lecture-date-col">Aug 11, 2026</div>
                     <div class="lecture-action-col">
-                        <span class="btn-table-disabled" style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i class="fa-solid fa-check"></i> Completed</span>
+                        <span class="btn-table-disabled"
+                            style="color: #15803d; background: #ecfdf5; border-color: #a7f3d0;"><i
+                                class="fa-solid fa-check"></i> Completed</span>
                     </div>
                 </div>
 
@@ -1544,14 +1636,18 @@
                     <div><span class="lecture-id-badge">Lec 5-6</span></div>
                     <div class="lecture-topic-col">
                         <h4>Multi-Core Architectures</h4>
-                        <span class="module-name">Module 1 &bull; Architecture &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Architecture &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Single-core to CMP transition, hardware multithreading (SMT/Fine-Grained/Coarse-Grained), and cache hierarchy bottlenecks in modern parallel systems.
+                        Single-core to CMP transition, hardware multithreading (SMT/Fine-Grained/Coarse-Grained), and
+                        cache hierarchy bottlenecks in modern parallel systems.
                     </div>
                     <div class="lecture-date-col">Aug 13, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-5-6.html" class="btn-table-action secondary" title="View Lecture 5-6 Slides" target="_blank">
+                        <a href="lecture-5-6.html" class="btn-table-action secondary" title="View Lecture 5-6 Slides"
+                            target="_blank">
                             <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
@@ -1559,13 +1655,16 @@
 
                 <!-- Lecture 7 (TODAY / ACTIVE SLIDE DECK) -->
                 <div class="lecture-row highlighted" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: var(--bits-navy); color: #ffffff;">Lec 7-8-9</span></div>
+                    <div><span class="lecture-id-badge" style="background: var(--bits-navy); color: #ffffff;">Lec
+                            7-8-9</span></div>
                     <div class="lecture-topic-col">
                         <h4>GPU Architecture &amp; CUDA</h4>
-                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture (Today's Class)</span>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull;
+                            Architecture (Today's Class)</span>
                     </div>
                     <div class="lecture-desc-col">
-                        <strong>Today's Topic:</strong> Introduction to GPU throughput designs, graphics pipelines, CUDA thread hierarchy, memory models, and SM warp execution/latency hiding.
+                        <strong>Today's Topic:</strong> Introduction to GPU throughput designs, graphics pipelines, CUDA
+                        thread hierarchy, memory models, and SM warp execution/latency hiding.
                     </div>
                     <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Aug 14, 2026</div>
                     <div class="lecture-action-col">
@@ -1577,17 +1676,21 @@
 
                 <!-- Lecture 10 -->
                 <div class="lecture-row" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 10</span></div>
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            10</span></div>
                     <div class="lecture-topic-col">
                         <h4>Physical Organizations &amp; Interconnection Topologies</h4>
-                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture</span>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull;
+                            Architecture</span>
                     </div>
                     <div class="lecture-desc-col">
-                        Local/modular memory models, PRAM model (EREW, CREW, CRCW), switch complexity, direct/indirect networks (Bus, Mesh, Hypercube, Multistage Networks, Fat Trees), and bus cache optimizations.
+                        Local/modular memory models, PRAM model (EREW, CREW, CRCW), switch complexity, direct/indirect
+                        networks (Bus, Mesh, Hypercube, Multistage Networks, Fat Trees), and bus cache optimizations.
                     </div>
                     <div class="lecture-date-col">Aug 17, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-10.html" class="btn-table-action secondary" title="View Lecture 10 Slides" target="_blank">
+                        <a href="lecture-10.html" class="btn-table-action secondary" title="View Lecture 10 Slides"
+                            target="_blank">
                             <i class="fa-solid fa-play"></i> Slides
                         </a>
                     </div>
@@ -1595,17 +1698,23 @@
 
                 <!-- Lecture 11 -->
                 <div class="lecture-row" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 11</span></div>
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            11</span></div>
                     <div class="lecture-topic-col">
                         <h4>Multistage Networks &amp; PRAM Algorithms</h4>
-                        <span class="module-name">Module 1 &bull; Architecture &amp; Algorithms &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Architecture &amp; Algorithms &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Multistage Omega networks, perfect shuffle left-rotations, 2&times;2 switch routing &amp; blocking, static/dynamic network evaluation (Diameter, Bisection Width, Cost), CREW PRAM Prefix Sum, and Pointer Jumping for Parallel List Ranking.
+                        Multistage Omega networks, perfect shuffle left-rotations, 2&times;2 switch routing &amp;
+                        blocking, static/dynamic network evaluation (Diameter, Bisection Width, Cost), CREW PRAM Prefix
+                        Sum, and Pointer Jumping for Parallel List Ranking.
                     </div>
                     <div class="lecture-date-col">Sep 01, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-11.html" class="btn-table-action secondary" title="View Lecture 11 Slides" target="_blank">
+                        <a href="lecture-11.html" class="btn-table-action secondary" title="View Lecture 11 Slides"
+                            target="_blank">
                             <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
@@ -1613,17 +1722,23 @@
 
                 <!-- Lecture 12 -->
                 <div class="lecture-row" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 12</span></div>
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            12</span></div>
                     <div class="lecture-topic-col">
                         <h4>Analytical Modeling of Parallel Systems</h4>
-                        <span class="module-name">Module 1 &bull; Performance Modeling &amp; Algorithms &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Performance Modeling &amp; Algorithms &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Sources of parallel overhead, Total Overhead ($T_o$), Speedup ($S$) and Efficiency ($E$), Tree reduction summation, Work-Depth model, Circuit model DAGs &amp; $NC$ class, Superlinear speedup ($S > p$) and Example 5.3 cache hit effects, and Brent's Theorem preview.
+                        Sources of parallel overhead, Total Overhead ($T_o$), Speedup ($S$) and Efficiency ($E$), Tree
+                        reduction summation, Work-Depth model, Circuit model DAGs &amp; $NC$ class, Superlinear speedup
+                        ($S > p$) and Example 5.3 cache hit effects, and Brent's Theorem preview.
                     </div>
                     <div class="lecture-date-col">Sep 03, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-12.html" class="btn-table-action secondary" title="View Lecture 12 Slides" target="_blank">
+                        <a href="lecture-12.html" class="btn-table-action secondary" title="View Lecture 12 Slides"
+                            target="_blank">
                             <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
@@ -1631,39 +1746,152 @@
 
                 <!-- Lecture 13 -->
                 <div class="lecture-row" data-category="algo">
-                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 13</span></div>
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            13</span></div>
                     <div class="lecture-topic-col">
                         <h4>Brent's Theorem &amp; Parallel Merge Sort</h4>
-                        <span class="module-name">Module 1 &bull; Parallel Algorithms &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                        <span class="module-name">Module 1 &bull; Parallel Algorithms &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
                     </div>
                     <div class="lecture-desc-col">
-                        Brent's Scheduling Theorem ($T_P \le W/P + D$), CREW PRAM emulation, work-optimality threshold ($P \le W/D$), naive parallel merge sort span bottleneck ($\Theta(n)$), CLRS divide-and-conquer parallel merge using binary search, worst-case subproblem bound ($\le 3n/4$), work-efficiency proof, and overall $O(\log^3 n)$ span parallel merge sort.
+                        Brent's Scheduling Theorem ($T_P \le W/P + D$), CREW PRAM emulation, work-optimality threshold
+                        ($P \le W/D$), naive parallel merge sort span bottleneck ($\Theta(n)$), CLRS divide-and-conquer
+                        parallel merge using binary search, worst-case subproblem bound ($\le 3n/4$), work-efficiency
+                        proof, and overall $O(\log^3 n)$ span parallel merge sort.
                     </div>
                     <div class="lecture-date-col">Sep 08, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-13.html" class="btn-table-action secondary" title="View Lecture 13 Slides" target="_blank">
+                        <a href="lecture-13.html" class="btn-table-action secondary" title="View Lecture 13 Slides"
+                            target="_blank">
                             <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
                 </div>
 
-                <!-- Lecture 14 (TODAY / ACTIVE SLIDE DECK) -->
-                <div class="lecture-row active-now" data-category="arch">
-                    <div><span class="lecture-id-badge" style="background: var(--bits-crimson); color: #fff;">Lec 14</span></div>
+                <!-- Lecture 14 -->
+                <div class="lecture-row" data-category="arch">
+                    <div><span class="lecture-id-badge">Lec 14</span></div>
                     <div class="lecture-topic-col">
                         <h4>Process-to-Processor Mapping &amp; Graph Embedding</h4>
-                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Architecture &amp; Topologies (Today's Class)</span>
+                        <span class="module-name">Module 1 &bull; Architecture &amp; Topologies</span>
                     </div>
                     <div class="lecture-desc-col">
-                        <strong>Today's Topic:</strong> Mapping process interaction graphs onto physical hardware topologies, Store-and-Forward vs Cut-Through &amp; Wormhole routing, Graph Embedding formalism (Dilation, Congestion, Expansion, Load), Leighton's Bisection Theorem, Reflected Gray Code (RGC) Hamiltonian embedding of Linear Arrays/Rings &amp; Meshes into Hypercubes, Snake &amp; Inverse Mesh-Linear Array mappings, and Hypercube into 2D Mesh bisection mismatch.
+                        Mapping process interaction graphs onto physical hardware topologies, Store-and-Forward vs
+                        Cut-Through &amp; Wormhole routing, Graph Embedding formalism (Dilation, Congestion, Expansion,
+                        Load), Leighton's Bisection Theorem, Reflected Gray Code (RGC) Hamiltonian embedding of Linear
+                        Arrays/Rings &amp; Meshes into Hypercubes, Snake &amp; Inverse Mesh-Linear Array mappings, and
+                        Hypercube into 2D Mesh bisection mismatch.
                     </div>
-                    <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Sep 10, 2026</div>
+                    <div class="lecture-date-col">Sep 10, 2026</div>
                     <div class="lecture-action-col">
-                        <a href="lecture-14.html" class="btn-table-action" title="View Lecture 14 Slides" target="_blank">
-                            <i class="fa-solid fa-play"></i> Open Slides
+                        <a href="lecture-14.html" class="btn-table-action secondary" title="View Lecture 14 Slides"
+                            target="_blank">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
                         </a>
                     </div>
                 </div>
+
+                <!-- Lecture 15 -->
+                <div class="lecture-row" data-category="openmp">
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            15</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Shared-Memory Programming with OpenMP</h4>
+                        <span class="module-name">Module 2 &bull; Shared-Memory Parallelism &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Shared-memory multiprocessor architectures, Fork-Join computation model and thread-pool
+                        recycling, OpenMP syntax &amp; pragmas (<code
+                            style="color: var(--bits-navy); font-weight: 700;">#pragma omp parallel for</code>), Static,
+                        Dynamic, and Guided loop scheduling policies, Loop-carried true data dependencies, the OpenMP
+                        <code style="color: var(--bits-crimson); font-weight: 700;">reduction(op:list)</code> clause
+                        mechanics (local copies, identity elements, tree reduction), and Data environment scoping (<code
+                            style="color: var(--bits-navy);">shared</code>, <code
+                            style="color: var(--bits-navy);">private</code>, <code
+                            style="color: var(--bits-navy);">firstprivate</code>, <code
+                            style="color: var(--bits-navy);">lastprivate</code>, <code
+                            style="color: var(--bits-navy);">default(none)</code>).
+                    </div>
+                    <div class="lecture-date-col">Sep 15, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-15.html" class="btn-table-action secondary" title="View Lecture 15 Slides"
+                            target="_blank">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lecture 16 -->
+                <div class="lecture-row" data-category="algo">
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec
+                            16</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Parallel Algorithm Design: Decomposition &amp; Concurrency</h4>
+                        <span class="module-name">Module 1 &bull; Parallel Algorithms &bull; <span
+                                style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i>
+                                Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Tasks, decomposition, and dependency DAGs, Dense matrix-vector row vs. scalar tasks, Relational
+                        database query dependency trees (Graph-1 vs. Graph-2), Fine vs. coarse granularity, Critical
+                        path length (Span), Total work, and Average Degree of Concurrency (<code
+                            style="color: var(--bits-navy); font-weight: 700;">W/L</code>), Limits on parallel
+                        performance &amp; communication overhead tradeoff, Task interaction graphs &amp; sparse matrix
+                        graph isomorphism, and Recursive, Data, Exploratory &amp; Speculative decomposition.
+                    </div>
+                    <div class="lecture-date-col">Sep 17, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-16.html" class="btn-table-action secondary" title="View Lecture 16 Slides"
+                            target="_blank">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
+                        </a>
+                        <!--a href="quiz-16-1.html" class="btn-table-action secondary" title="Quiz 16-1: Algorithms &amp; Decomposition" target="_blank" style="margin-top: 4px; background: #eff6ff; color: var(--bits-navy); border: 1px solid #bfdbfe;">
+                            <i class="fa-solid fa-brain"></i> Quiz 16-1
+                        </a>
+                        <a href="quiz-16-2.html" class="btn-table-action secondary" title="Quiz 16-2: Shared-Memory &amp; OpenMP" target="_blank" style="margin-top: 4px; background: #fef2f2; color: var(--bits-crimson); border: 1px solid #fecaca;">
+                            <i class="fa-solid fa-brain"></i> Quiz 16-2
+                        </a-->
+                    </div>
+                </div>
+
+                <!-- Lecture 17 -->
+                <!--div class="lecture-row" data-category="algo">
+                    <div><span class="lecture-id-badge" style="background: #e2e8f0; color: var(--bits-navy);">Lec 17</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Parallel Algorithm Design: Decomposition Techniques</h4>
+                        <span class="module-name">Module 1 &bull; Parallel Algorithms &bull; <span style="color: #15803d; font-weight: 600;"><i class="fa-solid fa-check"></i> Completed</span></span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        Recursive decomposition (Divide-and-Conquer tree, Quicksort, `SERIAL_MIN` vs. `RECURSIVE_MIN` logarithmic reduction DAG), Data decomposition (Matrix multiply output partitioning into 4 and 8 tasks, non-uniqueness, Database transaction mining input vs. output vs. 2D grid partitioning, Intermediate data partitioning with 12-task multi-stage DAG, Owner-Computes Rule), Exploratory decomposition (15-puzzle state-space search, anomalous superlinear and sublinear speedups), Speculative decomposition (branch speculation with checkpoint/rollback vs. exploratory search), and Hybrid decomposition (overcoming root Amdahl's Law bottleneck in parallel quicksort).
+                    </div>
+                    <div class="lecture-date-col">Sep 22, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-17.html" class="btn-table-action secondary" title="View Lecture 17 Slides" target="_blank">
+                            <i class="fa-solid fa-file-powerpoint"></i> Slides
+                        </a>
+                    </div>
+                </div-->
+
+                <!-- Lecture 18 (TODAY / ACTIVE SLIDE DECK) -->
+                <!--div class="lecture-row active-now" data-category="algo">
+                    <div><span class="lecture-id-badge" style="background: var(--bits-crimson); color: #fff;">Lec 18</span></div>
+                    <div class="lecture-topic-col">
+                        <h4>Parallel Algorithm Design: Process Mapping &amp; Load Balancing</h4>
+                        <span class="module-name" style="color: var(--bits-navy); font-weight: 700;">Module 1 &bull; Parallel Algorithms (Today's Class)</span>
+                    </div>
+                    <div class="lecture-desc-col">
+                        <strong>Today's Topic:</strong> The process mapping problem (<code style="color: var(--bits-navy); font-weight: 700;">M: Tasks &rarr; Processes</code>), Processes vs. Processors virtualization hierarchy, Minimizing idling (DAG alignment) vs. minimizing communication (Interaction graph locality), Static mapping via 1-D block, cyclic, and 2-D checkerboard distributions with <code style="color: var(--bits-crimson); font-weight: 700;">&radic;p</code> asymptotic surface-to-volume communication reduction, Sparse matrix-vector mapping via <code style="color: var(--bits-navy); font-weight: 700;">k</code>-way min-cut graph partitioning (METIS), Hierarchical mapping for binary tree algorithms (Quicksort processor teams), Decentralized dynamic load balancing via <strong>Work Stealing</strong> (Cilk/TBB) with double-ended queues (deques), and comprehensive taxonomies of task generation, granularity, context, and interaction profiles.
+                    </div>
+                    <div class="lecture-date-col" style="font-weight: 700; color: var(--bits-navy);">Sep 24, 2026</div>
+                    <div class="lecture-action-col">
+                        <a href="lecture-18.html" class="btn-table-action" title="View Lecture 18 Slides" target="_blank">
+                            <i class="fa-solid fa-play"></i> Open Slides
+                        </a>
+                    </div>
+                </div-->
 
             </div>
         </section>
@@ -1685,10 +1913,14 @@
                         <h3 class="module-title">Architectures &amp; Multicore</h3>
                     </div>
                     <ul class="module-list">
-                        <li><i class="fa-solid fa-angle-right"></i> Single-core Von Neumann limitations &amp; ILP bottlenecks</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Chip Multi-Processing (CMP) &amp; Simultaneous Multithreading (SMT)</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Memory wall, cache hierarchies (L1, L2, L3) &amp; interconnection networks</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Cache coherence (MSI/MESI/MOESI) &amp; memory consistency</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Single-core Von Neumann limitations &amp; ILP
+                            bottlenecks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Chip Multi-Processing (CMP) &amp; Simultaneous
+                            Multithreading (SMT)</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Memory wall, cache hierarchies (L1, L2, L3) &amp;
+                            interconnection networks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Cache coherence (MSI/MESI/MOESI) &amp; memory
+                            consistency</li>
                     </ul>
                 </div>
 
@@ -1698,10 +1930,14 @@
                         <h3 class="module-title">Shared Memory (OpenMP)</h3>
                     </div>
                     <ul class="module-list">
-                        <li><i class="fa-solid fa-angle-right"></i> POSIX threads (pthreads), race conditions &amp; mutual exclusion</li>
-                        <li><i class="fa-solid fa-angle-right"></i> OpenMP directives: parallel for, sections, reduction &amp; tasking</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Synchronization primitives: barriers, critical, atomic, and locks</li>
-                        <li><i class="fa-solid fa-angle-right"></i> False sharing diagnostics &amp; NUMA memory affinity</li>
+                        <li><i class="fa-solid fa-angle-right"></i> POSIX threads (pthreads), race conditions &amp;
+                            mutual exclusion</li>
+                        <li><i class="fa-solid fa-angle-right"></i> OpenMP directives: parallel for, sections, reduction
+                            &amp; tasking</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Synchronization primitives: barriers, critical,
+                            atomic, and locks</li>
+                        <li><i class="fa-solid fa-angle-right"></i> False sharing diagnostics &amp; NUMA memory affinity
+                        </li>
                     </ul>
                 </div>
 
@@ -1711,10 +1947,14 @@
                         <h3 class="module-title">Distributed Memory (MPI)</h3>
                     </div>
                     <ul class="module-list">
-                        <li><i class="fa-solid fa-angle-right"></i> Message passing paradigm &amp; MPI execution model</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Point-to-point communication: blocking vs non-blocking</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Collectives: Bcast, Scatter, Gather, Allreduce, Scan</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Parallel matrix algorithms (Cannon's, Fox's) &amp; scaling laws</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Message passing paradigm &amp; MPI execution model
+                        </li>
+                        <li><i class="fa-solid fa-angle-right"></i> Point-to-point communication: blocking vs
+                            non-blocking</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Collectives: Bcast, Scatter, Gather, Allreduce, Scan
+                        </li>
+                        <li><i class="fa-solid fa-angle-right"></i> Parallel matrix algorithms (Cannon's, Fox's) &amp;
+                            scaling laws</li>
                     </ul>
                 </div>
 
@@ -1724,10 +1964,14 @@
                         <h3 class="module-title">Accelerators &amp; CUDA</h3>
                     </div>
                     <ul class="module-list">
-                        <li><i class="fa-solid fa-angle-right"></i> GPU hardware architecture &amp; SIMT execution paradigm</li>
-                        <li><i class="fa-solid fa-angle-right"></i> CUDA programming: thread blocks, grids, and kernel launch</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Memory optimization: global, shared, constant &amp; texture caches</li>
-                        <li><i class="fa-solid fa-angle-right"></i> Asynchronous transfers, CUDA streams, &amp; profiling with Nsight</li>
+                        <li><i class="fa-solid fa-angle-right"></i> GPU hardware architecture &amp; SIMT execution
+                            paradigm</li>
+                        <li><i class="fa-solid fa-angle-right"></i> CUDA programming: thread blocks, grids, and kernel
+                            launch</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Memory optimization: global, shared, constant &amp;
+                            texture caches</li>
+                        <li><i class="fa-solid fa-angle-right"></i> Asynchronous transfers, CUDA streams, &amp;
+                            profiling with Nsight</li>
                     </ul>
                 </div>
             </div>
@@ -1739,36 +1983,51 @@
                 <div class="section-header-left">
                     <span class="section-eyebrow"><i class="fa-solid fa-file-lines"></i> Official Documentation</span>
                     <h2 class="section-title">Course Handout &amp; Policies</h2>
-                    <p class="section-desc">The official course document detailing evaluation breakdown, textbook references, and learning objectives.</p>
+                    <p class="section-desc">The official course document detailing evaluation breakdown, textbook
+                        references, and learning objectives.</p>
                 </div>
             </div>
 
-            <div style="background: var(--bg-card); border: 2px dashed #cbd5e1; border-radius: var(--radius-lg); padding: 2.25rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; box-shadow: var(--shadow-sm); position: relative; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+            <div
+                style="background: var(--bg-card); border: 2px dashed #cbd5e1; border-radius: var(--radius-lg); padding: 2.25rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; box-shadow: var(--shadow-sm); position: relative; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
                 <div style="display: flex; align-items: flex-start; gap: 1.5rem; max-width: 750px;">
-                    <div style="width: 58px; height: 58px; border-radius: var(--radius-md); background: var(--bits-crimson-light); color: var(--bits-crimson); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0;">
+                    <div
+                        style="width: 58px; height: 58px; border-radius: var(--radius-md); background: var(--bits-crimson-light); color: var(--bits-crimson); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0;">
                         <i class="fa-solid fa-file-pdf"></i>
                     </div>
                     <div>
-                        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
-                            <h3 style="font-size: 1.35rem; color: var(--bits-navy-dark);">CS F422 / U422 Course Handout</h3>
-                            <span style="background: #ecfdf5; color: #15803d; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #a7f3d0;">
+                        <div
+                            style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
+                            <h3 style="font-size: 1.35rem; color: var(--bits-navy-dark);">CS F422 / U422 Course Handout
+                            </h3>
+                            <span
+                                style="background: #ecfdf5; color: #15803d; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #a7f3d0;">
                                 <i class="fa-solid fa-circle-check"></i> Available
                             </span>
                         </div>
-                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.75rem;">
-                            The comprehensive course handout for First Semester 2026&ndash;27 containing the detailed lecture-by-lecture syllabus, evaluation breakdown, reference materials, and academic policies.
+                        <p
+                            style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0.75rem;">
+                            The comprehensive course handout for First Semester 2026&ndash;27 containing the detailed
+                            lecture-by-lecture syllabus, evaluation breakdown, reference materials, and academic
+                            policies.
                         </p>
-                        <div style="display: flex; align-items: center; gap: 1.2rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
-                            <span><i class="fa-solid fa-user-tie" style="color: var(--bits-navy);"></i> Instructor: Dr. Apurba Das</span>
-                            <span><i class="fa-solid fa-layer-group" style="color: var(--bits-navy);"></i> 4 Modules &bull; 40 Lectures</span>
-                            <span><i class="fa-solid fa-file-arrow-down" style="color: var(--bits-navy);"></i> Format: PDF</span>
+                        <div
+                            style="display: flex; align-items: center; gap: 1.2rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap;">
+                            <span><i class="fa-solid fa-user-tie" style="color: var(--bits-navy);"></i> Instructor: Dr.
+                                Apurba Das</span>
+                            <span><i class="fa-solid fa-layer-group" style="color: var(--bits-navy);"></i> 4 Modules
+                                &bull; 40 Lectures</span>
+                            <span><i class="fa-solid fa-file-arrow-down" style="color: var(--bits-navy);"></i> Format:
+                                PDF</span>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
                     <!-- COURSE HANDOUT PDF LINK -->
-                    <a href="handout.pdf" class="btn-preview-link" style="opacity: 0.9; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer;" target="_blank">
+                    <a href="handout.pdf" class="btn-preview-link"
+                        style="opacity: 0.9; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer;"
+                        target="_blank">
                         <i class="fa-solid fa-download"></i> Download Handout (PDF)
                     </a>
                     <span style="font-size: 0.75rem; color: var(--text-muted); font-style: italic;">
@@ -1780,19 +2039,27 @@
 
         <!-- Supplementary Blogs & Research Section -->
         <section id="resources" style="margin-bottom: 4rem;">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem;">
+            <div class="section-header"
+                style="display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem;">
                 <div class="section-header-left">
                     <span class="section-eyebrow"><i class="fa-solid fa-square-rss"></i> Supplementary Reading</span>
                     <h2 class="section-title">Blogs &amp; Seminal Research</h2>
-                    <p class="section-desc">Curated articles, technical blogs, and seminal research papers to deepen your knowledge of concurrency and hardware architectures.</p>
+                    <p class="section-desc">Curated articles, technical blogs, and seminal research papers to deepen
+                        your knowledge of concurrency and hardware architectures.</p>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-shrink: 0; flex-wrap: wrap;">
-                    <a href="blogs-research.html" class="btn-header-cta" style="font-size: 0.82rem; padding: 0.45rem 1rem; border-radius: var(--radius-full); box-shadow: var(--shadow-sm);">
+                <div
+                    style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; flex-shrink: 0; flex-wrap: wrap;">
+                    <a href="blogs-research.html" class="btn-header-cta"
+                        style="font-size: 0.82rem; padding: 0.45rem 1rem; border-radius: var(--radius-full); box-shadow: var(--shadow-sm);">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Dedicated Blogs &amp; Research Page
                     </a>
                     <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn-carousel-nav prev" onclick="slidePrev()" aria-label="Previous Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button class="btn-carousel-nav next" onclick="slideNext()" aria-label="Next Slide" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="btn-carousel-nav prev" onclick="slidePrev()" aria-label="Previous Slide"
+                            style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i
+                                class="fa-solid fa-arrow-left"></i></button>
+                        <button class="btn-carousel-nav next" onclick="slideNext()" aria-label="Next Slide"
+                            style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s ease;"><i
+                                class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -1803,21 +2070,33 @@
                         <!-- Card 1: Herb Sutter's Free Lunch -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: var(--bits-crimson-light); color: var(--bits-crimson); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fee2e2;">Technical Blog</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2005</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: var(--bits-crimson-light); color: var(--bits-crimson); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fee2e2;">Technical
+                                        Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2005</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     The Free Lunch Is Over: A Fundamental Turn Toward Concurrency
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    Herb Sutter's landmark article detailing the physical limits of processor frequency scaling and why software developers must transition to concurrency.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Herb Sutter's landmark article detailing the physical limits of processor frequency
+                                    scaling and why software developers must transition to concurrency.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Herb Sutter</span>
-                                <a href="https://herbsutter.com/welcome-to-the-jungle/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Herb
+                                    Sutter</span>
+                                <a href="https://herbsutter.com/welcome-to-the-jungle/" target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1825,21 +2104,34 @@
                         <!-- Card 2: Stanford Single-Chip Multiprocessor -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research Paper</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 1996</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research
+                                        Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 1996</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     The Case for a Single-Chip Multiprocessor
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    Stanford University's seminal paper proposing on-chip multiprocessors (CMPs) as a more effective alternative to complex single-core instruction-level parallelism (ILP).
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Stanford University's seminal paper proposing on-chip multiprocessors (CMPs) as a
+                                    more effective alternative to complex single-core instruction-level parallelism
+                                    (ILP).
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Kunle Olukotun et al.</span>
-                                <a href="https://dl.acm.org/doi/10.1145/237090.237140" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Kunle
+                                    Olukotun et al.</span>
+                                <a href="https://dl.acm.org/doi/10.1145/237090.237140" target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1847,21 +2139,33 @@
                         <!-- Card 3: NVIDIA CUDA Intro -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: #e0f2fe; color: #0369a1; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bae6fd;">Technical Blog</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2020</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: #e0f2fe; color: #0369a1; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bae6fd;">Technical
+                                        Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2020</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     An Introduction to CUDA and GPU Architectures
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    NVIDIA's detailed developer blog explaining GPU computing concepts, thread execution configurations, warps, and CUDA memory models.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    NVIDIA's detailed developer blog explaining GPU computing concepts, thread execution
+                                    configurations, warps, and CUDA memory models.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">NVIDIA Dev Blog</span>
-                                <a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">NVIDIA Dev
+                                    Blog</span>
+                                <a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1869,21 +2173,33 @@
                         <!-- Card 4: Amdahl's Law Multicore -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research Paper</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2008</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Research
+                                        Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2008</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     Amdahl's Law in the Multicore Era
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    A seminal IEEE Computer paper analyzing Gustafson's and Amdahl's laws for multicore designs, showing why hardware builders must combine small and large cores.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A seminal IEEE Computer paper analyzing Gustafson's and Amdahl's laws for multicore
+                                    designs, showing why hardware builders must combine small and large cores.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Hill &amp; Marty</span>
-                                <a href="https://www.cs.wisc.edu/multifacet/papers/ieeecomputer08_amdahl_multicore.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Hill
+                                    &amp; Marty</span>
+                                <a href="https://www.cs.wisc.edu/multifacet/papers/ieeecomputer08_amdahl_multicore.pdf"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1891,21 +2207,32 @@
                         <!-- Card 5: Parallel Scan/Prefix Sum -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: #f0fdf4; color: #166534; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bbf7d0;">Algorithms</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2007</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: #f0fdf4; color: #166534; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #bbf7d0;">Algorithms</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2007</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     Parallel Prefix Sum (Scan) with CUDA
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    Mark Harris's guide on executing work-efficient parallel scan algorithms, which serve as foundational building blocks for parallel sorting and searching.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Mark Harris's guide on executing work-efficient parallel scan algorithms, which
+                                    serve as foundational building blocks for parallel sorting and searching.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Mark Harris (NVIDIA)</span>
-                                <a href="https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Book <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Mark
+                                    Harris (NVIDIA)</span>
+                                <a href="https://developer.nvidia.com/gpugems/gpugems3/part-vi-gpu-computing/chapter-39-parallel-prefix-sum-scan-cuda"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Book <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1913,21 +2240,33 @@
                         <!-- Card 6: Google MapReduce -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems Paper</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2004</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems
+                                        Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2004</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     MapReduce: Simplified Data Processing
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    Google's breakthrough systems paper outlining the MapReduce model for processing massive datasets in parallel across distributed server arrays.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Google's breakthrough systems paper outlining the MapReduce model for processing
+                                    massive datasets in parallel across distributed server arrays.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Dean &amp; Ghemawat</span>
-                                <a href="https://dl.acm.org/doi/10.1145/1327452.1327492" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Dean
+                                    &amp; Ghemawat</span>
+                                <a href="https://dl.acm.org/doi/10.1145/1327452.1327492" target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1935,21 +2274,33 @@
                         <!-- Card 7: LMAX Disruptor -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: #faf5ff; color: #6b21a8; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #f3e8ff;">High Scalability</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2011</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: #faf5ff; color: #6b21a8; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #f3e8ff;">High
+                                        Scalability</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2011</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     The LMAX Disruptor: Concurrency Framework
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    A detailed design blog and paper outlining a lock-free queue concurrency framework that achieves millions of transactions per second on single commodity servers.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A detailed design blog and paper outlining a lock-free queue concurrency framework
+                                    that achieves millions of transactions per second on single commodity servers.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">LMAX Architecture</span>
-                                <a href="https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">LMAX
+                                    Architecture</span>
+                                <a href="https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1957,21 +2308,33 @@
                         <!-- Card 8: Compute Shaders / Game Engines -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: #fff1f2; color: #9f1239; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #ffe4e6;">Graphics Blog</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2021</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: #fff1f2; color: #9f1239; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #ffe4e6;">Graphics
+                                        Blog</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2021</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     Modern Game Engines Rely on Compute Shaders
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    A deep dive into how engines like Unreal and Frostbite bypass traditional graphics pipelines for arbitrary parallel GPU simulations like particle systems and culling.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    A deep dive into how engines like Unreal and Frostbite bypass traditional graphics
+                                    pipelines for arbitrary parallel GPU simulations like particle systems and culling.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By Sebastian Aaltonen</span>
-                                <a href="https://gpuopen.com/learn/optimizing-gpu-occupancy-resource-usage-large-thread-groups/" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Blog <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">By
+                                    Sebastian Aaltonen</span>
+                                <a href="https://gpuopen.com/learn/optimizing-gpu-occupancy-resource-usage-large-thread-groups/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Blog <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -1979,21 +2342,33 @@
                         <!-- Card 9: Amazon Dynamo DB -->
                         <div class="carousel-slide">
                             <div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                    <span style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems Paper</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> 2007</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <span
+                                        style="background: var(--bits-gold-light); color: #b45309; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-full); text-transform: uppercase; border: 1px solid #fef3c7;">Systems
+                                        Paper</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i
+                                            class="fa-regular fa-calendar"></i> 2007</span>
                                 </div>
-                                <h3 style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
+                                <h3
+                                    style="font-size: 1.15rem; color: var(--bits-navy-dark); margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">
                                     Dynamo: Amazon's Highly Available Key-Value Store
                                 </h3>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
-                                    Amazon's foundational paper on Dynamo, explaining decentralized, highly scalable distributed storage models utilizing consistent hashing and vector clocks.
+                                <p
+                                    style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 1.25rem;">
+                                    Amazon's foundational paper on Dynamo, explaining decentralized, highly scalable
+                                    distributed storage models utilizing consistent hashing and vector clocks.
                                 </p>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
-                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Amazon Web Services</span>
-                                <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
-                                    Read Paper <i class="fa-solid fa-arrow-right" style="transition: transform 0.2s ease;"></i>
+                            <div
+                                style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Amazon Web
+                                    Services</span>
+                                <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: var(--bits-navy); font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                                    Read Paper <i class="fa-solid fa-arrow-right"
+                                        style="transition: transform 0.2s ease;"></i>
                                 </a>
                             </div>
                         </div>
@@ -2025,34 +2400,43 @@
                         <div>
                             <h3 style="font-size: 1.35rem; color: var(--bits-navy-dark);">Dr. Apurba Das</h3>
                             <p style="color: var(--text-muted); font-size: 0.9rem;">Instructor-in-Charge</p>
-                            <p style="color: var(--bits-navy); font-size: 0.85rem; font-weight: 600;">Department of Computer Science &amp; Information Systems</p>
+                            <p style="color: var(--bits-navy); font-size: 0.85rem; font-weight: 600;">Department of
+                                Computer Science &amp; Information Systems</p>
                         </div>
                     </div>
 
                     <ul class="instructor-contact-list">
-                        <li><i class="fa-solid fa-building"></i> <strong>Institution:</strong> BITS Pilani, Hyderabad Campus</li>
-                        <li><i class="fa-solid fa-envelope"></i> <strong>Course Inquiries:</strong> Contact via Institute CMS Portal</li>
-                        <li><i class="fa-solid fa-clock"></i> <strong>Consultation Hours:</strong> Tuesdays &amp; Thursdays, 4:00 PM &ndash; 5:30 PM</li>
+                        <li><i class="fa-solid fa-building"></i> <strong>Institution:</strong> BITS Pilani, Hyderabad
+                            Campus</li>
+                        <li><i class="fa-solid fa-envelope"></i> <strong>Course Inquiries:</strong> Contact via
+                            Institute CMS Portal</li>
+                        <li><i class="fa-solid fa-clock"></i> <strong>Consultation Hours:</strong> Tuesdays &amp;
+                            Thursdays, 4:00 PM &ndash; 5:30 PM</li>
                         <li><i class="fa-solid fa-chalkboard-user"></i> <strong>Classroom:</strong> I222</li>
                     </ul>
 
-                    <h4 style="margin-top: 1.5rem; font-size: 1.05rem; color: var(--bits-navy-dark);">Evaluation &amp; Grading Components</h4>
+                    <h4 style="margin-top: 1.5rem; font-size: 1.05rem; color: var(--bits-navy-dark);">Evaluation &amp;
+                        Grading Components</h4>
                     <div class="grading-grid">
                         <div class="grading-item">
                             <span class="grading-weight">30%</span>
-                            <span class="grading-label">Mid-Sem Exam<br><small style="color:#64748b;">(Closed Book, 1.5h)</small></span>
+                            <span class="grading-label">Mid-Sem Exam<br><small style="color:#64748b;">(Closed Book,
+                                    1.5h)</small></span>
                         </div>
                         <div class="grading-item">
                             <span class="grading-weight">10%</span>
-                            <span class="grading-label">Continuous Assessments<br><small style="color:#64748b;">(Open Book)</small></span>
+                            <span class="grading-label">Continuous Assessments<br><small style="color:#64748b;">(Open
+                                    Book)</small></span>
                         </div>
                         <div class="grading-item">
                             <span class="grading-weight">20%</span>
-                            <span class="grading-label">Term Project<br><small style="color:#64748b;">(Open Book)</small></span>
+                            <span class="grading-label">Term Project<br><small style="color:#64748b;">(Open
+                                    Book)</small></span>
                         </div>
                         <div class="grading-item">
                             <span class="grading-weight">40%</span>
-                            <span class="grading-label">Comprehensive Exam<br><small style="color:#64748b;">(Closed Book, 3h)</small></span>
+                            <span class="grading-label">Comprehensive Exam<br><small style="color:#64748b;">(Closed
+                                    Book, 3h)</small></span>
                         </div>
                     </div>
                 </div>
@@ -2060,7 +2444,8 @@
                 <!-- Textbooks & References -->
                 <div class="info-box">
                     <h3 style="font-size: 1.25rem; color: var(--bits-navy-dark); margin-bottom: 0.5rem;">
-                        <i class="fa-solid fa-book-bookmark" style="color: var(--bits-gold); margin-right: 0.4rem;"></i> Prescribed Textbooks &amp; References
+                        <i class="fa-solid fa-book-bookmark" style="color: var(--bits-gold); margin-right: 0.4rem;"></i>
+                        Prescribed Textbooks &amp; References
                     </h3>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
                         Standard literature and technical reference manuals for CS F422/U422:
@@ -2069,7 +2454,8 @@
                     <div class="reference-list">
                         <div class="reference-item">
                             <strong>Ananth Grama, Anshul Gupta, George Karypis, Vipin Kumar.</strong><br>
-                            <em>Introduction to Parallel Computing</em>, 2nd Edition, Pearson Education / Addison-Wesley.
+                            <em>Introduction to Parallel Computing</em>, 2nd Edition, Pearson Education /
+                            Addison-Wesley.
                         </div>
 
                         <div class="reference-item">
@@ -2084,17 +2470,20 @@
 
                         <div class="reference-item">
                             <strong>David B. Kirk and Wen-mei W. Hwu.</strong><br>
-                            <em>Programming Massively Parallel Processors: A Hands-on Approach</em>, 4th Edition, Morgan Kaufmann.
+                            <em>Programming Massively Parallel Processors: A Hands-on Approach</em>, 4th Edition, Morgan
+                            Kaufmann.
                         </div>
 
                         <div class="reference-item" style="border-left-color: var(--bits-navy);">
                             <strong>K. Olukotun, B. A. Nayfeh, L. Hammond, et al. (Stanford University).</strong><br>
-                            <em>"The Case for a Single-Chip Multiprocessor"</em>, ACM ASPLOS-VII (1996) &bull; <em>"A Single-Chip Multiprocessor"</em>, IEEE Computer (1997).
+                            <em>"The Case for a Single-Chip Multiprocessor"</em>, ACM ASPLOS-VII (1996) &bull; <em>"A
+                                Single-Chip Multiprocessor"</em>, IEEE Computer (1997).
                         </div>
 
                         <div class="reference-item" style="border-left-color: var(--bits-crimson);">
                             <strong>L. Spracklen and S. G. Abraham (Sun Microsystems).</strong><br>
-                            <em>"Chip Multithreading: Opportunities and Challenges"</em>, IEEE HPCA-11 (2005) &bull; UltraSPARC T1 Niagara.
+                            <em>"Chip Multithreading: Opportunities and Challenges"</em>, IEEE HPCA-11 (2005) &bull;
+                            UltraSPARC T1 Niagara.
                         </div>
                     </div>
                 </div>
@@ -2143,7 +2532,7 @@
         function searchLectures() {
             const query = document.getElementById('lectureSearch').value.toLowerCase();
             const rows = document.querySelectorAll('.lectures-table-card .lecture-row:not(.row-header)');
-            
+
             rows.forEach(row => {
                 const text = row.innerText.toLowerCase();
                 if (text.includes(query)) {
@@ -2156,7 +2545,7 @@
 
         /* Blogs & Research Carousel Slider Script */
         let currentSlideIndex = 0;
-        
+
         function getSlidesPerView() {
             if (window.innerWidth <= 640) return 1;
             if (window.innerWidth <= 1024) return 2;
@@ -2167,35 +2556,35 @@
             const track = document.getElementById('carouselTrack');
             const slides = document.querySelectorAll('.carousel-slide');
             if (!track || slides.length === 0) return;
-            
+
             const totalSlides = slides.length;
             const slidesPerView = getSlidesPerView();
             const maxIndex = totalSlides - slidesPerView;
-            
+
             if (currentSlideIndex > maxIndex) currentSlideIndex = maxIndex;
             if (currentSlideIndex < 0) currentSlideIndex = 0;
-            
+
             // Calculate translate offset
             const slideWidth = slides[0].offsetWidth;
             const gap = 24; // 1.5rem gap = 24px
             const offset = currentSlideIndex * (slideWidth + gap);
             track.style.transform = `translateX(-${offset}px)`;
-            
+
             // Enable/disable navigation buttons
             const prevBtn = document.querySelector('.btn-carousel-nav.prev');
             const nextBtn = document.querySelector('.btn-carousel-nav.next');
             if (prevBtn) prevBtn.disabled = (currentSlideIndex === 0);
             if (nextBtn) nextBtn.disabled = (currentSlideIndex === maxIndex);
-            
+
             // Update indicator dots
             updateDots(totalSlides, slidesPerView);
         }
-        
+
         function updateDots(total, perView) {
             const dotsContainer = document.getElementById('carouselDots');
             if (!dotsContainer) return;
             dotsContainer.innerHTML = '';
-            
+
             const totalDots = total - perView + 1;
             for (let i = 0; i < totalDots; i++) {
                 const dot = document.createElement('button');
@@ -2205,14 +2594,14 @@
                 dotsContainer.appendChild(dot);
             }
         }
-        
+
         function slidePrev() {
             if (currentSlideIndex > 0) {
                 currentSlideIndex--;
                 updateCarousel();
             }
         }
-        
+
         function slideNext() {
             const slides = document.querySelectorAll('.carousel-slide');
             const slidesPerView = getSlidesPerView();
@@ -2221,16 +2610,17 @@
                 updateCarousel();
             }
         }
-        
+
         // Listen to window resizing to dynamically recalculate views
         window.addEventListener('resize', () => {
             requestAnimationFrame(updateCarousel);
         });
-        
+
         // Initialize once DOM is ready
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(updateCarousel, 150);
         });
     </script>
 </body>
+
 </html>
