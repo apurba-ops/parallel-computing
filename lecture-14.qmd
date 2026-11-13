@@ -53,9 +53,10 @@ format:
 - **Architectural Extension: Hypercube into 2D Mesh**:
   - Bisection mismatch ($p/2$ vs. $2\sqrt{p}$) and bound $C \ge \sqrt{p}/4$.
   - VLSI Rent's rule and why supercomputers moved to 3D tori.
-- **Interactive Review Quizzes (Quizzes 1 & 2)**:
+- **Interactive Review Quizzes (Quizzes 1, 2 & 3)**:
   - **Quiz-1 (Topology Mapping & Graph Embedding - Lec 14)**: 4 conceptual MCQs + answer keys.
   - **Quiz-2 (Brent's Theorem & Parallel Merge - Lec 13 Review)**: 4 conceptual MCQs + answer keys.
+  - **Quiz-3 (Analytical Modeling & Overhead - Lec 12 Review)**: 4 conceptual MCQs + answer keys.
 :::
 
 ::::
@@ -1153,7 +1154,6 @@ The following table summarizes the fundamental graph embeddings studied in paral
   <strong>Key Takeaway:</strong> Polylogarithmic parallel execution requires eliminating all polynomial-span bottlenecks, while Brent's Theorem guarantees that physical execution scales efficiently whenever $P \le W/D$!
 </div>
 
-<!--
 ---
 
 ## Review Quiz-3: Analytical Modeling & Overhead (Lecture 12 Review)
@@ -1241,7 +1241,6 @@ The following table summarizes the fundamental graph embeddings studied in paral
 <div style="background: #f8fafc; border-left: 4px solid #e5a93c; padding: 6px 12px; border-radius: 4px; margin-top: 12px; font-size: 0.78em; color: #475569;">
   <strong>Key Takeaway:</strong> True scalability requires minimizing total overhead $T_o$; over-allocating processors to subproblems with shallow work invariably leads to catastrophic idling!
 </div>
--->
 
 ---
 

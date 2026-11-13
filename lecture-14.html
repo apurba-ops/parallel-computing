@@ -203,10 +203,11 @@
 <li>Bisection mismatch (<span class="math inline">\(p/2\)</span> vs.&nbsp;<span class="math inline">\(2\sqrt{p}\)</span>) and bound <span class="math inline">\(C \ge \sqrt{p}/4\)</span>.</li>
 <li>VLSI Rent’s rule and why supercomputers moved to 3D tori.</li>
 </ul></li>
-<li><strong>Interactive Review Quizzes (Quizzes 1 &amp; 2)</strong>:
+<li><strong>Interactive Review Quizzes (Quizzes 1, 2 &amp; 3)</strong>:
 <ul>
 <li><strong>Quiz-1 (Topology Mapping &amp; Graph Embedding - Lec 14)</strong>: 4 conceptual MCQs + answer keys.</li>
 <li><strong>Quiz-2 (Brent’s Theorem &amp; Parallel Merge - Lec 13 Review)</strong>: 4 conceptual MCQs + answer keys.</li>
+<li><strong>Quiz-3 (Analytical Modeling &amp; Overhead - Lec 12 Review)</strong>: 4 conceptual MCQs + answer keys.</li>
 </ul></li>
 </ul>
 </div></div>
@@ -1334,97 +1335,50 @@
 <div style="background: #f8fafc; border-left: 4px solid #e5a93c; padding: 8px 16px; border-radius: 4px; margin-top: 12px; font-size: 0.85em; color: #475569;">
 <p><strong>Key Takeaway:</strong> Polylogarithmic parallel execution requires eliminating all polynomial-span bottlenecks, while Brent’s Theorem guarantees that physical execution scales efficiently whenever <span class="math inline">\(P \le W/D\)</span>!</p>
 </div>
-<!--
-
----
-
-## Review Quiz-3: Analytical Modeling & Overhead (Lecture 12 Review)
-
-:::: {.columns}
-
-::: {.column width="50%"}
+</section>
+<section id="review-quiz-3-analytical-modeling-overhead-lecture-12-review" class="slide level2">
+<h2>Review Quiz-3: Analytical Modeling &amp; Overhead (Lecture 12 Review)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #003366; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; font-size: 0.76em; line-height: 1.35;">
-  <strong style="color: #003366;">Q1 (Total Parallel Overhead):</strong> For an algorithm with serial runtime $T_s$ and parallel runtime $T_p$ on $p$ processors, how is the <strong>Total Overhead $T_o$</strong> formally defined?<br>
-  <strong>(A)</strong> $T_o = T_p - T_s / p$<br>
-  <strong>(B)</strong> $T_o = p \cdot T_p - T_s$<br>
-  <strong>(C)</strong> $T_o = T_s / T_p$<br>
-  <strong>(D)</strong> $T_o = p \cdot (T_s - T_p)$
+<p><strong style="color: #003366;">Q1 (Total Parallel Overhead):</strong> For an algorithm with serial runtime <span class="math inline">\(T_s\)</span> and parallel runtime <span class="math inline">\(T_p\)</span> on <span class="math inline">\(p\)</span> processors, how is the <strong>Total Overhead <span class="math inline">\(T_o\)</span></strong> formally defined?<br> <strong>(A)</strong> <span class="math inline">\(T_o = T_p - T_s / p\)</span><br> <strong>(B)</strong> <span class="math inline">\(T_o = p \cdot T_p - T_s\)</span><br> <strong>(C)</strong> <span class="math inline">\(T_o = T_s / T_p\)</span><br> <strong>(D)</strong> <span class="math inline">\(T_o = p \cdot (T_s - T_p)\)</span></p>
 </div>
-
 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #003366; border-radius: 6px; padding: 8px 12px; font-size: 0.76em; line-height: 1.35;">
-  <strong style="color: #003366;">Q2 (Sources of Overhead):</strong> Which of the following is an example of <strong>excess computation</strong> ($W_{\text{excess}}$) incurred by parallel execution?<br>
-  <strong>(A)</strong> Processors stalling at a global barrier while waiting for the slowest thread.<br>
-  <strong>(B)</strong> Physical packet propagation delay over an optical fiber interconnect.<br>
-  <strong>(C)</strong> Recomputing boundary values locally to avoid communicating across the network.<br>
-  <strong>(D)</strong> A processor idling because the input size cannot be divided evenly by $p$.
+<p><strong style="color: #003366;">Q2 (Sources of Overhead):</strong> Which of the following is an example of <strong>excess computation</strong> (<span class="math inline">\(W_{\text{excess}}\)</span>) incurred by parallel execution?<br> <strong>(A)</strong> Processors stalling at a global barrier while waiting for the slowest thread.<br> <strong>(B)</strong> Physical packet propagation delay over an optical fiber interconnect.<br> <strong>(C)</strong> Recomputing boundary values locally to avoid communicating across the network.<br> <strong>(D)</strong> A processor idling because the input size cannot be divided evenly by <span class="math inline">\(p\)</span>.</p>
 </div>
-:::
-
-::: {.column width="50%"}
+</div><div class="column" style="width:50%;">
 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #d71920; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; font-size: 0.76em; line-height: 1.35;">
-  <strong style="color: #d71920;">Q3 (Superlinear Speedup Mechanism):</strong> In Example 5.3 (Grama et al.), why did a 2-processor parallel system exhibit <strong>superlinear speedup ($S = 2.43 > 2$)</strong>?<br>
-  <strong>(A)</strong> The clock frequency of both processors dynamically doubled under parallel load.<br>
-  <strong>(B)</strong> Partitioning the working set across 2 processors allowed each half to fit entirely within L1/L2 cache, eliminating DRAM stalls.<br>
-  <strong>(C)</strong> The algorithm bypassed Amdahl's Law by eliminating all critical paths.<br>
-  <strong>(D)</strong> Floating-point rounding errors caused the parallel version to terminate early.
+<p><strong style="color: #d71920;">Q3 (Superlinear Speedup Mechanism):</strong> In Example 5.3 (Grama et al.), why did a 2-processor parallel system exhibit <strong>superlinear speedup (<span class="math inline">\(S = 2.43 &gt; 2\)</span>)</strong>?<br> <strong>(A)</strong> The clock frequency of both processors dynamically doubled under parallel load.<br> <strong>(B)</strong> Partitioning the working set across 2 processors allowed each half to fit entirely within L1/L2 cache, eliminating DRAM stalls.<br> <strong>(C)</strong> The algorithm bypassed Amdahl’s Law by eliminating all critical paths.<br> <strong>(D)</strong> Floating-point rounding errors caused the parallel version to terminate early.</p>
 </div>
-
 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #d71920; border-radius: 6px; padding: 8px 12px; font-size: 0.76em; line-height: 1.35;">
-  <strong style="color: #d71920;">Q4 (Tree Reduction Speedup):</strong> When summing $n$ numbers across $n$ processors via a balanced binary tree, the speedup is $S = \Theta(n / \log n)$. Why is the efficiency $E \to 0$ as $n \to \infty$?<br>
-  <strong>(A)</strong> Communication overhead grows exponentially with tree depth.<br>
-  <strong>(B)</strong> Half the processors sit idle after step 1, 3/4 idle after step 2, causing massive idle overhead ($T_{\text{idle}} = \Theta(n \log n)$).<br>
-  <strong>(C)</strong> The root processor experiences catastrophic thermal throttling.<br>
-  <strong>(D)</strong> Binary tree reduction violates Brent's Theorem.
+<p><strong style="color: #d71920;">Q4 (Tree Reduction Speedup):</strong> When summing <span class="math inline">\(n\)</span> numbers across <span class="math inline">\(n\)</span> processors via a balanced binary tree, the speedup is <span class="math inline">\(S = \Theta(n / \log n)\)</span>. Why is the efficiency <span class="math inline">\(E \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span>?<br> <strong>(A)</strong> Communication overhead grows exponentially with tree depth.<br> <strong>(B)</strong> Half the processors sit idle after step 1, 3/4 idle after step 2, causing massive idle overhead (<span class="math inline">\(T_{\text{idle}} = \Theta(n \log n)\)</span>).<br> <strong>(C)</strong> The root processor experiences catastrophic thermal throttling.<br> <strong>(D)</strong> Binary tree reduction violates Brent’s Theorem.</p>
 </div>
-:::
-
-::::
-
+</div></div>
 <div style="text-align: center; margin-top: 15px; font-size: 0.85em; color: #64748b;">
-  <em>Take a moment to record your answers before proceeding to the answer keys on the next slide!</em>
+<p><em>Take a moment to record your answers before proceeding to the answer keys on the next slide!</em></p>
 </div>
-
----
-
-
-## Review Quiz-3: Answer Keys & Detailed Explanations
-
-:::: {.columns}
-
-::: {.column width="50%"}
+</section>
+<section id="review-quiz-3-answer-keys-detailed-explanations" class="slide level2">
+<h2>Review Quiz-3: Answer Keys &amp; Detailed Explanations</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; font-size: 0.75em; line-height: 1.38;">
-  <strong style="color: #166534; font-size: 1.08em;">Q1 Key: (B) $T_o = p \cdot T_p - T_s$</strong><br>
-  &bull; <strong>Why (B) is True:</strong> The total processor-time product expended by the parallel ensemble is $p \cdot T_p$. Subtracting the serial work $T_s$ isolates all wasted cycles spent on communication, idling, and redundant work.<br>
-  &bull; <em>Why others are false:</em> (A) is per-processor overhead; (C) is the definition of speedup $S$; (D) reverses the sign.
+<p><strong style="color: #166534; font-size: 1.08em;">Q1 Key: (B) <span class="math inline">\(T_o = p \cdot T_p - T_s\)</span></strong><br> • <strong>Why (B) is True:</strong> The total processor-time product expended by the parallel ensemble is <span class="math inline">\(p \cdot T_p\)</span>. Subtracting the serial work <span class="math inline">\(T_s\)</span> isolates all wasted cycles spent on communication, idling, and redundant work.<br> • <em>Why others are false:</em> (A) is per-processor overhead; (C) is the definition of speedup <span class="math inline">\(S\)</span>; (D) reverses the sign.</p>
 </div>
-
 <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 8px 12px; font-size: 0.75em; line-height: 1.38;">
-  <strong style="color: #166534; font-size: 1.08em;">Q2 Key: (C) Recomputing Boundary Values</strong><br>
-  &bull; <strong>Why (C) is True:</strong> Excess computation represents arithmetic or logic operations executed in the parallel version that do not exist in the best sequential algorithm (e.g., redundant math to trade computation for communication).<br>
-  &bull; <em>Why others are false:</em> Barrier stalls (A) and uneven division (D) are processor idling ($T_{\text{idle}}$); transmission delay (B) is communication latency ($T_{\text{comm}}$).
+<p><strong style="color: #166534; font-size: 1.08em;">Q2 Key: (C) Recomputing Boundary Values</strong><br> • <strong>Why (C) is True:</strong> Excess computation represents arithmetic or logic operations executed in the parallel version that do not exist in the best sequential algorithm (e.g., redundant math to trade computation for communication).<br> • <em>Why others are false:</em> Barrier stalls (A) and uneven division (D) are processor idling (<span class="math inline">\(T_{\text{idle}}\)</span>); transmission delay (B) is communication latency (<span class="math inline">\(T_{\text{comm}}\)</span>).</p>
 </div>
-:::
-
-::: {.column width="50%"}
+</div><div class="column" style="width:50%;">
 <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; font-size: 0.75em; line-height: 1.38;">
-  <strong style="color: #166534; font-size: 1.08em;">Q3 Key: (B) Aggregated Cache Capacity Effects</strong><br>
-  &bull; <strong>Why (B) is True:</strong> In sequential execution, the entire dataset exceeded the single core's cache capacity, suffering frequent 100-cycle DRAM miss penalties. On 2 cores, the data was halved, fitting into local caches ($h \approx 1.0$), slashing average memory access time.<br>
-  &bull; <em>Why others are false:</em> Hardware frequencies do not double (A); Amdahl's Law is never violated (C); floating-point error does not produce valid superlinear speedup (D).
+<p><strong style="color: #166534; font-size: 1.08em;">Q3 Key: (B) Aggregated Cache Capacity Effects</strong><br> • <strong>Why (B) is True:</strong> In sequential execution, the entire dataset exceeded the single core’s cache capacity, suffering frequent 100-cycle DRAM miss penalties. On 2 cores, the data was halved, fitting into local caches (<span class="math inline">\(h \approx 1.0\)</span>), slashing average memory access time.<br> • <em>Why others are false:</em> Hardware frequencies do not double (A); Amdahl’s Law is never violated (C); floating-point error does not produce valid superlinear speedup (D).</p>
 </div>
-
 <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 8px 12px; font-size: 0.75em; line-height: 1.38;">
-  <strong style="color: #166534; font-size: 1.08em;">Q4 Key: (B) Exponential Processor Idling</strong><br>
-  &bull; <strong>Why (B) is True:</strong> The tree performs $n-1$ total additions across $\log_2 n$ steps with $p = n$ processors. Total processor-time is $n \log_2 n$. Since work is only $n-1$, idle time is $n \log n - n = \Theta(n \log n)$, driving efficiency $E = S / p = \Theta(1 / \log n) \to 0$.<br>
-  &bull; <em>Why others are false:</em> Communication steps are $O(\log n)$, not exponential (A); thermal throttling is not an algorithmic property (C); tree reduction conforms strictly to Brent's Theorem (D).
+<p><strong style="color: #166534; font-size: 1.08em;">Q4 Key: (B) Exponential Processor Idling</strong><br> • <strong>Why (B) is True:</strong> The tree performs <span class="math inline">\(n-1\)</span> total additions across <span class="math inline">\(\log_2 n\)</span> steps with <span class="math inline">\(p = n\)</span> processors. Total processor-time is <span class="math inline">\(n \log_2 n\)</span>. Since work is only <span class="math inline">\(n-1\)</span>, idle time is <span class="math inline">\(n \log n - n = \Theta(n \log n)\)</span>, driving efficiency <span class="math inline">\(E = S / p = \Theta(1 / \log n) \to 0\)</span>.<br> • <em>Why others are false:</em> Communication steps are <span class="math inline">\(O(\log n)\)</span>, not exponential (A); thermal throttling is not an algorithmic property (C); tree reduction conforms strictly to Brent’s Theorem (D).</p>
 </div>
-:::
-
-::::
-
+</div></div>
 <div style="background: #f8fafc; border-left: 4px solid #e5a93c; padding: 6px 12px; border-radius: 4px; margin-top: 12px; font-size: 0.78em; color: #475569;">
-  <strong>Key Takeaway:</strong> True scalability requires minimizing total overhead $T_o$; over-allocating processors to subproblems with shallow work invariably leads to catastrophic idling!
+<p><strong>Key Takeaway:</strong> True scalability requires minimizing total overhead <span class="math inline">\(T_o\)</span>; over-allocating processors to subproblems with shallow work invariably leads to catastrophic idling!</p>
 </div>
--->
 </section>
 <section id="key-takeaways-lecture-14-summary" class="slide level2">
 <h2>Key Takeaways: Lecture 14 Summary</h2>
